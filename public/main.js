@@ -225,7 +225,7 @@ $(function() {
   socket.on('login', (data) => {
     connected = true;
     // Display the welcome message
-    const message = 'Welcome to Group 2 Chat – powered by Socket.IO ';
+    const message = 'Welcome to Group 2 Chatroom – powered by Socket.IO ';
     log(message, {
       prepend: true
     });
