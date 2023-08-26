@@ -1,6 +1,6 @@
 [{
     "name": "group2-chat-td",
-    "image": "255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/wengsiong-docker-chat-app:latest",
+    "image": "255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/group2-chat-app:latest",
     "portMappings": [
         {
             "containerPort": 3000,
