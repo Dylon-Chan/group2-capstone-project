@@ -13,6 +13,6 @@ data "aws_network_interface" "all" {
 
 output "all_access_urls" {
   value = {
-    for k, v in data.aws_network_interface.all : k => "http://${v.association[0].public_ip}:8080"
+    for k, v in data.aws_network_interface.all : k => "http://${v.association[0].public_ip}:3000"
   }
 }

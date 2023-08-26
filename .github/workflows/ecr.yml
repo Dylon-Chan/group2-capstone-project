@@ -52,9 +52,9 @@ jobs:
         run: |
           cd ecs
           terraform init
-          terraform apply -auto-approve -target=aws_ecs_cluster.ws-docker-nodejs-cluster -target=aws_ecs_task_definition.ws-docker-nodejs-td -target=aws_security_group.ecs-sg -target=aws_ecs_service.ws-docker-nodejs-service
+          terraform apply -auto-approve -target=aws_ecs_cluster.group2-chat-cluster -target=aws_ecs_task_definition.group2-chat-td -target=aws_security_group.ecs-sg -target=aws_ecs_service.group2-chat-service
       - name: Set up Terraform outputs
-        id: tf-outputs
+        id: tf-outputsgit
         working-directory: ./ecs
         run: |
           terraform apply -auto-approve
