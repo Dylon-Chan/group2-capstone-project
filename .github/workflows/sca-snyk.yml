@@ -1,0 +1,53 @@
+name: SCA for Nodejs Application with Docker
+run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
+
+on:
+  push:
+    branches: 
+      - feature-wengsiong-sca
+
+permissions:
+  id-token: write
+
+jobs:
+  snyk-open-source-scan:
+    runs-on: ubuntu-latest
+    name: Run SCA tool - Snyk
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: install dependencies
+        run: npm install
+      - name: Run Snyk to scan for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true # To make sure that SARIF upload gets called even if Snyk fails
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+
+  code-scan:
+    runs-on: ubuntu-latest
+    name: Run GitHub Code Scanning
+    needs: snyk-open-source-scan
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
+  monitor-security:
+    runs-on: ubuntu-latest
+    name: Monitor Snapshots for Vulnerabilities
+    needs: code-scan
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Run Snyk to monitor for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
