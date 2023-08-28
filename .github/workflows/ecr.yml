@@ -3,7 +3,9 @@ run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 
 on:
   push:
-    branches: feature-app
+    branches: 
+      - feature-app
+      - david/oidc-SGhardening
 
 permissions:
   id-token: write
