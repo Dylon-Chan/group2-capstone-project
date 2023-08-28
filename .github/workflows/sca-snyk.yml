@@ -10,9 +10,9 @@ permissions:
   id-token: write
 
 jobs:
-  snyk-open-source-scan:
+  snyk-scan:
     runs-on: ubuntu-latest
-    name: Run SCA tool - Snyk
+    name: Open Source Security Scan
     steps:
       - name: Checkout repo code
         uses: actions/checkout@v3
@@ -25,30 +25,11 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high --sarif-file-output=snyk.sarif
-      - name: List file to validate SARIF file
-        run: ls -al
-      
-
-  code-scan:
-    runs-on: ubuntu-latest
-    name: Run GitHub Code Scanning
-    needs: snyk-open-source-scan
-    steps:
-      - name: Checkout repo code
-        uses: actions/checkout@v3
-      - name: Upload SARIF to GitHub Code Scanning
+      - name: Code scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
-
-  monitor-security:
-    runs-on: ubuntu-latest
-    name: Monitor Snapshots for Vulnerabilities
-    needs: code-scan
-    steps:
-      - name: Checkout repo code
-        uses: actions/checkout@v3
-      - name: Run Snyk to monitor for vulnerabilities
+      - name: Monitor for vulnerabilities continuously
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
