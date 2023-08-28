@@ -11,6 +11,17 @@ permissions:
   id-token: write
 
 jobs:
+  unit-testing:
+    runs-on: ubuntu-latest
+    name: Unit Testing
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit testing
+        run: npm test
+
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
     name: Build and Push Docker Image to ECR
