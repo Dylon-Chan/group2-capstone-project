@@ -6,6 +6,7 @@ on:
     branches: 
       - feature-app
       - david/oidc-SGhardening
+      - feature-unit-testing
 
 permissions:
   id-token: write
