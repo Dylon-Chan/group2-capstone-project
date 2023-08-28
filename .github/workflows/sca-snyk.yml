@@ -25,6 +25,9 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high --sarif-file-output=snyk.sarif
+      - name: List file to validate SARIF file
+        run: ls -al
+      
 
   code-scan:
     runs-on: ubuntu-latest
