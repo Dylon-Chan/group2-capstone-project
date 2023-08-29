@@ -5,6 +5,12 @@ run-name: ${{ github.actor }} is running horusec scan
 # Define the trigger conditions for this workflow.
 on: [push]
 
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  security-events: write
+
 jobs:
   checking_code:
     runs-on: ubuntu-latest
