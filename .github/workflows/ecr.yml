@@ -9,7 +9,10 @@ on:
       - chris
 
 permissions:
+  actions: read
+  contents: read
   id-token: write
+  security-events: write
 
 jobs:
   build-and-push-image-to-ecr:
@@ -76,5 +79,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
-          target: 'https://techconnectweb.azurewebsites.net/'
+          target: 'http://$access_url'
   
