@@ -4,19 +4,14 @@ run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 on:
   push:
     branches: 
+      - feature-app
+      - david/oidc-SGhardening
       - chris
 
+permissions:
+  id-token: write
+
 jobs:
-
-  zap_scan:
-    runs-on: ubuntu-latest
-    name: Scan ZAP website
-    steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.1.0
-        with:
-          target: 'https://www.zaproxy.org/'
-
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
     name: Build and Push Docker Image to ECR
@@ -72,3 +67,14 @@ jobs:
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
         run: echo "The Access URL is $access_url"
+  
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.1.0
+        with:
+          target: 'https://www.zaproxy.org/'
+      
+      
