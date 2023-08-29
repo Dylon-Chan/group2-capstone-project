@@ -69,9 +69,9 @@ jobs:
         working-directory: ./ecs
         run: |
           terraform apply -auto-approve
-          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
       - name: Echo Access URL
-        run: echo "The Access URL is ${{ env.access_url }}"
+        run: echo "The Access URL is $access_url"
   
   zap-scan:
     runs-on: ubuntu-latest
