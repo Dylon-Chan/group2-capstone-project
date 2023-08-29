@@ -76,5 +76,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.1.0
         with:
-          target: 'https://techconnectweb.azurewebsites.net/'
+          target: 'http://http://54.151.152.129:3000/'
   
