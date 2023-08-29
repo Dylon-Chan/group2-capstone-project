@@ -8,6 +8,9 @@ on:
       - david/oidc-SGhardening
       - chris
 
+env:
+  access_url:""
+
 permissions:
   actions: read
   contents: read
@@ -49,6 +52,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push-image-to-ecr
     name: Deploy to ECS
+    outputs:
+      access_url_output: ${{ steps.tf-outputsgit.outputs.access_url }}
     steps:
       - name: Checkout repo code
         uses: actions/checkout@v3
@@ -69,7 +74,7 @@ jobs:
           terraform apply -auto-approve
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
-        run: echo "The Access URL is $access_url or ${{ env.access_url }}"
+        run: echo "The Access URL is ${{ env.access_url }}"
   
   zap-scan:
     runs-on: ubuntu-latest
@@ -79,5 +84,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
-          target: ${{ env.access_url }}
+          target: ${{ needs.deploy-to-ecs.outputs.access_url_output }}
   
