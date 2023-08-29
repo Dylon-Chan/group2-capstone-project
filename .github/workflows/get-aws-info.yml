@@ -9,14 +9,14 @@ on:
     outputs:
       role_to_assume:
         description: "role_to_assume"
-        value: ${{ jobs.job-get-aws-info.outputs.role_to_assume }}
+        value: ${{ jobs.aws-config-fetcher.outputs.role_to_assume }}
       aws_region:
         description: "aws_region"
-        value: ${{ jobs.job-get-aws-info.outputs.aws_region }}
+        value: ${{ jobs.aws-config-fetcher.outputs.aws_region }}
 
 jobs:
-  # Define a job named "job-get-aws-info" that runs on the latest version of Ubuntu.
-  job-get-aws-info:
+  # Define a job named "aws-config-fetcher" that runs on the latest version of Ubuntu.
+  aws-config-fetcher:
     runs-on: ubuntu-latest
 
     # Define the outputs of this job that will be used in other workflows.
