@@ -6,6 +6,7 @@ on:
     branches: 
       - feature-app
       - david/oidc-SGhardening
+      - chris
 
 permissions:
   id-token: write
