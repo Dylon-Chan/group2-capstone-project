@@ -8,9 +8,6 @@ on:
       - david/oidc-SGhardening
       - chris
 
-env:
-  access_url:""
-
 permissions:
   actions: read
   contents: read
