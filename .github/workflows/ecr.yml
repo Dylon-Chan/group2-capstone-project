@@ -65,3 +65,13 @@ jobs:
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
         run: echo "The Access URL is $access_url"
+  
+  zap-scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.1.0
+        with:
+          target: 'https://www.zaproxy.org/'
+  
