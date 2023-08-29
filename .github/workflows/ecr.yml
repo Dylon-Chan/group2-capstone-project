@@ -71,12 +71,10 @@ jobs:
           terraform apply -auto-approve
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
       - name: Echo Access URL
-        run: |
-          echo "The Access URL is $access_url_output"
-          echo "The Access URL is $access_url"
-          echo "The Access URL is {{ steps.tf-outputsgit.outputs.access_url }}"
+        run: echo "The Access URL is ${{ steps.tf-outputsgit.outputs.access_url }}"
   
   zap-scan:
+    permissions: write-all
     runs-on: ubuntu-latest
     needs: deploy-to-ecs
     name: OWASP ZAP Full Scan
