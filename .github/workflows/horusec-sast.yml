@@ -1,0 +1,17 @@
+# Define the name and description for this workflow.
+name: SAST scan using horusec
+run-name: ${{ github.actor }} is running horusec scan
+
+# Define the trigger conditions for this workflow.
+on: [push]
+
+jobs:
+  checking_code:
+    runs-on: ubuntu-latest
+    name: Horusec Scan
+    steps:
+      - name: Run Horusec
+        id: run_horusec
+        uses: fike/horusec-action@v0.2.2
+        with:
+          arguments: -p="./" 
