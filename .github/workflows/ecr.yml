@@ -8,6 +8,12 @@ on:
       - david/oidc-SGhardening
       - chris
 
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  security-events: write
+
 jobs:
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
