@@ -27,7 +27,7 @@ jobs:
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
     # Make sure to run after the "get-aws-info" job.
-    needs: get-aws-info
+    needs: [ get-aws-info, unit-testing]
     name: Build and Push Docker Image to ECR
     steps:
       - name: Checkout repo code
