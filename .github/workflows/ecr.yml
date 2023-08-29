@@ -79,5 +79,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
-          target: 'http://$access_url'
+          target: '$access_url'
   
