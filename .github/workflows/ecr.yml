@@ -67,10 +67,9 @@ jobs:
         working-directory: ./ecs
         run: |
           terraform apply -auto-approve
-          "access_url": $(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
-          #echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
-        run: echo "The Access URL is $access_url"
+        run: echo "The Access URL is $access_url or ${{ env.access_url }}"
   
   zap-scan:
     runs-on: ubuntu-latest
@@ -80,5 +79,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
-          target: $access_url
+          target: ${{ env.access_url }}
   
