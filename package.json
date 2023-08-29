@@ -7,7 +7,6 @@
   "private": true,
   "license": "BSD",
   "dependencies": {
-    "aws-sdk": "^2.1444.0",
     "express": "~4.17.1",
     "socket.io": "^4.0.0"
   },

@@ -1,12 +1,24 @@
-$(function() {
-  const FADE_TIME = 150; // ms
-  const TYPING_TIMER_LENGTH = 400; // ms
-  const COLORS = [
-    '#e21400', '#91580f', '#f8a700', '#f78b00',
-    '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
-    '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
-  ];
+const FADE_TIME = 150; // ms
+const TYPING_TIMER_LENGTH = 400; // ms
+const COLORS = [
+  '#e21400', '#91580f', '#f8a700', '#f78b00',
+  '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+  '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+];
 
+// Gets the color of a username through our hash function
+const getUsernameColor = (username) => {
+  // Compute hash code
+  let hash = 7;
+  for (let i = 0; i < username.length; i++) {
+    hash = username.charCodeAt(i) + (hash << 5) - hash;
+  }
+  // Calculate color
+  const index = Math.abs(hash % COLORS.length);
+  return COLORS[index];
+}
+
+function initializeApp() {
   // Initialize variables
   const $window = $(window);
   const $usernameInput = $('.usernameInput'); // Input for username
@@ -24,16 +36,6 @@ $(function() {
   let typing = false;
   let lastTypingTime;
   let $currentInput = $usernameInput.focus();
-
-  const addParticipantsMessage = (data) => {
-    let message = '';
-    if (data.numUsers === 1) {
-      message += `there's 1 participant`;
-    } else {
-      message += `there are ${data.numUsers} participants`;
-    }
-    log(message);
-  }
 
   // Sets the client's username
   const setUsername = () => {
@@ -64,6 +66,17 @@ $(function() {
       socket.emit('new message', message);
     }
   }
+
+  const addParticipantsMessage = (data) => {
+    let message = '';
+    if (data.numUsers === 1) {
+      message += `there's 1 participant`;
+    } else {
+      message += `there are ${data.numUsers} participants`;
+    }
+    log(message);
+  }
+
 
   // Log a message
   const log = (message, options) => {
@@ -172,18 +185,6 @@ $(function() {
     });
   }
 
-  // Gets the color of a username through our hash function
-  const getUsernameColor = (username) => {
-    // Compute hash code
-    let hash = 7;
-    for (let i = 0; i < username.length; i++) {
-      hash = username.charCodeAt(i) + (hash << 5) - hash;
-    }
-    // Calculate color
-    const index = Math.abs(hash % COLORS.length);
-    return COLORS[index];
-  }
-
   // Keyboard events
 
   $window.keydown(event => {
@@ -225,7 +226,7 @@ $(function() {
   socket.on('login', (data) => {
     connected = true;
     // Display the welcome message
-    const message = 'Welcome to Group 2 Chatroom – powered by Socket.IO ';
+    const message = 'Welcome to WS - Chatroom ';
     log(message, {
       prepend: true
     });
@@ -275,4 +276,10 @@ $(function() {
     log('attempt to reconnect has failed');
   });
 
-});
+};
+
+module.exports = {
+  initializeApp,
+  getUsernameColor,
+  COLORS
+};
