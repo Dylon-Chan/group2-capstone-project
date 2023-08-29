@@ -75,10 +75,7 @@ jobs:
   
   zap-scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
+    permissions: write-all
     needs: deploy-to-ecs
     name: OWASP ZAP Full Scan
     steps:
