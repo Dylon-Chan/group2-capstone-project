@@ -68,6 +68,7 @@ jobs:
   
   zap-scan:
     runs-on: ubuntu-latest
+    needs: deploy-to-ecs
     name: Scan ZAP website
     steps:
       - name: ZAP Scan
