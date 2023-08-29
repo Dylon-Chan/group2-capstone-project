@@ -3,7 +3,8 @@ run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 
 on:
   push:
-    branches: chris
+    branches: 
+      - chris
 
 jobs:
 
