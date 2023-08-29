@@ -3,9 +3,19 @@ run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 
 on:
   push:
-    branches: feature-app
+    branches: chris
 
 jobs:
+
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.1.0
+        with:
+          target: 'https://www.zaproxy.org/'
+
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
     name: Build and Push Docker Image to ECR
