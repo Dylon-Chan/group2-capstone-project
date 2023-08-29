@@ -1,17 +1,23 @@
-name: DAST using ZAP
-run-name: ${{ github.actor }} is running ZAP Action Full Scan
+name: DAST for Nodejs Application with Docker
+run-name: ${{ github.actor }} is running DAST for Nodejs Application with Docker
 
 on:
-  schedule:
-    # Runs every day At 01:00.
-    - cron:  '1 4 * * *'
+  push:
+    branches: 
+      - chris
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  security-events: write
 
 jobs:
-  zap_scan:
+  zap-scan:
     runs-on: ubuntu-latest
     name: Scan ZAP website
     steps:
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.7.0
+        uses: zaproxy/action-full-scan@v0.1.0
         with:
           target: 'https://www.zaproxy.org/'
