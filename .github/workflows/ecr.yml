@@ -8,12 +8,6 @@ on:
       - david/oidc-SGhardening
       - chris
 
-permissions:
-  actions: read
-  contents: read
-  id-token: write
-  security-events: write
-
 jobs:
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
@@ -74,8 +68,11 @@ jobs:
         run: echo "The Access URL is ${{ steps.tf-outputsgit.outputs.access_url }}"
   
   zap-scan:
-    permissions: write-all
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     needs: deploy-to-ecs
     name: OWASP ZAP Full Scan
     steps:
