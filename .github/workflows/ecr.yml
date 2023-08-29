@@ -1,19 +1,17 @@
 name: CICD for Nodejs Application with Docker
 run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 
-# Define the trigger conditions for this workflow.
+
 on:
   push:
     branches: 
+      - feature-app
+      - david/oidc-SGhardening
       - feature/* 
-  pull_request:
-    branches-ignore:
-      - stage
-      - prod
-  workflow_dispatch:  
 
+# Define permissions for this workflow, which can be added at either the job or workflow level.      
 permissions:
-  id-token: write
+  id-token: write # This is required for requesting the JWT 
 
 jobs:
   build-and-push-image-to-ecr:
