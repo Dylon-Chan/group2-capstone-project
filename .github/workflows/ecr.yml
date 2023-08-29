@@ -1,30 +1,39 @@
 name: CICD for Nodejs Application with Docker
 run-name: ${{ github.actor }} is running CICD for Nodejs Application with Docker
 
+
 on:
   push:
     branches: 
       - feature-app
       - david/oidc-SGhardening
+      - feature/* 
 
+# Define permissions for this workflow, which can be added at either the job or workflow level.      
 permissions:
-  id-token: write
+  id-token: write # This is required for requesting the JWT 
+
 
 jobs:
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
+    # Make sure to run after the "get-aws-info" job.
+    needs: get-aws-info
     name: Build and Push Docker Image to ECR
     steps:
       - name: Checkout repo code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::255945442255:role/grp2-oidc
-          aws-region: ap-southeast-1
+          # Syntax for accessing outputs from a reusable workflow is "needs.<reusable>.outputs.<output>".
+          role-to-assume: ${{ needs.get-aws-info.outputs.role_to_assume }}
+          aws-region: ${{ needs.get-aws-info.outputs.aws_region }}
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
       - name: Create ECR repository using Terraform
         run: |
           cd ecr
@@ -41,7 +50,7 @@ jobs:
 
   deploy-to-ecs:
     runs-on: ubuntu-latest
-    needs: build-and-push-image-to-ecr
+    needs: [get-aws-info, build-and-push-image-to-ecr] # Make sure to run after the "get-aws-info" job.
     name: Deploy to ECS
     steps:
       - name: Checkout repo code
@@ -49,8 +58,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::255945442255:role/grp2-oidc
-          aws-region: ap-southeast-1
+          # Syntax for accessing outputs from a reusable workflow is "needs.<reusable>.outputs.<output>".
+          role-to-assume: ${{ needs.get-aws-info.outputs.role_to_assume }}
+          aws-region: ${{ needs.get-aws-info.outputs.aws_region }}
       - name: Create AWS ECS cluster, task definition and service using Terraform
         run: |
           cd ecs
@@ -64,3 +74,7 @@ jobs:
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
         run: echo "The Access URL is $access_url"
+
+  # Define the "get-aws-info" job, which uses a reusable workflow defined in another file. 
+  get-aws-info:
+    uses: ./.github/workflows/get-aws-info.yml
