@@ -71,10 +71,10 @@ jobs:
   zap-scan:
     runs-on: ubuntu-latest
     needs: deploy-to-ecs
-    name: Scan ZAP website
+    name: OWASP ZAP Full Scan
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.1.0
         with:
-          target: 'https://www.zaproxy.org/'
+          target: 'https://techconnectweb.azurewebsites.net/'
   
