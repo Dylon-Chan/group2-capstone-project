@@ -34,10 +34,58 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t group2chatapp/dockerimagelocal .
+
+  snykcon5:
+        permissions:
+          contents: read # for actions/checkout to fetch code
+          security-events: write # for github/pglim/upload-sarif to upload SARIF results
+          actions: read # only required for a private repository by github/pglim/upload-sarif to get the Action run status
+        runs-on: ubuntu-latest
+        needs: build-and-push-image-to-ecr
+        name: Test
+        steps:
+          - name: Checkout repo code
+            uses: actions/checkout@v3
+          - name: Configure AWS credentials
+            uses: aws-actions/configure-aws-credentials@v2
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: ap-southeast-1
+          - name: Login to Amazon ECR
+            id: login-ecr
+            uses: aws-actions/amazon-ecr-login@v1
+          - name: Build and push image to AWS ECR
+            env:
+              ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+              ECR_REPOSITORY: pglim360group2-chat-app
+              IMAGE_TAG: latest
+            run: |
+              docker build -t group2chatapp/dockerimagelocal .
+          - name: Run Snyk to check Docker image for vulnerabilities
+            # Snyk can be used to break the build when it detects vulnerabilities.
+            # In this case we want to upload the issues to GitHub Code Scanning
+            continue-on-error: true
+            #uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+            uses: snyk/actions/docker@master
+            env:
+            # In order to use the Snyk Action you will need to have a Snyk API token.
+            # More details in https://github.com/snyk/actions#getting-your-snyk-token
+            # or you can signup for free at https://snyk.io/login
+              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            with:
+              image: group2chatapp/dockerimagelocal
+              args: --file=Dockerfile
+          - name: Upload result to GitHub Code Scanning
+            uses: github/codeql-action/upload-sarif@v2
+            #uses: pglim/prjcase3backup
+            with:
+              sarif_file: snyk.sarif
 
   deploy-to-ecs:
     runs-on: ubuntu-latest
-    needs: build-and-push-image-to-ecr
+    needs: snykcon5
     name: Deploy to ECS
     steps:
       - name: Checkout repo code
