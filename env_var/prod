@@ -2,3 +2,4 @@
 BUILD_ENV="This is PROD environment"
 ROLE_TO_ASSUME="arn:aws:iam::255945442255:role/grp2-oidc"
 AWS_REGION="ap-southeast-1"
+environment="prod"
