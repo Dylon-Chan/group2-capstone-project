@@ -13,18 +13,18 @@ variable "role_to_assume" {
 variable "ecs_sg_name" {
   description = "ECS Security Group Name"
   type = string
-  default = "ws-app-ecs-sg-stage"
+  default = "group2-ecs-sg-stage"
 }
 
 variable "port" {
     description = "Port"
     type = number
-    default = 8000
+    default = 3030
 }
 
 variable "vpc_id" {
   type = string
-  default = "vpc-038783054495c1d2f" # change!
+  default = "vpc-038783054495c1d2f"
 }
 
 variable "subnets" {
@@ -40,7 +40,7 @@ variable "image_name" {
 variable "ecs_name" {
   description = "ECS Name"
   type = string
-  default = "ws-app-dev"
+  default = "group2-chat-app-stage"
 }
 
 variable "cpu" {
@@ -53,10 +53,4 @@ variable "memory" {
   description = "Memory"
   type = number
   default = 1024
-}
-
-variable "some_condition_that_determines_readiness" {
-  description = "A description explaining the purpose of this variable"
-  type        = bool
-  default     = false
 }

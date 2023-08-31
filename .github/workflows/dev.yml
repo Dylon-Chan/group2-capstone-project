@@ -64,7 +64,6 @@ jobs:
     needs: [ unit-testing, sca-tool-scan, get-aws-info] # Update if other jobs are added
     name: Deploy to AWS
     env:
-      docker_image_name: ws-app
       environment: ${{ needs.get-aws-info.outputs.environment }}
     steps:
       - name: Checkout repo code
@@ -73,46 +72,38 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           # Syntax for accessing outputs from a reusable workflow is "needs.<reusable>.outputs.<output>".
-          # role-to-assume: ${{ needs.get-aws-info.outputs.role_to_assume }}
-          # aws-region: ${{ needs.get-aws-info.outputs.aws_region }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
+          role-to-assume: ${{ needs.get-aws-info.outputs.role_to_assume }}
+          aws-region: ${{ needs.get-aws-info.outputs.aws_region }}
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: true
       - name: Create ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
         run: |
-          cd modules/ecr
           terraform init
           terraform plan
           terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
       - name: Push image to Amazon ECR
         id: push-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.docker_image_name }}
-          IMAGE_TAG: latest
+          image_tag: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "ecr_image_name=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT 
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
       - name: Create AWS ECS cluster, task definition and service using Terraform
-        env:
-          ecr_image_name: ${{ steps.push-image.outputs.ecr_image_name }}
+        working-directory: ./environments/${{ env.environment }}
         run: |
-          cd environments/$environment
           terraform init
-          terraform apply -auto-approve -var "image_name=$ecr_image_name" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
       - name: Set up Terraform outputs # to get the access url on Github Actions
         id: tf-outputs
         working-directory: ./environments/${{ env.environment }}
-        env:
-          ecr_image_name: ${{ steps.push-image.outputs.ecr_image_name }}
         run: |
-          terraform apply -auto-approve -var "image_name=$ecr_image_name"
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
       - name: Echo Access URL
         run: echo "The Access URL is $access_url"

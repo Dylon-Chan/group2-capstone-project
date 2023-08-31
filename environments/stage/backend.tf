@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket  = "ws-multi-env"
-    key     = "environments/stage/ws-app.tfstate"
+    bucket  = "ce2-group2-capstone-project-tfstate-bucket"
+    key     = "environments/stage/deploy.tfstate"
     region  = "ap-southeast-1"
   }
 }

@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "task" {
   execution_role_arn = var.role_to_assume
   container_definitions = jsonencode([{
     name: "${var.ecs_name}-td",
-    image: "${var.image_name}",
+    image: "${var.image_name}:${var.image_tag}",
     portMappings: [
         {
             containerPort: var.port,

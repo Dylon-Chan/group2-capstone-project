@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket  = "ws-multi-env"
+    bucket  = "ce2-group2-capstone-project-tfstate-bucket"
     key     = "environments/modules/ecr/ecr.tfstate"
     region  = "ap-southeast-1"
   }
