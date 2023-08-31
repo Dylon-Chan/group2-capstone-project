@@ -2,3 +2,5 @@
 BUILD_ENV="This is STAGE environment"
 ROLE_TO_ASSUME="arn:aws:iam::255945442255:role/grp2-oidc-stage"
 AWS_REGION="ap-southeast-1"
+ENVIRONMENT="stage"
+IMAGE_NAME="ws-app"
