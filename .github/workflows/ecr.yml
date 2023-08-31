@@ -38,7 +38,7 @@ jobs:
 
   snykcon5:
         permissions:
-          contents: read # for actions/checkout to fetch code
+          contents: read # for actions/checkout to fetch code 
           security-events: write # for github/pglim/upload-sarif to upload SARIF results
           actions: read # only required for a private repository by github/pglim/upload-sarif to get the Action run status
         runs-on: ubuntu-latest
