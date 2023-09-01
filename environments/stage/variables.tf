@@ -16,10 +16,16 @@ variable "ecs_sg_name" {
   default = "group2-ecs-sg-stage"
 }
 
-variable "port" {
+variable "image_port" {
     description = "Port"
     type = number
-    default = 3030
+    default = 3000
+}
+
+variable "alb_port" {
+    description = "ALB Port"
+    type = number
+    default = 8000
 }
 
 variable "vpc_id" {
@@ -35,6 +41,14 @@ variable "subnets" {
 variable "image_name" {
   description = "ECR Repository Name"
   type = string
+  // image_name to be input at runtime
+  // default = "255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/group2-chat-app" #for test locally
+}
+
+variable "image_tag" {
+  description = "Image Tag"
+  type = string
+  default = "latest"
 }
 
 variable "ecs_name" {
@@ -53,4 +67,10 @@ variable "memory" {
   description = "Memory"
   type = number
   default = 1024
+}
+
+variable "lb_sg_name" {
+  description = "ECS Security Group Name"
+  type = string
+  default = "group2-chat-app-lb-sg-stage"
 }
