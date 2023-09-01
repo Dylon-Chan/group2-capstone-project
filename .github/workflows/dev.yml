@@ -34,6 +34,7 @@ jobs:
         run: npm test
 
   SNYK-Comprehensive-Security-Testing:
+    needs: sca-tool-scan
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
 
