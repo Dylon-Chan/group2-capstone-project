@@ -5,6 +5,7 @@ run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application
 on:
   push:
     branches-ignore: [ stage, prod ]
+  workflow_dispatch:    
 
 # Define permissions for this workflow, which can be added at either the job or workflow level.      
 permissions:
@@ -31,6 +32,10 @@ jobs:
         run: npm install
       - name: Run unit tests
         run: npm test
+
+  SNYK-Comprehensive-Security-Testing:
+    uses: ./.github/workflows/snyk-security.yml
+    secrets: inherit
 
   sca-tool-scan:
     runs-on: ubuntu-latest
@@ -61,7 +66,7 @@ jobs:
     
   deploy:
     runs-on: ubuntu-latest
-    needs: [ unit-testing, sca-tool-scan, get-aws-info] # Update if other jobs are added
+    needs: [ unit-testing, sca-tool-scan, SNYK-Comprehensive-Security-Testing, get-aws-info] # Update if other jobs are added
     name: Deploy to AWS
     env:
       environment: ${{ needs.get-aws-info.outputs.environment }}
