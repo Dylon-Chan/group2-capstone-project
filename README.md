@@ -38,14 +38,13 @@ To get the Node server running locally:
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
-*** Diagram
+** Diagram
 
 ## Workflow for Project Titanium
 ![Workflow](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f7609a33-bf61-42d1-881b-0facb65c2513)
 
-
-
 ## Branching Strategies
+![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
 
 ### Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
