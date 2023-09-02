@@ -17,7 +17,7 @@ variable "ecs_sg_name" {
 }
 
 variable "image_port" {
-    description = "Port"
+    description = "Image Port"
     type = number
     default = 3000
 }
@@ -41,8 +41,6 @@ variable "subnets" {
 variable "image_name" {
   description = "ECR Repository Name"
   type = string
-  // image_name to be input at runtime
-  // default = "255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/group2-chat-app" #for test locally
 }
 
 variable "image_tag" {
