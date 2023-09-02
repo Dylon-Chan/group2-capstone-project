@@ -1,3 +1,5 @@
+# (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
+## `Case 3 - Securtiy Focused (DevSecOps)`
 # Capstone Project Case 3 Documentation
 
 
