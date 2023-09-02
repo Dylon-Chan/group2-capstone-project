@@ -1,10 +1,9 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
 ## `Case 3 - Securtiy Focused (DevSecOps)`
-# Capstone Project Case 3 Documentation
-
+### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
 
 ## Company Profile
-Our tech team is the backbone of Cloud Secure which comprised of five IT experts who have different skillsets and are passionate about technology and dedicated to driving innovation. The team collaborate excellently and contribute ideas and solutions to ensure that Project Titanium is secure and identify vunlerabilites before it is rolled out. Here's a glimpse into the roles and responsibilities of our talented tech team:
+Our tech team is the backbone of Chat Secure which comprised of five IT experts who have different skillsets and are passionate about technology and dedicated to driving innovation. The team collaborate excellently and contribute ideas and solutions to ensure that Project Titanium is secure and identify vunlerabilites before it is rolled out. Here's a glimpse into the roles and responsibilities of our talented tech team:
 
 ## Developers Team
 Our developers are the architects behind Project Titanium. They leverage their expertise in programming languages, such as Python, Java, and C++, to design, develop, and implement robust and scalable software solutions. Their skills range from front-end development for intuitive user interfaces to back-end systems that power our products' functionality.
@@ -13,7 +12,7 @@ Our developers are the architects behind Project Titanium. They leverage their e
 Project Name: Titanium
 Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
-The Developers team at Cloud Secure is currently working on an exciting project called "Titanium" This project involves the development of a chat application website that implements a docker container with security as first priority.
+The Developers team at Chat Secure is currently working on an exciting project called "Titanium" This project involves the development of a chat application website that implements a docker container with security as first priority.
 
 ## Getting started
 To get the Node server running locally:
