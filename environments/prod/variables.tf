@@ -1,7 +1,7 @@
 variable "env" {
   description = "Environment"
   type = string
-  default = "stage"
+  default = "prod"
 }
 
 variable "role_to_assume" {
@@ -13,7 +13,7 @@ variable "role_to_assume" {
 variable "ecs_sg_name" {
   description = "ECS Security Group Name"
   type = string
-  default = "group2-ecs-sg-stage"
+  default = "group2-ecs-sg-prod"
 }
 
 variable "image_port" {
@@ -25,7 +25,7 @@ variable "image_port" {
 variable "alb_port" {
     description = "ALB Port"
     type = number
-    default = 8000
+    default = 80
 }
 
 variable "vpc_id" {
@@ -54,7 +54,7 @@ variable "image_tag" {
 variable "ecs_name" {
   description = "ECS Name"
   type = string
-  default = "group2-chat-app-stage"
+  default = "group2-chat-app-prod"
 }
 
 variable "cpu" {
@@ -72,5 +72,5 @@ variable "memory" {
 variable "lb_sg_name" {
   description = "ECS Security Group Name"
   type = string
-  default = "group2-chat-app-lb-sg-stage"
+  default = "group2-chat-app-lb-sg-prod"
 }

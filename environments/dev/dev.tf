@@ -3,8 +3,8 @@ resource "aws_security_group" "ecs_sg" {
   name = var.ecs_sg_name
   
   ingress {
-    from_port = var.port
-    to_port = var.port
+    from_port = var.image_port
+    to_port = var.image_port
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -34,8 +34,8 @@ resource "aws_ecs_task_definition" "task" {
     image: "${var.image_name}:${var.image_tag}",
     portMappings: [
         {
-            containerPort: var.port,
-            hostPort: var.port,
+            containerPort: var.image_port,
+            hostPort: var.image_port,
             protocol: "tcp"
         }
     ],
