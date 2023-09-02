@@ -29,8 +29,6 @@ jobs:
     outputs:
       role_to_assume: ${{steps.step-get-aws-info.outputs.role_to_assume}}
       aws_region: ${{steps.step-get-aws-info.outputs.aws_region}}
-      image_name: ${{steps.step-get-aws-info.outputs.image_name}}
-      environment: ${{steps.step-get-aws-info.outputs.environment}}
         
 
     steps:
@@ -68,12 +66,6 @@ jobs:
             # Output the variables for later use.
             echo "role_to_assume=$role_to_assume" >> $GITHUB_OUTPUT
             echo "aws_region=$aws_region" >> $GITHUB_OUTPUT
-            
-            #Environment variables
-            environment=$ENVIRONMENT
-            echo "environment=$environment" >> $GITHUB_OUTPUT
-            image_name=$IMAGE_NAME
-            echo "image_name=$image_name" >> $GITHUB_OUTPUT
         
         # Specify that this script should be executed using Bash.
         shell: bash
