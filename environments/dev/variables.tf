@@ -16,8 +16,8 @@ variable "ecs_sg_name" {
   default = "group2-ecs-sg-dev"
 }
 
-variable "port" {
-    description = "Port"
+variable "image_port" {
+    description = "Image Port"
     type = number
     default = 3000
 }
