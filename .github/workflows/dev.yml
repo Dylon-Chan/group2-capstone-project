@@ -16,14 +16,14 @@ permissions:
 
 jobs:
 
-  # Define the "get-aws-info" job, which uses a reusable workflow defined in another file. 
-  get-aws-info:
-    uses: ./.github/workflows/get-aws-info.yml
-
   pre-deploy:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+  
+  # Define the "get-aws-info" job, which uses a reusable workflow defined in another file. 
+  get-aws-info:
+    uses: ./.github/workflows/get-aws-info.yml
 
   unit-testing:
     runs-on: ubuntu-latest
@@ -39,6 +39,7 @@ jobs:
 
   #SNYK-Comprehensive-Security-Testing is conducting a comprehensive set of security tests, including Snyk Code, Snyk Open Source, Snyk Infrastructure as Code, and Snyk Container tests         
   SNYK-Comprehensive-Security-Testing:
+    needs: pre-deploy
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
    
@@ -46,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
-    needs: [ unit-testing, SNYK-Comprehensive-Security-Testing, get-aws-info] # Update if other jobs are added
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-Testing, get-aws-info] # Update if other jobs are added
     name: Deploy to AWS
     env:
       environment: ${{ github.ref_name }}
