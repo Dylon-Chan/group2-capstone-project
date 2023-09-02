@@ -40,6 +40,11 @@ npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
 *** Diagram
 
+## Workflow for Project Titanium
+![Workflow](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f7609a33-bf61-42d1-881b-0facb65c2513)
+
+
+
 ## Branching Strategies
 
 ### Development Branch (Dev)
