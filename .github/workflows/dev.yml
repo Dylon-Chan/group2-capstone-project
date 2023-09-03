@@ -5,6 +5,7 @@ run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Dev
 on:
   push:
     branches: [ dev ]
+  workflow_dispatch:
 
 # Define permissions for this workflow, which can be added at either the job or workflow level.      
 permissions:
