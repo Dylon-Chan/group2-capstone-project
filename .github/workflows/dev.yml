@@ -81,7 +81,8 @@ jobs:
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
       - name: Create AWS ECS cluster, task definition and service using Terraform
-        working-directory: ./environments/${{ env.environment }}
+        #working-directory: ./environments/${{ env.environment }}
+        working-directory: ./environments/dev
         run: |
           terraform init
           terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
