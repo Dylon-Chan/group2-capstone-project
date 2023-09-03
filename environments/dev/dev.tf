@@ -1,3 +1,4 @@
+#Creates an AWS security group named ecs_sg within the specified VPC to allow incoming traffic on a specified port (var.image_port) from any source (0.0.0.0/0) and allows all outgoing traffic
 resource "aws_security_group" "ecs_sg" {
   vpc_id = var.vpc_id
   name = var.ecs_sg_name
@@ -18,10 +19,13 @@ resource "aws_security_group" "ecs_sg" {
   }
 }
 
+#Defines an Amazon ECS cluster
 resource "aws_ecs_cluster" "cluster" {
   name = var.ecs_name
 }
 
+#Defines an ECS task definition that specifies how the containers should run
+#Use the Fargate launch type and sets resource constraints like CPU and memory
 resource "aws_ecs_task_definition" "task" {
   family = "${var.ecs_name}-task"
   network_mode = "awsvpc"
@@ -43,6 +47,7 @@ resource "aws_ecs_task_definition" "task" {
 }])
 }
 
+#Creates an ECS service within the specified cluster. Use the Fargate launch type and depends on the previously defined security group
 resource "aws_ecs_service" "service" {
   name = "${var.ecs_name}-service"
   cluster = aws_ecs_cluster.cluster.id
