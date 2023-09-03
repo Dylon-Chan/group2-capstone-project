@@ -49,7 +49,6 @@ variable "image_name" {
   description = "ECR Repository Name"
   type = string
   // image_name to be input at runtime
-  // default = "255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/group2-chat-app" #for test locally
 }
 
 #Specifies the version or tag of the container image, with a default value of "latest"
@@ -70,14 +69,14 @@ variable "ecs_name" {
 variable "cpu" {
   description = "CPU"
   type = number
-  default = 512
+  default = 1024
 }
 
 #Specifies the memory (in MiB) allocation for ECS tasks
 variable "memory" {
   description = "Memory"
   type = number
-  default = 1024
+  default = 2048
 }
 
 #Specifies the name of an ECS (Elastic Container Service) security group for load balancing in a production environment
@@ -85,4 +84,11 @@ variable "lb_sg_name" {
   description = "ECS Security Group Name"
   type = string
   default = "group2-chat-app-lb-sg-prod"
+}
+
+#Specifies the domain name for the application
+variable "domain_name" {
+  description = "Domain Name"
+  type = string
+  default = "securechat.club"
 }
