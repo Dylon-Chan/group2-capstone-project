@@ -54,7 +54,7 @@ resource "aws_ecs_service" "service" {
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
   depends_on = [ aws_security_group.ecs_sg, aws_lb_listener.front_end ]
-  desired_count = 1
+  desired_count = 2
   
   network_configuration {
     subnets = var.subnets
@@ -109,6 +109,12 @@ resource "aws_lb_target_group" "load_balancer_tg" {
     healthy_threshold   = "3"
     unhealthy_threshold = "2"
   }
+
+  stickiness { //Enable stickiness for the target group
+    type = "lb_cookie"
+    cookie_duration = 86400 // Set the stickiness duration in seconds (e.g. 1 day)
+    enabled = true
+  }
 }
 
 #Creates AWS ALB resources
@@ -117,8 +123,8 @@ resource "aws_lb" "loadbalancer" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.loadbalancer_sg.id]
   subnets            = var.subnets
-
-  # enable_deletion_protection = true
+  enable_deletion_protection = false
+  idle_timeout = 300  # Set the timeout in seconds (e.g. 5 minutes)
 }
 
 #Defines an ALB listener
@@ -130,5 +136,26 @@ resource "aws_lb_listener" "front_end" {
   default_action {
     type             = "forward" //To forward incoming requests to the defined target group as default action
     target_group_arn = aws_lb_target_group.load_balancer_tg.id
+  }
+}
+
+# Below for Route 53
+
+# Data block to fetch details of the Route53 zone with our specified domain name
+data "aws_route53_zone" "primary" {
+  name = var.domain_name
+}
+
+# Create/update a Route53 A record for the domain name
+resource "aws_route53_record" "root" {
+  zone_id = data.aws_route53_zone.primary.zone_id
+  name = data.aws_route53_zone.primary.name
+  type = "A"
+
+  # Using an alias for the A record, pointing to the AWS Load Balancer's DNS name
+  alias {
+    name = aws_lb.loadbalancer.dns_name
+    zone_id = aws_lb.loadbalancer.zone_id
+    evaluate_target_health = true
   }
 }
