@@ -120,10 +120,14 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 ## Step 1: Create main.yml in .github/workflows folder
 
 ## Step 2: Add AWS_ACCESS_KEY_ID, ASW_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
-*** Diagram
+1. Goto Settings, Secret and variables, Actions and click New repository secret
+2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
+3. 
+![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 *** Diagram
+
 
 ## Lesson Learnt
 1. Team collaboration is critical for the success of the project
