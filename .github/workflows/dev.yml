@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Dev
 
 on:
   push:
-    branches: [ dev, feature/* ]
+    branches: [ dev ]
   
 # Define permissions for this workflow, which can be added at either the job or workflow level.      
 permissions:
@@ -81,15 +81,13 @@ jobs:
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
       - name: Create AWS ECS cluster, task definition and service using Terraform
-        #working-directory: ./environments/${{ env.environment }}
-        working-directory: ./environments/dev
+        working-directory: ./environments/${{ env.environment }}        
         run: |
           terraform init
           terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
       - name: Set up Terraform outputs # to get the access url on Github Actions
         id: tf-outputs
-        #working-directory: ./environments/${{ env.environment }}
-        working-directory: ./environments/dev
+        working-directory: ./environments/${{ env.environment }}
         run: |
           terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
