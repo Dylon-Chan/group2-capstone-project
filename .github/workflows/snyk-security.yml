@@ -16,7 +16,7 @@
 # For more examples, including how to limit scans to only high-severity issues
 # and fail PR checks, see https://github.com/snyk/actions/
 
-name: Snyk Security
+name: Snyk Comprehensive Security scan
 
 on:
   workflow_call:
@@ -27,7 +27,7 @@ on:
 
 
 jobs:
-  snyk:
+  SAST-SCA-IaC_Container_scan:
     permissions:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
@@ -52,29 +52,39 @@ jobs:
       - uses: actions/setup-node@v3
       - run: npm ci        
 
+        # This authentication step is typically used before running security scans or other Snyk-related actions.
       - name: Snyk Auth
         run: snyk auth --debug ${{ secrets.SNYK_TOKEN }} 
         
         # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
+        # Report only vulnerabilities at the severity-threshold=high or higher
         # Use || true to not fail the pipeline
-      - name: Snyk Code test
-        run: snyk code test --sarif > snyk-code.sarif  || true
+      - name: Snyk Code test(SAST)
+        run: snyk code test --sarif --severity-threshold=high > snyk-code.sarif  || true
 
         # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
-      - name: Snyk Open Source monitor
-        run: snyk monitor --all-projects
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Open Source test and monitor(SCA)
+        run: |
+          snyk test --all-projects --severity-threshold=high
+          snyk monitor --all-projects --severity-threshold=high
 
         # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
         # Use || true to not fail the pipeline.
       - name: Snyk IaC test and report
-        run: snyk iac test --report  || true
+        run: snyk iac test --report --severity-threshold=high  || true
 
         # Build the docker image for testing
       - name: Build a Docker image
         run: docker build -t group2-chat-app/latest .
+        
         # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
-      - name: Snyk Container monitor
-        run: snyk container monitor group2-chat-app/latest --file=Dockerfile
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Container test and monitor
+        run: |
+          snyk container test group2-chat-app/latest --file=Dockerfile --severity-threshold=high
+          snyk container monitor group2-chat-app/latest --file=Dockerfile --severity-threshold=high
 
         # Push the Snyk Code results into GitHub Code Scanning tab
       - name: Upload result to GitHub Code Scanning

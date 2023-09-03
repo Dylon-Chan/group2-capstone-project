@@ -37,8 +37,8 @@ jobs:
       - name: Run unit tests
         run: npm test
 
-  #SNYK-Comprehensive-Security-Testing is conducting a comprehensive set of security tests, including Snyk Code, Snyk Open Source, Snyk Infrastructure as Code, and Snyk Container tests         
-  SNYK-Comprehensive-Security-Testing:
+  #SNYK-Comprehensive-Security-scan is conducting a comprehensive set of security tests, including Snyk Code(SAST), Snyk Open Source(SCA), Snyk Infrastructure as Code, and Snyk Container tests         
+  SNYK-Comprehensive-Security-scan:
     needs: pre-deploy
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
-    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-Testing, get-aws-info] # Update if other jobs are added
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan, get-aws-info] # Update if other jobs are added
     name: Deploy to AWS
     env:
       environment: ${{ github.ref_name }}
@@ -94,15 +94,21 @@ jobs:
       - name: Echo Access URL
         run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
 
+  # This GitHub Actions workflow job is named 'zap-scan' and is responsible for performing an OWASP ZAP Full Scan,
+  # which is a Dynamic Application Security Testing (DAST) scan.
   zap-scan:
+    # It runs on the 'ubuntu-latest' runner with necessary permissions granted for the scan.
     runs-on: ubuntu-latest
     permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
     needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
     name: OWASP ZAP Full Scan
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
           target: ${{ needs.deploy.outputs.access_url_output }}
 
 # Add other jobs here if needed
