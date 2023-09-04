@@ -242,7 +242,7 @@ function initializeApp() {
   socket.on('login', (data) => {
     connected = true;
     // Display the welcome message
-    const message = 'Welcome to WS - Chatroom ';
+    const message = 'Welcome to ChatSecure - Private Room';
     log(message, {
       prepend: true
     });
