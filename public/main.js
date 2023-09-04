@@ -93,16 +93,21 @@ function initializeApp() {
       $typingMessages.remove();
     }
 
-    const $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
-      .css('color', getUsernameColor(data.username));
-    const $messageBodyDiv = $('<span class="messageBody">')
-      .text(data.message);
+    // Only add the username if the message is not from the current user
+    const $messageBodyDiv = $('<span class="messageBody">').text(data.message);
+    let $usernameDiv;
+    if (data.username !== username) {
+        $usernameDiv = $('<span class="username"/>')
+            .text(data.username)
+            .css('color', getUsernameColor(data.username));
+    }
 
     const typingClass = data.typing ? 'typing' : '';
+    const alignmentClass = data.username === username ? 'right' : 'left';  // Check if the sender is the current user
     const $messageDiv = $('<li class="message"/>')
       .data('username', data.username)
       .addClass(typingClass)
+      .addClass(alignmentClass)  // Add the alignment class
       .append($usernameDiv, $messageBodyDiv);
 
     addMessageElement($messageDiv, options);
@@ -208,6 +213,17 @@ function initializeApp() {
     updateTyping();
   });
 
+     // Send button event
+     $('.sendButton').on('click', () => {
+      if (username) {
+        sendMessage();
+        socket.emit('stop typing');
+        typing = false;
+      } else {
+        setUsername();
+      }
+    });
+
   // Click events
 
   // Focus input when clicking anywhere on login page
@@ -278,6 +294,10 @@ function initializeApp() {
 
 };
 
+// If the message is from the sender, align it to the right
+if(data.username === username) {
+  $messageDiv.addClass('ownerMessage');
+}
 module.exports = {
   initializeApp,
   getUsernameColor,

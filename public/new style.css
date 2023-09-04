@@ -1,0 +1,258 @@
+/* Fix user-agent */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  html, input {
+    font-family:
+      "HelveticaNeue-Light",
+      "Helvetica Neue Light",
+      "Helvetica Neue",
+      Helvetica,
+      Arial,
+      "Lucida Grande",
+      sans-serif;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul {
+    list-style: none;
+    word-wrap: break-word;
+  }
+  
+  /* Pages */
+  
+  .pages {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .page {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+  
+  /* Login Page */
+  
+  /* .login.page {
+    background-color: #000;
+  } */
+  
+  .login.page {
+    background-image: url('./images/login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  } 
+  
+  .login.page .form {
+    height: 100px;
+    margin-top: -100px;
+    position: absolute;
+  
+    text-align: center;
+    top: 50%;
+    width: 100%;
+  }
+  
+  .login.page .form .usernameInput {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    padding-bottom: 15px;
+    text-align: center;
+    width: 400px;
+  }
+  
+  .login.page .title {
+    font-size: 200%;
+  }
+  
+  .login.page .usernameInput {
+    font-size: 200%;
+    letter-spacing: 3px;
+  }
+  
+  .login.page .title, .login.page .usernameInput {
+    color: #fff;
+    font-weight: 100;
+  }
+  
+  /* Chat page */
+  
+  .chat.page {
+    display: none;
+  }
+  
+  /* Font */
+  
+  .messages {
+    font-size: 150%;
+  }
+  
+  .inputMessage {
+    font-size: 100%;
+  }
+  
+  .log {
+    color: gray;
+    font-size: 70%;
+    margin: 5px;
+    text-align: center;
+  }
+  
+  /* Messages */
+  
+  .chatArea {
+    height: 100%;
+    padding-bottom: 60px;
+  }
+  
+  .chatArea {
+    background-image: url('./images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .messages {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+    padding: 10px 20px 10px 20px;
+  }
+  
+  /* .messageBody {
+    background-color: #E1E1E1;
+    padding: 5px 10px;
+    border-radius: 12px;
+    max-width: 75%;
+    margin-bottom: 12px;
+    display: inline-block;
+    flex-direction: column;
+  } */
+  
+  .messageBody {
+    position: relative;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 5px;
+    display: inline-block;
+    background-color: #f0f0f0; /* light gray */
+    max-width: 70%; /* to ensure messages don't stretch too wide */
+  }
+  
+  
+  /* Styling for typing status in a message. */
+  .message.typing .messageBody {
+    color: gray;
+  }
+  
+  /* Styling for username. */
+  .username {
+    font-weight: 700;
+    overflow: hidden;
+    padding-right: 15px;
+    text-align: right;
+  }
+  
+  /* .message.left .username,
+  .message.left .messageBody {
+    text-align: left;
+  } */
+  
+  /* .message.right .username,
+  .message.right .messageBody {
+    text-align: right;
+  }
+   */
+   
+  .message.right {
+    text-align: right;
+  }
+  
+  .message.left {
+    text-align: left;
+  }
+  
+  /* For messages on the left */
+  .message.left .messageBody::after {
+    content: '';
+    position: absolute;
+    left: -10px; /* adjust as necessary */
+    top: 10px; /* adjust to move the arrow up or down */
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent; /* half the height of the arrow */
+    border-bottom: 8px solid transparent; /* half the height of the arrow */
+    border-right: 10px solid #f0f0f0; /* arrow color */
+  }
+  
+  
+  /* For messages on the right */
+  .message.right .messageBody {
+    background-color: #a0e0a0; /* or any color you prefer for "your" messages */
+  }
+  
+  .message.right .messageBody::after {
+    content: '';
+    position: absolute;
+    right: -10px; /* adjust as necessary */
+    top: 10px; /* adjust to move the arrow up or down */
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent; /* half the height of the arrow */
+    border-bottom: 8px solid transparent; /* half the height of the arrow */
+    border-left: 10px solid #a0e0a0; /* arrow color */
+  }
+  
+  /* Input */
+  
+  .inputMessage {
+    border: 5px solid #000;
+    bottom: 0;
+    height: 60px;
+    left: 0;
+    outline: none;
+    padding-left: 10px;
+    position: absolute;
+    right: 0;
+    width: 100%;
+  }
+  
+  
+  
+  .username::before {
+    content: '👤';
+    margin-right: 5px;
+  }
+  
+  .sendButton {
+    background-color: #34B7F1;
+    border: none;
+    border-radius: 50%;
+    bottom: 15px;
+    height: 40px;
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    cursor: pointer;
+  }
+  
+  .inputMessage {
+    width: calc(100% - 60px);  /* reducing width to accommodate the send button */
+  }
+  
