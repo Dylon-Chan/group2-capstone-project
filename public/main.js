@@ -294,10 +294,6 @@ function initializeApp() {
 
 };
 
-// If the message is from the sender, align it to the right
-if(data.username === username) {
-  $messageDiv.addClass('ownerMessage');
-}
 module.exports = {
   initializeApp,
   getUsernameColor,
