@@ -53,8 +53,9 @@ resource "aws_ecs_service" "service" {
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
-  depends_on = [ aws_security_group.ecs_sg, aws_lb_listener.front_end ]
+  depends_on = [ aws_security_group.ecs_sg, aws_ecs_task_definition.task, aws_lb_listener.front_end ]
   desired_count = 2
+  force_new_deployment = true
   
   network_configuration {
     subnets = var.subnets
