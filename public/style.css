@@ -49,7 +49,9 @@ ul {
 /* Login Page */
 
 .login.page {
-  background-color: #000;
+  background-image: url('./images/login-background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login.page .form {
@@ -116,17 +118,35 @@ ul {
   padding-bottom: 60px;
 }
 
+.chatArea {
+  background-image: url('./images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .messages {
   height: 100%;
   margin: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 10px 20px 10px 20px;
 }
 
+.messageBody {
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 5px;
+  display: inline-block;
+  background-color: #f0f0f0; /* light gray */
+  max-width: 70%; /* to ensure messages don't stretch too wide */
+}
+
+  /* Styling for typing status in a message. */
 .message.typing .messageBody {
   color: gray;
 }
 
+  /* Styling for username. */
 .username {
   font-weight: 700;
   overflow: hidden;
@@ -134,10 +154,49 @@ ul {
   text-align: right;
 }
 
+.message.right {
+  text-align: right;
+}
+
+.message.left {
+  text-align: left;
+}
+
+/* For messages on the left */
+.message.left .messageBody::after {
+  content: '';
+  position: absolute;
+  left: -10px; /* adjust as necessary */
+  top: 10px; /* adjust to move the arrow up or down */
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent; /* half the height of the arrow */
+  border-bottom: 8px solid transparent; /* half the height of the arrow */
+  border-right: 10px solid #f0f0f0; /* arrow color */
+}
+
+
+/* For messages on the right */
+.message.right .messageBody {
+  background-color: #a0e0a0; /* or any color you prefer for "your" messages */
+}
+
+.message.right .messageBody::after {
+  content: '';
+  position: absolute;
+  right: -10px; /* adjust as necessary */
+  top: 10px; /* adjust to move the arrow up or down */
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent; /* half the height of the arrow */
+  border-bottom: 8px solid transparent; /* half the height of the arrow */
+  border-left: 10px solid #a0e0a0; /* arrow color */
+}
+
 /* Input */
 
 .inputMessage {
-  border: 10px solid #000;
+  border: 5px solid #000;
   bottom: 0;
   height: 60px;
   left: 0;
@@ -146,4 +205,25 @@ ul {
   position: absolute;
   right: 0;
   width: 100%;
+}
+
+.username::before {
+  content: '👤';
+  margin-right: 5px;
+}
+
+.sendButton {
+  background-color: #34B7F1;
+  border: none;
+  border-radius: 50%;
+  bottom: 15px;
+  height: 40px;
+  position: absolute;
+  right: 10px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.inputMessage {
+  width: calc(100% - 60px);  /* reducing width to accommodate the send button */
 }
