@@ -47,6 +47,9 @@ resource "aws_ecs_task_definition" "task" {
 }])
 }
 
+# Generates a random UUID to be used as a trigger for the ECS service resource
+resource "random_uuid" "redeploy_trigger" {}
+
 #Creates an ECS service within the specified cluster. Use the Fargate launch type and depends on the previously defined security group
 resource "aws_ecs_service" "service" {
   name = "${var.ecs_name}-service"
