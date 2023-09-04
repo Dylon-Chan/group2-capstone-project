@@ -1,4 +1,0 @@
-# This section contains variables pertaining to the development, staging, and production environments.
-BUILD_ENV="This is DEV environment"
-ROLE_TO_ASSUME="arn:aws:iam::255945442255:role/grp2-oidc"
-AWS_REGION="ap-southeast-1"
