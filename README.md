@@ -1,5 +1,5 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
-## `Case 3 - Securtiy Focused (DevSecOps)`
+## 'Case 3 - Securtiy Focused (DevSecOps)'
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
 
 ## Company Profile
