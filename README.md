@@ -1,5 +1,5 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
-## `Case 3 - Securtiy Focused (DevSecOps)`
+## 'Case 3 - Securtiy Focused (DevSecOps)'
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
 
 ## Company Profile
@@ -38,14 +38,13 @@ To get the Node server running locally:
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
-*** Diagram
+** Diagram
 
 ## Workflow for Project Titanium
 ![Workflow](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f7609a33-bf61-42d1-881b-0facb65c2513)
 
-
-
 ## Branching Strategies
+![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
 
 ### Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
@@ -121,10 +120,14 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 ## Step 1: Create main.yml in .github/workflows folder
 
 ## Step 2: Add AWS_ACCESS_KEY_ID, ASW_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
-*** Diagram
+1. Goto Settings, Secret and variables, Actions and click New repository secret
+2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
+
+![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 *** Diagram
+
 
 ## Lesson Learnt
 1. Team collaboration is critical for the success of the project
@@ -138,11 +141,4 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 
 ## Conclusion
 
-In this document we cover all aspect of our CI/CD Pipeline, including:
-
-Branching strategy
-GitHub branch creation & protection
-Serverless application deployment
-Unit test
-Package vulnerability scan
-GitHub Actions Workflow
+The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
