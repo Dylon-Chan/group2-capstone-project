@@ -22,16 +22,16 @@ The Developers team at ChatSecure is currently working on an exciting project ca
 
 ## Getting started
 To get the Node server running locally:
-#	Clone this repo
-#	npm install to install all required dependencies
-#	Use snyk to scan for vunlerabilities
-#	Deploy to dev, stage or production environment respectively
+1.	Clone this repo
+2.	npm install to install all required dependencies
+3.	Use snyk to scan for vunlerabilities
+4.	Deploy to dev, stage or production environment respectively
 
 ## Dependencies
-#	dockerfile - definition for docker file
+1.	dockerfile - definition for docker file
 
 ## Application Structure
-#	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
+1.	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
 
 
 ## CICD Pipeline
