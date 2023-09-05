@@ -14,6 +14,9 @@ Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
 The Developers team at ChatSecure is currently working on an exciting project called "Titanium" This project involves the development of a chat application website that implements a docker container with security as first priority.
 
+## Architecture
+*** Diagram Chris
+
 ## Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
 2. Implement dependency screening in CI Script
@@ -37,7 +40,6 @@ The Developers team at ChatSecure is currently working on an exciting project ca
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
-** Diagram
 
 ## Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
@@ -67,21 +69,21 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 ●	It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 ## Branch Creation
-*** Program
+*** Program Weng Siong
 
 ## Branch Protection
-*** Diagram
+*** Diagram Weng Siong
 
 ## Chat Application
-*** Program
+*** Program Poh Guan
 
 Steps to create
 
 ## Unit tests
-*** Program
+*** Program David
 
 ## Vulnerability Scan
-
+*** Program Poh Leng
 
 ## GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
