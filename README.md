@@ -3,8 +3,7 @@
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
 
 ## Company Profile
-Our tech team is the backbone of Chat Secure which comprised of five IT experts who have different skillsets and are passionate about technology and dedicated to driving innovation. The team collaborate excellently and contribute ideas and solutions to ensure that Project Titanium is secure and identify vunlerabilites before it is rolled out. Here's a glimpse into the roles and responsibilities of our talented tech team:
-![1689003090583](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f6317782-54ad-4f3d-8c19-b0e1bf24c17b)
+Our tech team is the backbone of ChatSecure which comprised of five IT experts who have different skillsets and are passionate about technology and dedicated to driving innovation. The team collaborate excellently and contribute ideas and solutions to ensure that Project Titanium is secure and identify vunlerabilites before it is rolled out. Here's a glimpse into the roles and responsibilities of our talented tech team:
 
 ## Developers Team
 Our developers are the architects behind Project Titanium. They leverage their expertise in programming languages, such as Python, Java, and C++, to design, develop, and implement robust and scalable software solutions. Their skills range from front-end development for intuitive user interfaces to back-end systems that power our products' functionality.
@@ -13,7 +12,7 @@ Our developers are the architects behind Project Titanium. They leverage their e
 Project Name: Titanium
 Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
-The Developers team at Chat Secure is currently working on an exciting project called "Titanium" This project involves the development of a chat application website that implements a docker container with security as first priority.
+The Developers team at ChatSecure is currently working on an exciting project called "Titanium" This project involves the development of a chat application website that implements a docker container with security as first priority.
 
 ## Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
@@ -23,16 +22,16 @@ The Developers team at Chat Secure is currently working on an exciting project c
 
 ## Getting started
 To get the Node server running locally:
-●	Clone this repo
-●	npm install to install all required dependencies
-●	Use snyk to scan for vunlerabilities
-●	Deploy to dev, stage or production environment respectively
+#●	Clone this repo
+#●	npm install to install all required dependencies
+#●	Use snyk to scan for vunlerabilities
+#●	Deploy to dev, stage or production environment respectively
 
 ## Dependencies
-●	dockerfile - definition for docker file
+#●	dockerfile - definition for docker file
 
 ## Application Structure
-●	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
+#●	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
 
 
 ## CICD Pipeline
@@ -120,7 +119,7 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 
 ## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Add AWS_ACCESS_KEY_ID, ASW_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
+## Step 2: Add AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
 1. Goto Settings, Secret and variables, Actions and click New repository secret
 2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
 
