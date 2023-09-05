@@ -142,7 +142,7 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
-![pre-deploy detail]
+
 
 ## Step 1: Create main.yml in .github/workflows folder
 
