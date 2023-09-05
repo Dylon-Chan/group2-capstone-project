@@ -127,7 +127,7 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 ![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
-*** Diagram
+*** Diagram 
 
 
 ## Lesson Learnt
