@@ -235,8 +235,10 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 * Create a `New pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
 
 * Choose the desired base and merge branch, and click `Create pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
 
 * A new pull request is now open. Leave a comment and click `Create pull request`
 
@@ -246,7 +248,7 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
 
-The pull request is merging 'feature' into 'dev' branch which resulted in 'job1' and 'job2' is running/skipped.
+The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
 
 
 
