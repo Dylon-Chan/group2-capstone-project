@@ -62,24 +62,25 @@ deploy to deploy chat application to development, stage or production respective
 
 ### Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
-●	The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
-●	It acts as a staging area for features and bug fixes before they are merged into the main branch.
-●	Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
-●	Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
+- The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
+-	It acts as a staging area for features and bug fixes before they are merged into the main branch.
+- Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
+- Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
+
 
 ### Stage Branch (Stage)
 https://github.com/Dylon-Chan/group2-capstone-project/stage
 
-●	The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
-●	It acts as a staging area for testing before deploy Production environment
+- The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
+- It acts as a staging area for testing before deploy Production environment
 
 ### Production Branch (Prod)
 https://github.com/Dylon-Chan/group2-capstone-project/prod
 
-●	The main branch, also known as the master branch, represents the production-ready state of the application.
-●	It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
-●	Only fully reviewed and approved code changes are merged into the main branch.
-●	It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
+- The main branch, also known as the master branch, represents the production-ready state of the application.
+- It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
+- Only fully reviewed and approved code changes are merged into the main branch.
+- It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 ## Branch Creation
 *** Program Weng Siong
@@ -112,24 +113,36 @@ The following outline the steps required to create a GitHub Actions workflow.
 *** Program Poh Guan
 
 ## Workflow Syntax
-name: The name of the workflow.
+**name**: The name of the workflow.
 
-on: The type of event that can run the workflow. This workflow will only run when there is a git push to either the main or other branch.
+**on**: The type of event that can run the workflow. This workflow will only run when there is a git push to either the main or other branch.
 
-jobs: A workflow consists of one or more jobs. Jobs run in parallel unless a needs keyword is used. Each job runs in a runner environment specified by runs-on.
+**jobs**: A workflow consists of one or more jobs. Jobs run in parallel unless a ***needs*** keyword is used. Each job runs in a runner environment specified by ***runs-on***.
 
-steps: A sequence of tasks to be carried out.
+**steps**: A sequence of tasks to be carried out.
 
-uses: Selects an action to run as part of a step in your job. An action is a reusable unit of code.
+**uses**: Selects an action to run as part of a step in your job. An action is a reusable unit of code.
 
-with: A map of input parameters.
+**with**: A map of input parameters.
 
-run: Runs command line programs.
+**run**: Runs command line programs.
 
-env: Set the environment variables.
+**env**: Set the environment variables.
 
 These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
 *** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
+
+### These are the jobs defined in [dev.yml][./github/workflows/dev.yml] which will be run in Github Actions workflow :
+Job name : `pre-deploy`
+
+```yml
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+
 
 ## Step 1: Create main.yml in .github/workflows folder
 
