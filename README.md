@@ -234,6 +234,22 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 ![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
+* Create a `New pull request`
+
+* Choose the desired base and merge branch, and click `Create pull request`
+
+* A new pull request is now open. Leave a comment and click `Create pull request`
+
+* Review the pull request
+
+* Approve and submit the pull request
+
+* Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+
+The pull request is merging 'feature' into 'dev' branch which resulted in 'job1' and 'job2' is running/skipped.
+
+
+
 *** Diagram Poh Leng
 
 
