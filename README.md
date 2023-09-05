@@ -67,12 +67,12 @@ https://github.com/Dylon-Chan/group2-capstone-project/dev
 - Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
 - Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
 
-
 ### Stage Branch (Stage)
 https://github.com/Dylon-Chan/group2-capstone-project/stage
 
 - The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
 - It acts as a staging area for testing before deploy Production environment
+
 
 ### Production Branch (Prod)
 https://github.com/Dylon-Chan/group2-capstone-project/prod
@@ -81,6 +81,7 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 - It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
 - Only fully reviewed and approved code changes are merged into the main branch.
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
+
 
 ## Branch Creation
 *** Program Weng Siong
@@ -96,7 +97,87 @@ Steps to create
 ## Unit tests
 *** Program David
 
-## Vulnerability Scan
+## Vulnerability Scan - Snyk Comprehensive Security Scan 
+Continuous integration (CI) is part of the DevOps movement to involve developers in operations tasks. It uses a server to monitor your repository, executing specific tasks such as static analysis, compilation and bundling of code, and continuous integration testing. In our CI/CD pipeline, it is absolutely essential to include comprehensive package vulnerability scanning. This practice encompasses multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning. By seamlessly weaving these layers together, we fortify the security and integrity of our software, thereby significantly mitigating the risk associated with deploying insecure packages into our production environment during CI/CD testing.
+
+### Static Application Security Testing (SAST)
+SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. By running SAST scans during our CI/CD pipeline, we detect vulnerabilities at the code level, allowing us to address them early in the development process.
+
+### Run SAST scan - Continuous Integration (CI) testing on the Github hosted runner
+For SAST scan, we will use Snyk Code analysis and uploads result into GitHub.
+```
+$ snyk code test --sarif --severity-threshold=high > snyk-code.sarif
+...(truncated)....
+✔ Test completed
+```
+
+### Software Composition Analysis (SCA)
+SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. By incorporating SCA into our pipeline, we ensure that we are using secure and up-to-date components, reducing the risk of known vulnerabilities being exploited.
+
+### Run SCA scan - Continuous Integration (CI) testing on the Github hosted runner
+For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
+```
+$ snyk test --all-projects 
+...(truncated)....
+✔ Tested 65 dependencies for known issues, no vulnerable paths found.
+
+$ snyk monitor --all-projects
+Monitoring /home/runner/work/group2-capstone-project/group2-capstone-project (group2-capstone-project-chat)...
+
+Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/17b1d8b9-d5b0-4e55-8af8-dff2eac1eb71/history/46fa1190-9567-4072-8671-00a7a4f14236
+
+Notifications about newly disclosed issues related to these dependencies will be emailed to you.
+```
+
+### Infrastructure as Code (IaC) Scanning
+IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. By including IaC scanning in our pipeline, we maintain the security of our infrastructure as it evolves, reducing the likelihood of security incidents related to configuration errors.
+
+### Run IaC scan - Continuous Integration (CI) testing on the Github hosted runner
+For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
+```
+$ snyk iac test --report
+Snyk Infrastructure as Code
+
+- Snyk testing Infrastructure as Code configuration issues.
+✔ Test completed.
+
+Issues
+  No vulnerable paths were found!
+
+...(truncated)....
+
+Report Complete
+
+  Your test results are available at: https://snyk.io/org/dylon-chan/projects
+  under the name: Dylon-Chan/group2-capstone-project
+
+```
+### Container Scanning
+Container scanning focuses on the security of our Docker images and containers. It checks for vulnerabilities within the containerized applications and their dependencies. By integrating container scanning, we ensure that our containerized applications are free from known vulnerabilities, minimizing the risk of security breaches through containerized environments.
+
+### Run Container scan - Continuous Integration (CI) testing on the Github hosted runner
+Initially, we initiate the Docker image building process on the Github hosted runner using the following command:
+```
+docker build -t group2-chat-app/latest .
+```
+Subsequently, we commence the Snyk Container analysis and upload the results to Snyk.
+```
+$ snyk container test group2-chat-app/latest --file=Dockerfile
+$ snyk container monitor group2-chat-app/latest --file=Dockerfile
+...(truncated)....
+✔ Tested 2 dependencies for known issues, no vulnerable paths found.
+
+Tested 2 projects, no vulnerable paths were found.
+
+Monitoring group2-chat-app/latest (docker-image|group2-chat-app/latest)...
+
+Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/02779ff9-426c-455d-93d5-7ff1f1f5ad95/history/b4d1839d-faba-4bf5-ba27-9f209b57a31b
+
+Notifications about newly disclosed issues related to these dependencies will be emailed to you.
+
+```
+
+
 *** Program Poh Leng
 
 ## GitHub Actions
