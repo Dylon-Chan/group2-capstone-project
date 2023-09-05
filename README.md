@@ -1,5 +1,5 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
-## `Case 3 - Securtiy Focused (DevSecOps)`
+## Case 3 - Securtiy Focused (DevSecOps)
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
 
 ## Company Profile
@@ -23,12 +23,12 @@ Our developers are the architects behind Project Titanium. They leverage their e
 4. David - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/IaC).
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
 
-
 ## Showcase Project
 Project Name: Titanium
 Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
-One of the projects our team has deployed include a project named "Titanium",  which involved the development of a chat application website that implements a docker container with security as first priority.
+## Architecture
+*** Diagram Chris
 
 ## Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
@@ -37,31 +37,28 @@ One of the projects our team has deployed include a project named "Titanium",  w
 4. Proper handling of CICD Pipeline Secrets
 
 ## Getting started
-To get the Node server running locally:
-●	Clone this repo
-●	npm install to install all required dependencies
-●	Use snyk to scan for vunlerabilities
-●	Deploy to dev, stage or production environment respectively
+### To get the Node server running locally:
+1.	Clone this repo
+2.	npm install to install all required dependencies
+3.	Use snyk to scan for vunlerabilities
+4.	Deploy to dev, stage or production environment respectively
 
 ## Dependencies
-●	dockerfile - definition for docker file
+1.	dockerfile - definition for docker file
 
 ## Application Structure
-●	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
-
+###	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
 
 ## CICD Pipeline
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
-*** Diagram
 
 ## Workflow for Project Titanium
-![Workflow](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f7609a33-bf61-42d1-881b-0facb65c2513)
-
-
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
 
 ## Branching Strategies
+![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
 
 ### Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
@@ -85,21 +82,21 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 ●	It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 ## Branch Creation
-*** Program
+*** Program Weng Siong
 
 ## Branch Protection
-*** Diagram
+*** Diagram Weng Siong
 
 ## Chat Application
-*** Program
+*** Program Poh Guan
 
 Steps to create
 
 ## Unit tests
-*** Program
+*** Program David
 
 ## Vulnerability Scan
-
+*** Program Poh Leng
 
 ## GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
@@ -112,7 +109,7 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-*** Program
+*** Program Poh Guan
 
 ## Workflow Syntax
 name: The name of the workflow.
@@ -131,16 +128,20 @@ run: Runs command line programs.
 
 env: Set the environment variables.
 
-These are the jobs defined in main.yml which will be run in GitHub Actions workflow:
-*** Program
+These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
+*** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
 
 ## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Add AWS_ACCESS_KEY_ID, ASW_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
-*** Diagram
+## Step 2: Add AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
+1. Goto Settings, Secret and variables, Actions and click New repository secret
+2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
+
+![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
-*** Diagram
+*** Diagram Poh Leng
+
 
 ## Lesson Learnt
 1. Team collaboration is critical for the success of the project
@@ -154,11 +155,4 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 
 ## Conclusion
 
-In this document we cover all aspect of our CI/CD Pipeline, including:
-
-Branching strategy
-GitHub branch creation & protection
-Serverless application deployment
-Unit test
-Package vulnerability scan
-GitHub Actions Workflow
+The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.

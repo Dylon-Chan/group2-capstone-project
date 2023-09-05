@@ -35,7 +35,7 @@ variable "vpc_id" {
 #Defines a list of subnet IDs within the VPC
 variable "subnets" {
   type = list(string)
-  default = ["subnet-0623d78431b777e3e", "subnet-02a6bf9a87a5dec14", "subnet-07d728c6db3bd830b" ]  
+  default = ["subnet-0623d78431b777e3e" ]  
 }
 
 #Specifies the name of ECR(Elastic Container Registry) repo where container images are stored
