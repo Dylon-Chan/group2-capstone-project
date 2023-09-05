@@ -48,24 +48,24 @@ deploy to deploy chat application to development, stage or production respective
 
 ### Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
-●	The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
-●	It acts as a staging area for features and bug fixes before they are merged into the main branch.
-●	Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
-●	Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
+*	The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
+*	It acts as a staging area for features and bug fixes before they are merged into the main branch.
+*	Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
+*	Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
 
 ### Stage Branch (Stage)
 https://github.com/Dylon-Chan/group2-capstone-project/stage
 
-●	The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
-●	It acts as a staging area for testing before deploy Production environment
+*	The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
+*	It acts as a staging area for testing before deploy Production environment
 
 ### Production Branch (Prod)
 https://github.com/Dylon-Chan/group2-capstone-project/prod
 
-●	The main branch, also known as the master branch, represents the production-ready state of the application.
-●	It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
-●	Only fully reviewed and approved code changes are merged into the main branch.
-●	It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
+*	The main branch, also known as the master branch, represents the production-ready state of the application.
+*	It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
+*	Only fully reviewed and approved code changes are merged into the main branch.
+*	It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 ## Branch Creation
 *** Program
