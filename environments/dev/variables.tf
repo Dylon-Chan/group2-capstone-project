@@ -51,6 +51,12 @@ variable "image_tag" {
   default = "latest"
 }
 
+#Define a variable to represent the sha256 digest of the image in the ECR repository
+variable "image_digest" {
+  description = "ECR Repository Digest"
+  type = string
+}
+
 #Name of ECS service/task
 variable "ecs_name" {
   description = "ECS Name"
