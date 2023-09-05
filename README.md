@@ -84,7 +84,31 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 
 
 ## Branch Creation
-*** Program Weng Siong
+There are two methods to create branch in GitHub. Our team has utilized both methods when creating different branches for the project.
+The first method is to create branch in GitHub website and the second method is to create branch in local environment and push to GitHub.
+1. Create critical branches in GitHub website - `dev`, `stage` and `prod`. These branches are protected branches.
+-	Go to the repository in GitHub website
+-	Click on the branch drop down list
+-	Enter the branch name and click on the create branch button
+![CreateBranch](documentation/images/create-branch-online.png)
+
+2. Create other branches in local machine and push to GitHub
+-	Open CLI terminal
+-	Navigate to the repository folder
+-	Create a new branch using the following command. This command will create a new branch and switch to the new branch immediately.
+```git
+git checkout -b <branch name>
+```
+-	Push the branch to GitHub using the following command
+```git
+git push <branch name>
+```
+- You may need to use the following command to push the branch to GitHub for the first time if the branch is not available in GitHub website yet.
+```git
+git push --set-upstream origin <branch name>
+```
+![CreateBranch](documentation/images/create-branch-local.png)
+
 
 ## Branch Protection
 *** Diagram Weng Siong
