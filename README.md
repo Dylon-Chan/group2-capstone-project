@@ -116,7 +116,7 @@ run: Runs command line programs.
 env: Set the environment variables.
 
 These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
-*** Program Weng Siong
+*** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
 
 ## Step 1: Create main.yml in .github/workflows folder
 
