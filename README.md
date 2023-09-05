@@ -96,7 +96,7 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-*** Program
+*** Program Poh Guan
 
 ## Workflow Syntax
 name: The name of the workflow.
@@ -115,8 +115,8 @@ run: Runs command line programs.
 
 env: Set the environment variables.
 
-These are the jobs defined in main.yml which will be run in GitHub Actions workflow:
-*** Program
+These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
+*** Program Weng Siong
 
 ## Step 1: Create main.yml in .github/workflows folder
 
@@ -127,7 +127,7 @@ These are the jobs defined in main.yml which will be run in GitHub Actions workf
 ![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
-*** Diagram 
+*** Diagram Poh Leng
 
 
 ## Lesson Learnt
