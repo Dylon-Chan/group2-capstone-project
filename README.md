@@ -41,7 +41,7 @@ deploy to deploy chat application to development, stage or production respective
 ** Diagram
 
 ## Workflow for Project Titanium
-![Workflow](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/f7609a33-bf61-42d1-881b-0facb65c2513)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
 
 ## Branching Strategies
 ![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
