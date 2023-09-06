@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "task" {
   execution_role_arn = var.role_to_assume
   container_definitions = jsonencode([{
     name: "${var.ecs_name}-td",
-    image: "${var.image_name}:${var.image_tag}",
+    image: "${var.image_name}:${var.image_tag}@${var.image_digest}", //Use the image name, tag and digest to ensure every new image will be deployed
     portMappings: [
         {
             containerPort: var.image_port,
@@ -47,9 +47,6 @@ resource "aws_ecs_task_definition" "task" {
 }])
 }
 
-# Generates a random UUID to be used as a trigger for the ECS service resource
-resource "random_uuid" "redeploy_trigger" {}
-
 #Creates an ECS service within the specified cluster. Use the Fargate launch type and depends on the previously defined security group
 resource "aws_ecs_service" "service" {
   name = "${var.ecs_name}-service"
@@ -57,17 +54,7 @@ resource "aws_ecs_service" "service" {
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
   depends_on = [ aws_security_group.ecs_sg, aws_ecs_task_definition.task, aws_lb_listener.front_end ]
-  desired_count = 2
-
-  # forces a new deployment of the ECS service every time `terraform apply` is run.
-  force_new_deployment = true
-
-  # force the ECS service resource to be recreated or redeployed when thereis a change in the values inside this block.
-  # A unique hash combining the current timestamp and a random UUID is used as the value for the redeploy_trigger key.
-  # This ensures that the hash changes every time `terraform apply` is executed, causing the ECS service to redeploy due to the change in the 'triggers' value.
-  triggers = {
-    redeploy_trigger = sha1("${timestamp()}-${random_uuid.redeploy_trigger.result}")
-  }
+  desired_count = 1
   
   network_configuration {
     subnets = var.subnets
@@ -121,12 +108,6 @@ resource "aws_lb_target_group" "load_balancer_tg" {
     timeout = 3
     healthy_threshold   = "3"
     unhealthy_threshold = "2"
-  }
-
-  stickiness {
-    type = "lb_cookie"
-    cookie_duration = 86400 # Set the stickiness duration in seconds (e.g. 1 day)
-    enabled = true
   }
 }
 

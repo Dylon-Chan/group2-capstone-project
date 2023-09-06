@@ -99,7 +99,50 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 Steps to create
 
 ## Unit tests
-*** Program David
+Tests help us to keep our code maintainable and working. Because even small changes can bring giant bugs, so if we keep our tests up to date with our code, the changes of facing a bug in the future are minor than without tests.
+
+1. Install Jest with npm
+   ```
+   $ npm install --save-dev jest
+   $ npm install --save-dev socket.io-client
+   ```
+   The *--save-dev* flag updates the `devDepenendices` in package.json. These are only used for local testing and development.
+
+   package.json
+
+  ```json
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "socket.io-client": "^4.7.2"
+  }
+   ```
+
+2. Test folder and test script
+   When we run Jest, it's going to search for tests in our repo. It is recommened to have a folder that holds our test script.
+
+
+   
+
+3. Run the unit test - **`local testing`**
+
+```sh
+$ npm test
+> group2-capstone-project-chat@0.0.0 test
+> jest
+
+ PASS  __tests__/username_colour.test.js
+ PASS  __tests__/colour_array.test.js
+ PASS  __tests__/socket.test.js
+
+Test Suites: 3 passed, 3 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.487 s
+Ran all test suites.
+    ```
+    The output from **npm test** command shows that the unit test has passed.
+
+We have successfully ran the unit test locally. This unit test will be implemented in the CI/CD Pipeline and automatically triggered in [GitHub Actions](#github-actions) workflow.
 
 ## Vulnerability Scan  
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
@@ -335,7 +378,7 @@ jobs:
 These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
 *** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
 
-### These are the jobs defined in [dev.yml][./github/workflows/dev.yml] which will be run in Github Actions workflow :
+### These are the jobs defined in [dev.yml](./github/workflows/dev.yml) which will be run in Github Actions workflow :
 Job name : `pre-deploy`
 
 ```yml
@@ -346,8 +389,8 @@ Job name : `pre-deploy`
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/4b9fa16c-6855-4f43-9047-2d26ca6cba90)
-
-
+<br>
+<br>
 Job name : `unit-testing`
 
 ```yml
@@ -366,17 +409,25 @@ unit-testing:
 In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
-
+<br>
+<br>
 Job name : `SNYK-Comprehensive-Security-scan`
 
 ```yml
+  SNYK-Comprehensive-Security-scan:
     needs: pre-deploy
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
 ```
-In `SNYK-Comprehensive-Security-scan` job, **snyk-security.yml** workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
 
+In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/workflows/snyk-security.yml) workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+
+As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
+
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+<br>
+<br>
 Job name : `deploy`
 
 ```yml
@@ -432,9 +483,14 @@ deploy:
       - name: Echo Access URL # Print the access url on Github Actions
         run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
 ```
-In this `deploy` .....
+In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
+
+The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
+<br>
+<br>
 
 Job name : `zap-scan`
 
@@ -452,15 +508,101 @@ runs-on: ubuntu-latest
           # The 'target' parameter specifies the URL of the deployed application to be scanned.
           target: ${{ needs.deploy.outputs.access_url_output }}
 ```
-In this `zap-scan` .....
+In this `zap-scan` will only perform OWASP scanning after resources have been successfully deployed from `deploy` job.
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
+<br>
+<br>
+<br>
+## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Add AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
-1. Goto Settings, Secret and variables, Actions and click New repository secret
-2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
+## Step 2: Create OIDC Roles on AWS IAM
+In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
 
-![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
+In order to protect each individual deployment, three different IAM OIDC roles were utilized namely, `grp2-oidc, grp2-oidc-stage, grp2-oidc-prod`. IAM permission policies required in deploying AWS Resources are attached into these roles accordingly.
+
+`grp2-oidc` is used for `dev` environment.
+
+This role will only allow any actions executed from `dev` branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringLike": {
+                    "token.actions.githubusercontent.com:sub": [
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev",
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/feature/*"
+                    ]
+                },
+                "ForAllValues:StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+`grp2-oidc-stage` is used for `stage` environment.
+
+This role will only allow any actions executed from `stage` branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/stage",
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+`grp2-oidc-prod` is used for `prod` environment.
+
+This role will only allow any actions executed from `prod` branch as indicated in trust relationship below:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/prod"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+<br>
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 * Create a `New pull request`
