@@ -223,7 +223,116 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/4b9fa16c-6855-4f43-9047-2d26ca6cba90)
 
+
+Job name : `unit-testing`
+
+```yml
+unit-testing:
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    name: Unit Testing
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+```
+In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
+
+Job name : `SNYK-Comprehensive-Security-scan`
+
+```yml
+    needs: pre-deploy
+    uses: ./.github/workflows/snyk-security.yml
+    secrets: inherit
+```
+In `SNYK-Comprehensive-Security-scan` job, **snyk-security.yml** workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+
+Job name : `deploy`
+
+```yml
+deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
+    name: Deploy to AWS
+    env:
+      environment: ${{ github.ref_name }} # Specify the environment to deploy
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
+        id: push-image
+        env:
+          image_tag: latest
+        run: |
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
+      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}        
+        run: |
+          terraform init
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
+        id: tf-outputs
+        working-directory: ./environments/${{ env.environment }}
+        run: |
+          terraform output
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
+      - name: Echo Access URL # Print the access url on Github Actions
+        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
+```
+In this `deploy` .....
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
+
+Job name : `zap-scan`
+
+```yml
+runs-on: ubuntu-latest
+    permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
+    needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
+    name: OWASP ZAP Full Scan
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.7.0
+        with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
+          target: ${{ needs.deploy.outputs.access_url_output }}
+```
+In this `zap-scan` .....
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
 
 ## Step 1: Create main.yml in .github/workflows folder
 
