@@ -230,8 +230,6 @@ Notifications about newly disclosed issues related to these dependencies will be
 ```
 
 
-*** Program Poh Leng
-
 ## GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
 
@@ -516,6 +514,99 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 <br>
 <br>
 <br>
+
+### Snyk Comprehensive Security Scan Workflow
+Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
+
+This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in your codebase and infrastructure, ensuring the project's security.
+
+## Usage
+
+To use this workflow, we'll need to have a Snyk API token. One can obtain one by signing up for free at [Snyk](https://snyk.io/login). After obtaining your token, follow these steps:
+
+1. Add the our Snyk API token as a GitHub secret named `SNYK_TOKEN` in your repository.
+
+2. Create or update a workflow file (e.g., `.github/workflows/snyk-security-scan.yml`) in the repository with the following content:
+
+```yaml
+name: Snyk Comprehensive Security scan
+
+on:
+  workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        description: 'A SNYK token passed from the caller workflow'
+        required: true
+
+
+jobs:
+  SAST-SCA-IaC_Container_scan:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Snyk CLI to check for security issues
+        # Snyk can be used to break the build when it detects security issues.
+        # In this case we want to upload the SAST issues to GitHub Code Scanning
+        #uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+        uses: snyk/actions/setup@master
+        env:
+          # This is where you will need to introduce the Snyk API token created with your Snyk account
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+        # For Snyk Open Source you must first set up the development environment for your application's dependencies
+        # For example for Node
+        #- uses: actions/setup-node@v3
+        #  with:
+        #    node-version: 16
+      - uses: actions/setup-node@v3
+      - run: npm ci        
+
+        # This authentication step is typically used before running security scans or other Snyk-related actions.
+      - name: Snyk Auth
+        run: snyk auth --debug ${{ secrets.SNYK_TOKEN }} 
+        
+        # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+        # Use || true to not fail the pipeline
+      - name: Snyk Code test(SAST)
+        run: snyk code test --sarif --severity-threshold=high > snyk-code.sarif  || true
+
+        # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Open Source test and monitor(SCA)
+        run: |
+          snyk test --all-projects --severity-threshold=high
+          snyk monitor --all-projects --severity-threshold=high
+
+        # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+        # Use || true to not fail the pipeline.
+      - name: Snyk IaC test and report
+        run: snyk iac test --report --severity-threshold=high  || true
+
+        # Build the docker image for testing
+      - name: Build a Docker image
+        run: docker build -t group2-chat-app/latest .
+        
+        # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Container test and monitor
+        run: |
+          snyk container test group2-chat-app/latest --file=Dockerfile --severity-threshold=high
+          snyk container monitor group2-chat-app/latest --file=Dockerfile --severity-threshold=high
+
+        # Push the Snyk Code results into GitHub Code Scanning tab
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk-code.sarif
+```
+<br>
+
 ## Step 1: Create main.yml in .github/workflows folder
 
 ## Step 2: Create OIDC Roles on AWS IAM
@@ -631,9 +722,6 @@ This role will only allow any actions executed from `prod` branch as indicated i
 The pull request is merging a feature branch into 'dev' branch now which resulted in GitHub action workflow job was running or skipped.
 
 
-*** Diagram Poh Leng
-
-
 ## Lesson Learnt
 1. Team collaboration is critical for the success of the project
 
@@ -647,3 +735,5 @@ The pull request is merging a feature branch into 'dev' branch now which resulte
 ## Conclusion
 
 The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
+
+
