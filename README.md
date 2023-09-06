@@ -158,7 +158,7 @@ SAST focuses on analyzing the source code of our applications for security vulne
 
 ### Run SAST scan - `local testing`
 For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
-```
+```sh
 $ snyk code test 
 ...(truncated)....
 ✔ Test completed
@@ -169,7 +169,7 @@ SCA plays a vital role in identifying vulnerabilities in our project's dependenc
 
 ### Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
-```
+```sh
 $ snyk test --all-projects 
 ...(truncated)....
 ✔ Tested 65 dependencies for known issues, no vulnerable paths found.
@@ -186,7 +186,7 @@ IaC scanning is crucial for evaluating the security of our infrastructure script
 
 ### Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
-```
+```sh
 $ snyk iac test --report
 Snyk Infrastructure as Code
 
@@ -213,7 +213,7 @@ Initially, we initiate the Docker image building process using the following com
 docker build -t group2-chat-app/latest .
 ```
 Subsequently, we commence the Snyk Container analysis and upload the results to Snyk.
-```
+```sh
 $ snyk container test group2-chat-app/latest --file=Dockerfile
 $ snyk container monitor group2-chat-app/latest --file=Dockerfile
 ...(truncated)....
