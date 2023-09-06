@@ -99,7 +99,50 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 Steps to create
 
 ## Unit tests
-*** Program David
+Tests help us to keep our code maintainable and working. Because even small changes can bring giant bugs, so if we keep our tests up to date with our code, the changes of facing a bug in the future are minor than without tests.
+
+1. Install Jest with npm
+   ```
+   $ npm install --save-dev jest
+   $ npm install --save-dev socket.io-client
+   ```
+   The *--save-dev* flag updates the `devDepenendices` in package.json. These are only used for local testing and development.
+
+   package.json
+
+  ```json
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "socket.io-client": "^4.7.2"
+  }
+   ```
+
+2. Test folder and test script
+   When we run Jest, it's going to search for tests in our repo. It is recommened to have a folder that holds our test script.
+
+
+   
+
+3. Run the unit test - **`local testing`**
+
+```sh
+$ npm test
+> group2-capstone-project-chat@0.0.0 test
+> jest
+
+ PASS  __tests__/username_colour.test.js
+ PASS  __tests__/colour_array.test.js
+ PASS  __tests__/socket.test.js
+
+Test Suites: 3 passed, 3 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.487 s
+Ran all test suites.
+    ```
+    The output from **npm test** command shows that the unit test has passed.
+
+We have successfully ran the unit test locally. This unit test will be implemented in the CI/CD Pipeline and automatically triggered in [GitHub Actions](#github-actions) workflow.
 
 ## Vulnerability Scan  
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
@@ -371,6 +414,7 @@ In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy`
 Job name : `SNYK-Comprehensive-Security-scan`
 
 ```yml
+  SNYK-Comprehensive-Security-scan:
     needs: pre-deploy
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
