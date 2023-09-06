@@ -525,7 +525,7 @@ Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
 
 This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in your codebase and infrastructure, ensuring the project's security.
 
-## Usage
+### Usage
 
 To use this workflow, a Snyk API token will be needed. A Snyk API token can be obtained by signing up for free at Snyk. After obtaining the token, follow these steps:
 
