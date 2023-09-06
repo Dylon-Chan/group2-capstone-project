@@ -99,7 +99,7 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 Steps to create
 
 ## Unit tests
-The purpose of tests is to keep our code maintainable and functional. We keep our tests up-to-date with our code in order to reduce the likelihood of facing a bug in the future, since even small changes can have a huge impact.
+Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
 
 1. Install Jest with npm
    ```
@@ -118,7 +118,7 @@ The purpose of tests is to keep our code maintainable and functional. We keep ou
    ```
 
 2. Test folder and test script
-As soon as Jest is run, it searches our repository for testing. Having a folder where we can keep our test scripts is recommended.
+As soon as Jest is executed, it searches our repository for tests. The practice of keeping our test scripts in a folder is recommended.
    
 ![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
   
@@ -158,7 +158,7 @@ SAST focuses on analyzing the source code of our applications for security vulne
 
 ### Run SAST scan - `local testing`
 For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
-```
+```sh
 $ snyk code test 
 ...(truncated)....
 ✔ Test completed
@@ -169,7 +169,7 @@ SCA plays a vital role in identifying vulnerabilities in our project's dependenc
 
 ### Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
-```
+```sh
 $ snyk test --all-projects 
 ...(truncated)....
 ✔ Tested 65 dependencies for known issues, no vulnerable paths found.
@@ -186,7 +186,7 @@ IaC scanning is crucial for evaluating the security of our infrastructure script
 
 ### Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
-```
+```sh
 $ snyk iac test --report
 Snyk Infrastructure as Code
 
@@ -213,7 +213,7 @@ Initially, we initiate the Docker image building process using the following com
 docker build -t group2-chat-app/latest .
 ```
 Subsequently, we commence the Snyk Container analysis and upload the results to Snyk.
-```
+```sh
 $ snyk container test group2-chat-app/latest --file=Dockerfile
 $ snyk container monitor group2-chat-app/latest --file=Dockerfile
 ...(truncated)....
@@ -246,16 +246,21 @@ The following outline the steps required to create a GitHub Actions workflow.
 ## Step 1: Create dev.yml in .github/workflows folder
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
+```yml
 dev.yml
 name: CICD for Group 2 Chat Application - Development
 run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
+```
 
 # The workflow is triggered on push event to the 'dev' branch
+```yml
 on:
   push:
     branches: [ dev ]
-  
-# Define permissions for this workflow, which can be added at either the job or workflow level.      
+```
+
+# Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
 permissions:
   id-token: write # This is required for requesting the JWT.
   actions: read # Permission to read actions.
@@ -359,7 +364,7 @@ jobs:
         with:
           # The 'target' parameter specifies the URL of the deployed application to be scanned.
           target: ${{ needs.deploy.outputs.access_url_output }}
-
+```
 ## Workflow Syntax
 **name**: The name of the workflow.
 
@@ -523,9 +528,9 @@ In this project, `OpenID Connect` authentication protocol is being used instead 
 
 In order to protect each individual deployment, three different IAM OIDC roles were utilized namely, `grp2-oidc, grp2-oidc-stage, grp2-oidc-prod`. IAM permission policies required in deploying AWS Resources are attached into these roles accordingly.
 
-`grp2-oidc` is used for `dev` environment.
+**`grp2-oidc`** is used for *`dev`* environment.
 
-This role will only allow any actions executed from `dev` branch as indicated in trust relationship below:
+This role will only allow any actions executed from *`dev`* branch as indicated in trust relationship below:
 ```json
 {
     "Version": "2012-10-17",
@@ -554,9 +559,9 @@ This role will only allow any actions executed from `dev` branch as indicated in
 ```
 <br>
 
-`grp2-oidc-stage` is used for `stage` environment.
+**`grp2-oidc-stage`** is used for *`stage`* environment.
 
-This role will only allow any actions executed from `stage` branch as indicated in trust relationship below:
+This role will only allow any actions executed from *`stage`* branch as indicated in trust relationship below:
 ```json
 {
     "Version": "2012-10-17",
@@ -579,9 +584,9 @@ This role will only allow any actions executed from `stage` branch as indicated 
 ```
 <br>
 
-`grp2-oidc-prod` is used for `prod` environment.
+**`grp2-oidc-prod`** is used for *`prod`* environment.
 
-This role will only allow any actions executed from `prod` branch as indicated in trust relationship below:
+This role will only allow any actions executed from *`prod`* branch as indicated in trust relationship below:
 
 ```json
 {
@@ -608,27 +613,21 @@ This role will only allow any actions executed from `prod` branch as indicated i
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 * Create a `New pull request`
-![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/49ff2a43-d091-4f32-a7da-a8da53db23e4)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
 
 * Choose the desired base and merge branch, and click `Create pull request`
-![choose-base-merge-branch-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/ea1c4000-cc63-43fb-98e3-9ebe9720317e)
-
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
 
 * A new pull request is now open. Leave a comment and click `Create pull request`
-![leave-comment-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/b42279b0-fc48-4cd9-ad3e-ef1de5d145ef)
 
-
-* Review the pull request, resolve conflict if any.
-![review-the-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/ac670977-e732-41eb-8be1-73aa76dc2b17)
+* Review the pull request
 
 * Approve and submit the pull request
-  ![approve-submit-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4afc92fb-7d5b-49af-abe9-550d646ba8c0)
-
 
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
-  ![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/8bb2865d-f66e-421f-91b1-327065b62a5a)
 
-The pull request is merging a feature branch into 'dev' branch now which resulted in GitHub action workflow job was running or skipped.
+The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+
 
 
 *** Diagram Poh Leng
