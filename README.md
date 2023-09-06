@@ -90,7 +90,11 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 *** Diagram Weng Siong
 
 ## Chat Application
-*** Program Poh Guan
+##This application is used for chatting by scanning on the following QR code.
+![qrcodechatsecure](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996)
+
+##The frontend of the chat screen is as below.
+![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
 
 Steps to create
 
@@ -194,7 +198,123 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-*** Program Poh Guan
+## Step 1: Create dev.yml in .github/workflows folder
+
+![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/d7989093-6757-4622-acb5-f6082aaebb96)
+
+dev.yml
+name: CICD for Group 2 Chat Application - Development
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
+
+# The workflow is triggered on push event to the 'dev' branch
+on:
+  push:
+    branches: [ dev ]
+  
+# Define permissions for this workflow, which can be added at either the job or workflow level.      
+permissions:
+  id-token: write # This is required for requesting the JWT.
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+  security-events: write # Grants permission to write security event data for the repository.
+
+
+jobs:
+
+  # The pre-deploy job just prints the type of event and branch that triggered the workflow
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+
+  # This job is responsible for running unit tests on the application
+  unit-testing:
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    name: Unit Testing
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+
+  #SNYK-Comprehensive-Security-scan is conducting a comprehensive set of security tests, including Snyk Code(SAST), Snyk Open Source(SCA), Snyk Infrastructure as Code, and Snyk Container tests         
+  SNYK-Comprehensive-Security-scan:
+    needs: pre-deploy
+    uses: ./.github/workflows/snyk-security.yml
+    secrets: inherit
+   
+  # This job handles deployment to the development environment
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
+    name: Deploy to AWS
+    env:
+      environment: ${{ github.ref_name }} # Specify the environment to deploy
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
+        id: push-image
+        env:
+          image_tag: latest
+        run: |
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
+      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}        
+        run: |
+          terraform init
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
+        id: tf-outputs
+        working-directory: ./environments/${{ env.environment }}
+        run: |
+          terraform output
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
+      - name: Echo Access URL # Print the access url on Github Actions
+        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
+        
+  # This GitHub Actions workflow job is named 'zap-scan' and is responsible for performing an OWASP ZAP Full Scan,
+  # which is a Dynamic Application Security Testing (DAST) scan.
+  zap-scan:
+    # It runs on the 'ubuntu-latest' runner with necessary permissions granted for the scan.
+    runs-on: ubuntu-latest
+    permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
+    needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
+    name: OWASP ZAP Full Scan
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.7.0
+        with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
+          target: ${{ needs.deploy.outputs.access_url_output }}
 
 ## Workflow Syntax
 **name**: The name of the workflow.
@@ -336,8 +456,6 @@ runs-on: ubuntu-latest
 In this `zap-scan` .....
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
-
-## Step 1: Create main.yml in .github/workflows folder
 
 ## Step 2: Add AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
 1. Goto Settings, Secret and variables, Actions and click New repository secret
