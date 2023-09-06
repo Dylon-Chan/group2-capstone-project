@@ -181,7 +181,7 @@ jobs:
         # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
         run: |
           terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
-          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
 
       # Display the access URL in the GitHub Actions log
