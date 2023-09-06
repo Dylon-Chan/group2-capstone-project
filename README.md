@@ -375,9 +375,11 @@ Job name : `SNYK-Comprehensive-Security-scan`
     uses: ./.github/workflows/snyk-security.yml
     secrets: inherit
 ```
-In `SNYK-Comprehensive-Security-scan` job, **snyk-security.yml** workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+
+In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/workflows/snyk-security.yml) workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
 As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
+
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
 <br>
