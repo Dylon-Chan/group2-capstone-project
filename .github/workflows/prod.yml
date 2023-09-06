@@ -28,6 +28,8 @@ jobs:
     env:
       environment: ${{ github.ref_name }}  # Specify the environment to deploy
     steps:
+
+      # Checkout the latest code from the repository
       - name: Checkout repo code
         uses: actions/checkout@v3
 
@@ -37,34 +39,54 @@ jobs:
         with:
           role-to-assume: ${{ secrets.PROD_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: true
-      - name: Get ECR URL from Terraform  # Retrieve the ECR URL from Terraform output
-        id: terraform-ecr
-        working-directory: ./modules/ecr
+      
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' and 'image_digest' outputs from Terraform.
+        # Store the resulting ECR URL and image digest in output variables for later use or reference.
         run: |
           terraform init
           terraform plan
-          terraform apply -auto-approve
+          terraform apply -auto-approve -refresh-only
           echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
-      - name: Create AWS ECS Fargate  # Use Terraform to set up AWS ECS with Fargate
+          echo "image_digest=$(terraform output -json | jq -r .image_digest.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
         working-directory: ./environments/${{ env.environment }}
         id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # Various parameters, 'image_name' and 'image_digest', are provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
         run: |
           terraform init
-          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -var "image_digest=${{ steps.terraform-ecr.outputs.image_digest }}"
           echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
           echo "route53_record_name=$(terraform output -json | jq -r .route53_record_name.value)" >> $GITHUB_OUTPUT
 
-      # Continuously check the health status of the ALB Target Group until it is 'healthy' before publishing the Application URL
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
       - name: Check ALB Target Group Health Status
         run: |
           target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
           while true; do
-            health_status=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
             if [[ "$health_status" == "healthy" ]]; then
                     echo "Targets are healthy!"
                     break
@@ -74,6 +96,6 @@ jobs:
                 fi
           done
       
-      # Output the Application URL
+      # Display the Application URL
       - name: Echo Application URL
         run: echo "The Application URL is http://${{ steps.terraform-ecs.outputs.route53_record_name }}"
