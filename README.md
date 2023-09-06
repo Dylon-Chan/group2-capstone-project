@@ -446,7 +446,7 @@ unit-testing:
 ```
 In `unit-testing` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720">
 <br>
 <br>
 
@@ -464,7 +464,7 @@ In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/work
 As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
 
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37">
 <br>
 <br>
 
@@ -528,7 +528,7 @@ In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-sca
 The deployment environment (dev,stage, or prod) is determined from *```environment: ${{ github.ref_name }}```*
 
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
+<img width="450" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2">
 <br>
 <br>
 
@@ -550,7 +550,7 @@ runs-on: ubuntu-latest
 ```
 OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839">
 <br>
 <br>
 <br>
@@ -664,7 +664,7 @@ Audience : sts.amazonaws.com
 ```
 - Create new IAM Roles with `web identity`
 
-![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
+<img width="600" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b">
 
 
 - Attached permission policies accordingly
