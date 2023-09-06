@@ -97,24 +97,28 @@ Steps to create
 ## Unit tests
 *** Program David
 
-## Vulnerability Scan - Snyk Comprehensive Security Scan 
-Continuous integration (CI) is part of the DevOps movement to involve developers in operations tasks. It uses a server to monitor your repository, executing specific tasks such as static analysis, compilation and bundling of code, and continuous integration testing. In our CI/CD pipeline, it is absolutely essential to include comprehensive package vulnerability scanning. This practice encompasses multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning. By seamlessly weaving these layers together, we fortify the security and integrity of our software, thereby significantly mitigating the risk associated with deploying insecure packages into our production environment during CI/CD testing.
+## Vulnerability Scan  
+In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
+
+We will begin by locally validating each test to ensure the correct implementation of the Snyk security scan software. 
+
+Subsequently, we will automate the same test in our Continuous Integration (CI) process.  This process employs a server known as a GitHub-hosted runner to monitor the repository and conduct each security scan during continuous integration testing, which we will explain in more detail later.
 
 ### Static Application Security Testing (SAST)
-SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. By running SAST scans during our CI/CD pipeline, we detect vulnerabilities at the code level, allowing us to address them early in the development process.
+SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. 
 
-### Run SAST scan - Continuous Integration (CI) testing on the Github hosted runner
-For SAST scan, we will use Snyk Code analysis and uploads result into GitHub.
+### Run SAST scan - `local testing`
+For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
 ```
-$ snyk code test --sarif --severity-threshold=high > snyk-code.sarif
+$ snyk code test 
 ...(truncated)....
 ✔ Test completed
 ```
 
 ### Software Composition Analysis (SCA)
-SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. By incorporating SCA into our pipeline, we ensure that we are using secure and up-to-date components, reducing the risk of known vulnerabilities being exploited.
+SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. 
 
-### Run SCA scan - Continuous Integration (CI) testing on the Github hosted runner
+### Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
 ```
 $ snyk test --all-projects 
@@ -122,17 +126,16 @@ $ snyk test --all-projects
 ✔ Tested 65 dependencies for known issues, no vulnerable paths found.
 
 $ snyk monitor --all-projects
-Monitoring /home/runner/work/group2-capstone-project/group2-capstone-project (group2-capstone-project-chat)...
-
+...(truncated)....
 Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/17b1d8b9-d5b0-4e55-8af8-dff2eac1eb71/history/46fa1190-9567-4072-8671-00a7a4f14236
 
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 
 ### Infrastructure as Code (IaC) Scanning
-IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. By including IaC scanning in our pipeline, we maintain the security of our infrastructure as it evolves, reducing the likelihood of security incidents related to configuration errors.
+IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. 
 
-### Run IaC scan - Continuous Integration (CI) testing on the Github hosted runner
+### Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
 ```
 $ snyk iac test --report
@@ -155,8 +158,8 @@ Report Complete
 ### Container Scanning
 Container scanning focuses on the security of our Docker images and containers. It checks for vulnerabilities within the containerized applications and their dependencies. By integrating container scanning, we ensure that our containerized applications are free from known vulnerabilities, minimizing the risk of security breaches through containerized environments.
 
-### Run Container scan - Continuous Integration (CI) testing on the Github hosted runner
-Initially, we initiate the Docker image building process on the Github hosted runner using the following command:
+### Run Container scan - `local testing`
+Initially, we initiate the Docker image building process using the following command:
 ```
 docker build -t group2-chat-app/latest .
 ```
@@ -343,6 +346,24 @@ In this `zap-scan` .....
 ![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
+* Create a `New pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
+
+* Choose the desired base and merge branch, and click `Create pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
+
+* A new pull request is now open. Leave a comment and click `Create pull request`
+
+* Review the pull request
+
+* Approve and submit the pull request
+
+* Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+
+The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+
+
+
 *** Diagram Poh Leng
 
 
