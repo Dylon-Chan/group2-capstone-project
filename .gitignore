@@ -131,3 +131,6 @@ dist
 
 # terraform
 .terraform
+
+#snyk
+.dccache
