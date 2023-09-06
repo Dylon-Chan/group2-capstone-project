@@ -21,3 +21,7 @@ output "all_access_urls" {
     for k, v in data.aws_network_interface.all : k => "http://${v.association[0].public_ip}:${var.image_port}"
   }
 }
+
+output "ecs_name" {
+  value = aws_ecs_cluster.cluster.name
+}

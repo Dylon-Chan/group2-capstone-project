@@ -159,7 +159,47 @@ This branch solely requires a PR before merging, streamlining the process for te
 ## The frontend of the chat screen is as below.
 ![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
 
-Steps to create
+ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
+
+## Application Architecture
+### Backend:
+Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
+Frontend:
+### Frontend: 
+The user interface is designed using a blend of HTML, CSS, and JavaScript.
+### Source Code Organization:
+Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
+
+## Package and Dependency Installation
+Once the application source codes are available, we can install the required packages and dependencies. This can be done by running the following command in the terminal:
+```bash
+npm init                        # Create the package.json file
+npm install express socket.io   # Install the required packages
+```
+
+`package.json`:
+```json
+{
+  "name": "group2-capstone-project-chat",
+  "version": "1.0.0",
+  "description": "ChatSecure App",
+  "main": "index.js",
+  "author": "SCTP Cohort 2 Group 2",
+  "dependencies": {
+    "express": "~4.17.1",
+    "socket.io": "^4.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+}
+```
+For local exploration, update the scripts as above and launch the application:
+```bash
+npm start
+```
+You can now access the ChatSecure magic by heading over to http://localhost:3000 in your browser.
 
 ## Unit tests
 Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.

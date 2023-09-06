@@ -92,31 +92,86 @@ jobs:
         run: |
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
-      
-      # Retrieve the digest of the pushed Docker image from ECR using Terraform
-      - name: Retrieve ECR Image Digest
-        id: get-image-digest  # Define an id for this step to be used in the subsequent steps.
-        working-directory: ./modules/ecr  # Set the working directory for this step
-        # Run Terraform's 'apply' command with the '-refresh-only' option to get the latest state without making any changes.
-        # Terraform's 'output' command is used to fetch the image digest value and then store it in an output variable for later use.
-        run: |
-          terraform apply -auto-approve -refresh-only
-          echo "image_digest=$(terraform output -json | jq -r .image_digest.value)" >> $GITHUB_OUTPUT
 
       # Use Terraform to create AWS ECS resources like cluster, task definition, and service
       - name: Create AWS ECS cluster, task definition and service using Terraform
+        id: terraform-ecs # Define an id which allows other steps to reference outputs from this step.
         working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
         # 'terraform apply -auto-approve' command is used to create or update the resources with auto-approval.
-        # Various input variables are passed using the '-var' option. These are used to customize the Terraform configuration.
+        # Variables are passed using the '-var' option to customize the Terraform configuration.
         # The '-target' option is used to restrict the scope of resource application.
+        # Mark the ECS service resource for recreation in the next Terraform apply.
         run: |
           terraform init
           terraform apply -auto-approve \
           -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
-          -var "image_digest=${{ steps.get-image-digest.outputs.image_digest }}" \
           -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" \
           -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+          terraform taint aws_ecs_service.service
+
+          # Output the ECS cluster name for use in subsequent steps.
+          echo "ecs_name=$(terraform output -json | jq -r .ecs_name.value)" >> $GITHUB_OUTPUT
       
+      # Ensure that ECS task is running before proceeding to next step.
+      - name: Check if ECS task is running
+        run: |
+          # Define ECS cluster and service names based on previous Terraform outputs.
+          cluster_name=${{ steps.terraform-ecs.outputs.ecs_name}}
+          service_name="${{ steps.terraform-ecs.outputs.ecs_name}}-service"
+        
+          # Set a timeout and interval for checking task status
+          timeout=600 # Wait for 10 minutes max
+          interval=30 # Check every 30 seconds
+        
+          # Capture the start time for timeout tracking
+          start_time=$(date +%s)
+        
+          # Begin loop to check task status
+          while true; do
+              # Calculate elapsed time
+              current_time=$(date +%s)
+              elapsed_time=$((current_time - start_time))
+                       
+              # Fetch the task ARNs associated with the service
+              task_arns=$(aws ecs list-tasks --cluster $cluster_name --service-name $service_name --query "taskArns" --output text)
+                       # If no tasks are found, wait for the interval duration and then check again
+              if [ -z "$task_arns" ]; then
+                  echo "No tasks found. Waiting..."
+                  sleep $interval
+                  continue
+              fi
+        
+              # Fetch the last status of the tasks
+              statuses=$(aws ecs describe-tasks --cluster $cluster_name --tasks $task_arns --query "tasks[*].lastStatus" --output text)
+        
+              # Start by assuming all tasks are in the "RUNNING" state.
+              all_running=true
+        
+              # Loop through each status and check if it's "RUNNING"
+              for status in $statuses; do
+                  if [ "$status" != "RUNNING" ]; then
+                      all_running=false
+                      break
+                  fi
+              done
+        
+              # If all tasks are running, exit the loop
+              if $all_running; then
+                  echo "All tasks are running."
+                  break
+              fi
+        
+              # If timeout is reached before all tasks are running, exit with an error
+              if [[ $elapsed_time -ge $timeout ]]; then
+                  echo "Timeout reached before all tasks reached RUNNING state."
+                  exit 1
+              fi
+        
+              # Wait for the specified interval before checking again
+              echo "Waiting for tasks to reach RUNNING state..."
+              sleep $interval
+          done
+
       # Retrieve the access URL from Terraform outputs
       - name: Set up Terraform outputs
         id: tf-outputs  # Define an id for this step to be used in the subsequent steps.
@@ -125,9 +180,8 @@ jobs:
         # Various input variables are passed using the '-var' option. These are used to customize the Terraform configuration.
         # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
         run: |
-          terraform refresh \
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
           -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
-          -var "image_digest=${{ steps.get-image-digest.outputs.image_digest }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
 
       # Display the access URL in the GitHub Actions log
