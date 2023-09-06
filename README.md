@@ -99,14 +99,14 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 Steps to create
 
 ## Unit tests
-Tests help us to keep our code maintainable and working. Because even small changes can bring giant bugs, so if we keep our tests up to date with our code, the changes of facing a bug in the future are minor than without tests.
+The purpose of tests is to keep our code maintainable and functional. We keep our tests up-to-date with our code in order to reduce the likelihood of facing a bug in the future, since even small changes can have a huge impact.
 
 1. Install Jest with npm
    ```
    $ npm install --save-dev jest
    $ npm install --save-dev socket.io-client
    ```
-   The *--save-dev* flag updates the `devDepenendices` in package.json. These are only used for local testing and development.
+   The *--save-dev* flag updates the `devDepenendices` in package.json. They are only used for testing and development on a local basis.
 
    package.json
 
@@ -118,7 +118,7 @@ Tests help us to keep our code maintainable and working. Because even small chan
    ```
 
 2. Test folder and test script
-   When we run Jest, it's going to search for tests in our repo. It is recommened to have a folder that holds our test script.
+As soon as Jest is run, it searches our repository for testing. Having a folder where we can keep our test scripts is recommended.
    
 ![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
   
@@ -142,7 +142,7 @@ Ran all test suites.
 ```
 The output from **npm test** command shows that the unit test has passed.
 
-We have successfully ran the unit test locally. This unit test will be implemented in the CI/CD Pipeline and automatically triggered in [GitHub Actions](#github-actions) workflow.
+The unit test has been successfully run locally. This unit test will be included in the CI/CD pipeline and will be automatically triggered through the [GitHub Actions](#github-actions) workflow.
 <br>
 <br>
 
@@ -510,7 +510,7 @@ runs-on: ubuntu-latest
           # The 'target' parameter specifies the URL of the deployed application to be scanned.
           target: ${{ needs.deploy.outputs.access_url_output }}
 ```
-In this `zap-scan` will only perform OWASP scanning after resources have been successfully deployed from `deploy` job.
+OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
 <br>
