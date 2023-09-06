@@ -28,10 +28,13 @@ jobs:
     needs: pre-deploy
     name: Unit Testing
     steps:
+       # Checkout the latest code from the repository.
       - name: Checkout repo code
         uses: actions/checkout@v3
+       # Install the required npm dependencies for the application
       - name: Install dependencies
         run: npm install
+      # Execute unit tests using npm test
       - name: Run unit tests
         run: npm test
 
@@ -45,12 +48,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     outputs:
-      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }} # Define outputs for this job which can be used in subsequent jobs.
     needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
     name: Deploy to AWS
+    # Set environment variables for this job. Here, the deployment environment is set based on the branch name 'dev'.
     env:
       environment: ${{ github.ref_name }} # Specify the environment to deploy
     steps:
+      
+      # Checkout the latest code from the repository
       - name: Checkout repo code
         uses: actions/checkout@v3
       
@@ -60,38 +66,72 @@ jobs:
         with:
           role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
-        id: login-ecr
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR 
+        id: login-ecr # Define an id which allows other steps to reference outputs from this step.
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: true
-      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
-        id: terraform-ecr
+
+      # Create an ECR repository using Terraform and output the repository url for the input to the subsequent steps.
+      - name: Create ECR repository using Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
         working-directory: ./modules/ecr
         run: |
           terraform init
           terraform plan
           terraform apply -auto-approve
           echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
-      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
-        id: push-image
+      
+      # Build and push the Docker image to the Amazon ECR Repository using the repository url from the previous step.
+      - name: Push image to Amazon ECR
+        id: push-image  # Define an id which allows other steps to reference outputs from this step.
         env:
-          image_tag: latest
+          image_tag: latest # Define the image tag
         run: |
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
-      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
-        working-directory: ./environments/${{ env.environment }}        
+      
+      # Retrieve the digest of the pushed Docker image from ECR using Terraform
+      - name: Retrieve ECR Image Digest
+        id: get-image-digest  # Define an id for this step to be used in the subsequent steps.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Run Terraform's 'apply' command with the '-refresh-only' option to get the latest state without making any changes.
+        # Terraform's 'output' command is used to fetch the image digest value and then store it in an output variable for later use.
+        run: |
+          terraform apply -auto-approve -refresh-only
+          echo "image_digest=$(terraform output -json | jq -r .image_digest.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to create AWS ECS resources like cluster, task definition, and service
+      - name: Create AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # 'terraform apply -auto-approve' command is used to create or update the resources with auto-approval.
+        # Various input variables are passed using the '-var' option. These are used to customize the Terraform configuration.
+        # The '-target' option is used to restrict the scope of resource application.
         run: |
           terraform init
-          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
-      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
-        id: tf-outputs
-        working-directory: ./environments/${{ env.environment }}
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -var "image_digest=${{ steps.get-image-digest.outputs.image_digest }}" \
+          -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" \
+          -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      
+      # Retrieve the access URL from Terraform outputs
+      - name: Set up Terraform outputs
+        id: tf-outputs  # Define an id for this step to be used in the subsequent steps.
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # Apply the Terraform configuration which includes the data block in the output.tf file.
+        # Various input variables are passed using the '-var' option. These are used to customize the Terraform configuration.
+        # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
         run: |
-          terraform output
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -var "image_digest=${{ steps.get-image-digest.outputs.image_digest }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
-      - name: Echo Access URL # Print the access url on Github Actions
+
+      # Display the access URL in the GitHub Actions log
+      - name: Echo Access URL 
         run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
 
   # This GitHub Actions workflow job is named 'zap-scan' and is responsible for performing an OWASP ZAP Full Scan,
