@@ -528,6 +528,8 @@ In this project, `OpenID Connect` authentication protocol is being used instead 
 - Login to AWS Console
 - Add provider on IAM Identity providers
 
+<img width="481" alt="Add IAM Provider" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/aebf6e7b-07e9-4148-98bc-4fe6ee575576">
+
 - Select OpenID Connect and ensure below information are correct
 ```
 Provider URL :  https://token.actions.githubusercontent.com
@@ -535,7 +537,10 @@ Provider URL :  https://token.actions.githubusercontent.com
 Audience : sts.amazonaws.com
 
 ```
-- Create new IAM Roles with `web identity` 
+- Create new IAM Roles with `web identity`
+
+![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
+
 
 - Attached permission policies accordingly
 
