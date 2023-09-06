@@ -54,7 +54,7 @@ resource "aws_ecs_service" "service" {
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
   depends_on = [ aws_security_group.ecs_sg, aws_ecs_task_definition.task, aws_lb_listener.front_end ]
-  desired_count = 2
+  desired_count = 1
   
   network_configuration {
     subnets = var.subnets
@@ -108,12 +108,6 @@ resource "aws_lb_target_group" "load_balancer_tg" {
     timeout = 3
     healthy_threshold   = "3"
     unhealthy_threshold = "2"
-  }
-
-  stickiness {
-    type = "lb_cookie"
-    cookie_duration = 86400 # Set the stickiness duration in seconds (e.g. 1 day)
-    enabled = true
   }
 }
 
