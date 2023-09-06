@@ -347,21 +347,27 @@ In this `zap-scan` .....
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 * Create a `New pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
+![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/49ff2a43-d091-4f32-a7da-a8da53db23e4)
 
 * Choose the desired base and merge branch, and click `Create pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
+![choose-base-merge-branch-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/ea1c4000-cc63-43fb-98e3-9ebe9720317e)
+
 
 * A new pull request is now open. Leave a comment and click `Create pull request`
+![leave-comment-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/b42279b0-fc48-4cd9-ad3e-ef1de5d145ef)
 
-* Review the pull request
+
+* Review the pull request, resolve conflict if any.
+![review-the-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/ac670977-e732-41eb-8be1-73aa76dc2b17)
 
 * Approve and submit the pull request
+  ![approve-submit-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4afc92fb-7d5b-49af-abe9-550d646ba8c0)
+
 
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+  ![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/8bb2865d-f66e-421f-91b1-327065b62a5a)
 
-The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
-
+The pull request is merging a feature branch into 'dev' branch now which resulted in GitHub action workflow job was running or skipped.
 
 
 *** Diagram Poh Leng
