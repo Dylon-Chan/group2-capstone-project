@@ -114,51 +114,103 @@ git push --set-upstream origin <branch name>
 *** Diagram Weng Siong
 
 ## Chat Application
-*** Program Poh Guan
+##This application is used for chatting by scanning on the following QR code.
+![qrcodechatsecure](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996)
+
+##The frontend of the chat screen is as below.
+![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
 
 Steps to create
 
 ## Unit tests
-*** Program David
+Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
 
-## Vulnerability Scan - Snyk Comprehensive Security Scan 
-Continuous integration (CI) is part of the DevOps movement to involve developers in operations tasks. It uses a server to monitor your repository, executing specific tasks such as static analysis, compilation and bundling of code, and continuous integration testing. In our CI/CD pipeline, it is absolutely essential to include comprehensive package vulnerability scanning. This practice encompasses multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning. By seamlessly weaving these layers together, we fortify the security and integrity of our software, thereby significantly mitigating the risk associated with deploying insecure packages into our production environment during CI/CD testing.
+1. Install Jest with npm
+   ```
+   $ npm install --save-dev jest
+   $ npm install --save-dev socket.io-client
+   ```
+   The *--save-dev* flag updates the `devDepenendices` in package.json. They are only used for testing and development on a local basis.
+
+   package.json
+
+  ```json
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "socket.io-client": "^4.7.2"
+  }
+   ```
+
+2. Test folder and test script
+As soon as Jest is executed, it searches our repository for tests. The practice of keeping our test scripts in a folder is recommended.
+   
+![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
+  
+
+4. Run the unit test - **`local testing`**
+
+```sh
+$ npm test
+> group2-capstone-project-chat@0.0.0 test
+> jest
+
+ PASS  __tests__/username_colour.test.js
+ PASS  __tests__/colour_array.test.js
+ PASS  __tests__/socket.test.js
+
+Test Suites: 3 passed, 3 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.487 s
+Ran all test suites.
+```
+The output from **npm test** command shows that the unit test has passed.
+
+The unit test has been successfully run locally. This unit test will be included in the CI/CD pipeline and will be automatically triggered through the [GitHub Actions](#github-actions) workflow.
+<br>
+<br>
+
+## Vulnerability Scan  
+In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
+
+We will begin by locally validating each test to ensure the correct implementation of the Snyk security scan software. 
+
+Subsequently, we will automate the same test in our Continuous Integration (CI) process.  This process employs a server known as a GitHub-hosted runner to monitor the repository and conduct each security scan during continuous integration testing, which we will explain in more detail later.
 
 ### Static Application Security Testing (SAST)
-SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. By running SAST scans during our CI/CD pipeline, we detect vulnerabilities at the code level, allowing us to address them early in the development process.
+SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. 
 
-### Run SAST scan - Continuous Integration (CI) testing on the Github hosted runner
-For SAST scan, we will use Snyk Code analysis and uploads result into GitHub.
-```
-$ snyk code test --sarif --severity-threshold=high > snyk-code.sarif
+### Run SAST scan - `local testing`
+For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
+```sh
+$ snyk code test 
 ...(truncated)....
 ✔ Test completed
 ```
 
 ### Software Composition Analysis (SCA)
-SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. By incorporating SCA into our pipeline, we ensure that we are using secure and up-to-date components, reducing the risk of known vulnerabilities being exploited.
+SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. 
 
-### Run SCA scan - Continuous Integration (CI) testing on the Github hosted runner
+### Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
-```
+```sh
 $ snyk test --all-projects 
 ...(truncated)....
 ✔ Tested 65 dependencies for known issues, no vulnerable paths found.
 
 $ snyk monitor --all-projects
-Monitoring /home/runner/work/group2-capstone-project/group2-capstone-project (group2-capstone-project-chat)...
-
+...(truncated)....
 Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/17b1d8b9-d5b0-4e55-8af8-dff2eac1eb71/history/46fa1190-9567-4072-8671-00a7a4f14236
 
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 
 ### Infrastructure as Code (IaC) Scanning
-IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. By including IaC scanning in our pipeline, we maintain the security of our infrastructure as it evolves, reducing the likelihood of security incidents related to configuration errors.
+IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. 
 
-### Run IaC scan - Continuous Integration (CI) testing on the Github hosted runner
+### Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
-```
+```sh
 $ snyk iac test --report
 Snyk Infrastructure as Code
 
@@ -179,13 +231,13 @@ Report Complete
 ### Container Scanning
 Container scanning focuses on the security of our Docker images and containers. It checks for vulnerabilities within the containerized applications and their dependencies. By integrating container scanning, we ensure that our containerized applications are free from known vulnerabilities, minimizing the risk of security breaches through containerized environments.
 
-### Run Container scan - Continuous Integration (CI) testing on the Github hosted runner
-Initially, we initiate the Docker image building process on the Github hosted runner using the following command:
+### Run Container scan - `local testing`
+Initially, we initiate the Docker image building process using the following command:
 ```
 docker build -t group2-chat-app/latest .
 ```
 Subsequently, we commence the Snyk Container analysis and upload the results to Snyk.
-```
+```sh
 $ snyk container test group2-chat-app/latest --file=Dockerfile
 $ snyk container monitor group2-chat-app/latest --file=Dockerfile
 ...(truncated)....
@@ -202,8 +254,6 @@ Notifications about newly disclosed issues related to these dependencies will be
 ```
 
 
-*** Program Poh Leng
-
 ## GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
 
@@ -215,8 +265,128 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-*** Program Poh Guan
+## Step 1: Create dev.yml in .github/workflows folder
+![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
+```yml
+dev.yml
+name: CICD for Group 2 Chat Application - Development
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
+```
+
+# The workflow is triggered on push event to the 'dev' branch
+```yml
+on:
+  push:
+    branches: [ dev ]
+```
+
+# Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT.
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+  security-events: write # Grants permission to write security event data for the repository.
+
+
+jobs:
+
+  # The pre-deploy job just prints the type of event and branch that triggered the workflow
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+
+  # This job is responsible for running unit tests on the application
+  unit-testing:
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    name: Unit Testing
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+
+  #SNYK-Comprehensive-Security-scan is conducting a comprehensive set of security tests, including Snyk Code(SAST), Snyk Open Source(SCA), Snyk Infrastructure as Code, and Snyk Container tests         
+  SNYK-Comprehensive-Security-scan:
+    needs: pre-deploy
+    uses: ./.github/workflows/snyk-security.yml
+    secrets: inherit
+   
+  # This job handles deployment to the development environment
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
+    name: Deploy to AWS
+    env:
+      environment: ${{ github.ref_name }} # Specify the environment to deploy
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
+        id: push-image
+        env:
+          image_tag: latest
+        run: |
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
+      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}        
+        run: |
+          terraform init
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
+        id: tf-outputs
+        working-directory: ./environments/${{ env.environment }}
+        run: |
+          terraform output
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
+      - name: Echo Access URL # Print the access url on Github Actions
+        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
+        
+  # This GitHub Actions workflow job is named 'zap-scan' and is responsible for performing an OWASP ZAP Full Scan,
+  # which is a Dynamic Application Security Testing (DAST) scan.
+  zap-scan:
+    # It runs on the 'ubuntu-latest' runner with necessary permissions granted for the scan.
+    runs-on: ubuntu-latest
+    permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
+    needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
+    name: OWASP ZAP Full Scan
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.7.0
+        with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
+          target: ${{ needs.deploy.outputs.access_url_output }}
+```
 ## Workflow Syntax
 **name**: The name of the workflow.
 
@@ -237,7 +407,7 @@ The following outline the steps required to create a GitHub Actions workflow.
 These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml which will be run in GitHub Actions workflow:
 *** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
 
-### These are the jobs defined in [dev.yml][./github/workflows/dev.yml] which will be run in Github Actions workflow :
+### These are the jobs defined in [dev.yml](./github/workflows/dev.yml) which will be run in Github Actions workflow :
 Job name : `pre-deploy`
 
 ```yml
@@ -247,18 +417,354 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/4b9fa16c-6855-4f43-9047-2d26ca6cba90)
+<br>
+<br>
+Job name : `unit-testing`
 
+```yml
+unit-testing:
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    name: Unit Testing
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+```
+In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
+<br>
+<br>
+Job name : `SNYK-Comprehensive-Security-scan`
+
+```yml
+  SNYK-Comprehensive-Security-scan:
+    needs: pre-deploy
+    uses: ./.github/workflows/snyk-security.yml
+    secrets: inherit
+```
+
+In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/workflows/snyk-security.yml) workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+
+As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
+
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+<br>
+<br>
+Job name : `deploy`
+
+```yml
+deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
+    name: Deploy to AWS
+    env:
+      environment: ${{ github.ref_name }} # Specify the environment to deploy
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
+        id: push-image
+        env:
+          image_tag: latest
+        run: |
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
+      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}        
+        run: |
+          terraform init
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
+        id: tf-outputs
+        working-directory: ./environments/${{ env.environment }}
+        run: |
+          terraform output
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
+      - name: Echo Access URL # Print the access url on Github Actions
+        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
+```
+In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
+
+The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
+<br>
+<br>
+
+Job name : `zap-scan`
+
+```yml
+runs-on: ubuntu-latest
+    permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
+    needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
+    name: OWASP ZAP Full Scan
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.7.0
+        with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
+          target: ${{ needs.deploy.outputs.access_url_output }}
+```
+OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
+<br>
+<br>
+<br>
+
+### Snyk Comprehensive Security Scan Workflow
+Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
+
+This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in your codebase and infrastructure, ensuring the project's security.
+
+## Usage
+
+To use this workflow, we'll need to have a Snyk API token. One can obtain one by signing up for free at [Snyk](https://snyk.io/login). After obtaining your token, follow these steps:
+
+1. Add the our Snyk API token as a GitHub secret named `SNYK_TOKEN` in your repository.
+
+2. Create or update a workflow file (e.g., `.github/workflows/snyk-security-scan.yml`) in the repository with the following content:
+
+```yaml
+name: Snyk Comprehensive Security scan
+
+on:
+  workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        description: 'A SNYK token passed from the caller workflow'
+        required: true
+
+
+jobs:
+  SAST-SCA-IaC_Container_scan:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Snyk CLI to check for security issues
+        # Snyk can be used to break the build when it detects security issues.
+        # In this case we want to upload the SAST issues to GitHub Code Scanning
+        #uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+        uses: snyk/actions/setup@master
+        env:
+          # This is where you will need to introduce the Snyk API token created with your Snyk account
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+        # For Snyk Open Source you must first set up the development environment for your application's dependencies
+        # For example for Node
+        #- uses: actions/setup-node@v3
+        #  with:
+        #    node-version: 16
+      - uses: actions/setup-node@v3
+      - run: npm ci        
+
+        # This authentication step is typically used before running security scans or other Snyk-related actions.
+      - name: Snyk Auth
+        run: snyk auth --debug ${{ secrets.SNYK_TOKEN }} 
+        
+        # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+        # Use || true to not fail the pipeline
+      - name: Snyk Code test(SAST)
+        run: snyk code test --sarif --severity-threshold=high > snyk-code.sarif  || true
+
+        # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Open Source test and monitor(SCA)
+        run: |
+          snyk test --all-projects --severity-threshold=high
+          snyk monitor --all-projects --severity-threshold=high
+
+        # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+        # Use || true to not fail the pipeline.
+      - name: Snyk IaC test and report
+        run: snyk iac test --report --severity-threshold=high  || true
+
+        # Build the docker image for testing
+      - name: Build a Docker image
+        run: docker build -t group2-chat-app/latest .
+        
+        # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
+        # Report only vulnerabilities at the severity-threshold=high or higher
+      - name: Snyk Container test and monitor
+        run: |
+          snyk container test group2-chat-app/latest --file=Dockerfile --severity-threshold=high
+          snyk container monitor group2-chat-app/latest --file=Dockerfile --severity-threshold=high
+
+        # Push the Snyk Code results into GitHub Code Scanning tab
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk-code.sarif
+```
+<br>
 
 ## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Add AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and Snyk_Token to GitHub Secrets
-1. Goto Settings, Secret and variables, Actions and click New repository secret
-2. Add AWS_ACCESS_KEY_ID. Then repeat the same for AWS_SECRET_ACCESS_KEY and SNYK_TOKEN
+## Step 2: Create OIDC Roles on AWS IAM
+In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
+- Login to AWS Console
+- Add provider on IAM Identity providers
 
-![SecretKey](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/2e56d3be-e064-4014-8b33-ffd8061096f3)
+<img width="481" alt="Add IAM Provider" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/aebf6e7b-07e9-4148-98bc-4fe6ee575576">
+
+- Select OpenID Connect and ensure below information are correct
+```
+Provider URL :  https://token.actions.githubusercontent.com
+
+Audience : sts.amazonaws.com
+
+```
+- Create new IAM Roles with `web identity`
+
+![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
+
+
+- Attached permission policies accordingly
+
+In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
+- grp2-oidc
+- grp2-oidc-stage
+- grp2-oidc-prods
+
+IAM permission policies required in deploying AWS Resources must be attached into these roles accordingly.
+
+**`grp2-oidc`** is used for *`dev`* environment.
+
+This role will only allow any actions executed from *`dev`* branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringLike": {
+                    "token.actions.githubusercontent.com:sub": [
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev",
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/feature/*"
+                    ]
+                },
+                "ForAllValues:StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+**`grp2-oidc-stage`** is used for *`stage`* environment.
+
+This role will only allow any actions executed from *`stage`* branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/stage",
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+**`grp2-oidc-prod`** is used for *`prod`* environment.
+
+This role will only allow any actions executed from *`prod`* branch as indicated in trust relationship below:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/prod"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+<br>
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
-*** Diagram Poh Leng
+* Create a `New pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
+
+* Choose the desired base and merge branch, and click `Create pull request`
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
+
+* A new pull request is now open. Leave a comment and click `Create pull request`
+
+* Review the pull request
+
+* Approve and submit the pull request
+
+* Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+
+The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
 
 
 ## Lesson Learnt
@@ -274,3 +780,5 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 ## Conclusion
 
 The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
+
+
