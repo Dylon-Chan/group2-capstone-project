@@ -84,34 +84,72 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 
 
 ## Branch Creation
-There are two methods to create branch in GitHub. Our team has utilized both methods when creating different branches for the project.
-The first method is to create branch in GitHub website and the second method is to create branch in local environment and push to GitHub.
-1. Create critical branches in GitHub website - `dev`, `stage` and `prod`. These branches are protected branches.
--	Go to the repository in GitHub website
--	Click on the branch drop down list
--	Enter the branch name and click on the create branch button
+There are two methods to create branch in GitHub: through the GitHub website and using a local environment followed by pushing to GitHub.
+
+1. Create environment branches in GitHub website - `dev`, `stage` and `prod`. 
+-	Navigate to the desired repository on the GitHub website.
+-	Click on the branch dropdown list.
+-	Enter the branch name and select "Create branch".
 ![CreateBranch](documentation/images/create-branch-online.png)
 
-2. Create other branches in local machine and push to GitHub
--	Open CLI terminal
--	Navigate to the repository folder
+2. Create other feature branches in local machine and push to GitHub
+-	Open the CLI terminal.
+-	Navigate to the repository's directory.
 -	Create a new branch using the following command. This command will create a new branch and switch to the new branch immediately.
-```git
-git checkout -b <branch name>
-```
--	Push the branch to GitHub using the following command
-```git
-git push <branch name>
-```
-- You may need to use the following command to push the branch to GitHub for the first time if the branch is not available in GitHub website yet.
-```git
-git push --set-upstream origin <branch name>
-```
+    ```git
+    git checkout -b <branch name>
+    ```
+-	Push the branch to GitHub using:
+    ```git
+    git push <branch name>
+    ```
+- If the branch isn't recognized on GitHub yet, use:
+    ```git
+    git push --set-upstream origin <branch name>
+    ```
+
+  **Note:** If you wish to create a branch without switching to it, use:
+    ```git
+    git branch <branch name>
+    ```
+
 ![CreateBranch](documentation/images/create-branch-local.png)
 
-
 ## Branch Protection
-*** Diagram Weng Siong
+Branch protection is a critical aspect of maintaining code integrity in a collaborative environment. It enforces rules on the specific branches and prevents unauthorized changes to the codebase.
+
+**Steps to enable branch protection in GitHub:**
+1. Navigate to the repository on the GitHub website.
+2. Click on the "Settings" tab.
+3. Click on the "Branches" tab.
+4. Click on the "Add rule" button.
+5. Enter the branch name to be protected.
+6. Set up the branch protection rules as per team's requirement.
+
+![SetupBranchProtection](documentation/images/setup-branch-protection.png)
+
+In this project, branch protection has been implemented for the `dev`, `stage` and `prod` branches. The following rules are enforced on these branches:
+
+## `Prod` and `Stage` branches
+Both require a pull request (PR) prior to merging:
+- For `prod`: PR must be reviewed by all four team members.
+- For `stage`: PR requires at least two team members reviews.
+- Both branches require status checks to pass and must be up-to-date before merging.
+- Administrators cannot override these branch protection rules.
+
+![Prod&StageBranchProtection](documentation/images/branch-protection-prod-stage.png)
+
+## `Dev` branch
+This branch solely requires a PR before merging, streamlining the process for team members to merge feature branches into dev for testing and collaboration.
+
+![DevBranchProtection](documentation/images/branch-protection-dev.png)
+
+# Best Practices on Branch Management
+
+- Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
+- Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
+- Stay Synced: Consistently pull the latest changes from the main (or base) branch into your feature branches. Doing so reduces the risk of merge conflicts.
+- Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into your feature branch. This ensures that your feature branch is current and minimizes unforeseen integration issues.
 
 ## Chat Application
 ##This application is used for chatting by scanning on the following QR code.
