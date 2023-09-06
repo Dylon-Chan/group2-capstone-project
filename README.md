@@ -199,8 +199,7 @@ Earlier we run unit test, vulnerability scan and deploy serverless application i
 
 The following outline the steps required to create a GitHub Actions workflow.
 ## Step 1: Create dev.yml in .github/workflows folder
-
-![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/d7989093-6757-4622-acb5-f6082aaebb96)
+![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
 dev.yml
 name: CICD for Group 2 Chat Application - Development
