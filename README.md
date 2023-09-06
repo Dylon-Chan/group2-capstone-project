@@ -525,8 +525,26 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 
 ## Step 2: Create OIDC Roles on AWS IAM
 In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
+- Login to AWS Console
+- Add provider on IAM Identity providers
 
-In order to protect each individual deployment, three different IAM OIDC roles were utilized namely, `grp2-oidc, grp2-oidc-stage, grp2-oidc-prod`. IAM permission policies required in deploying AWS Resources are attached into these roles accordingly.
+- Select OpenID Connect and ensure below information are correct
+```
+Provider URL :  https://token.actions.githubusercontent.com
+
+Audience : sts.amazonaws.com
+
+```
+- Create new IAM Roles with `web identity` 
+
+- Attached permission policies accordingly
+
+In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
+- grp2-oidc
+- grp2-oidc-stage
+- grp2-oidc-prods
+
+IAM permission policies required in deploying AWS Resources must be attached into these roles accordingly.
 
 **`grp2-oidc`** is used for *`dev`* environment.
 
