@@ -1,0 +1,16 @@
+name: Demo GitHub Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  # The demo job just prints the type of event and branch that triggered the workflow
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Job Name
+      - run: echo "The current job - ${{ github.job }} is running on ${{ github.ref_name }} branch."
+      
