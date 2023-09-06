@@ -119,11 +119,11 @@ Tests help us to keep our code maintainable and working. Because even small chan
 
 2. Test folder and test script
    When we run Jest, it's going to search for tests in our repo. It is recommened to have a folder that holds our test script.
-
-
    
+![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
+  
 
-3. Run the unit test - **`local testing`**
+4. Run the unit test - **`local testing`**
 
 ```sh
 $ npm test
@@ -139,10 +139,12 @@ Tests:       6 passed, 6 total
 Snapshots:   0 total
 Time:        0.487 s
 Ran all test suites.
-    ```
-    The output from **npm test** command shows that the unit test has passed.
+```
+The output from **npm test** command shows that the unit test has passed.
 
 We have successfully ran the unit test locally. This unit test will be implemented in the CI/CD Pipeline and automatically triggered in [GitHub Actions](#github-actions) workflow.
+<br>
+<br>
 
 ## Vulnerability Scan  
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
