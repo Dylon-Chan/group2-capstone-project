@@ -125,7 +125,7 @@ jobs:
         # Various input variables are passed using the '-var' option. These are used to customize the Terraform configuration.
         # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
         run: |
-          terraform apply -auto-approve \
+          terraform refresh \
           -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
           -var "image_digest=${{ steps.get-image-digest.outputs.image_digest }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT

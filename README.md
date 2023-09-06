@@ -90,6 +90,7 @@ There are two methods to create branch in GitHub: through the GitHub website and
 -	Navigate to the desired repository on the GitHub website.
 -	Click on the branch dropdown list.
 -	Enter the branch name and select "Create branch".
+
 ![CreateBranch](documentation/images/create-branch-online.png)
 
 2. Create other feature branches in local machine and push to GitHub
@@ -151,11 +152,11 @@ This branch solely requires a PR before merging, streamlining the process for te
 - Stay Synced: Consistently pull the latest changes from the main (or base) branch into your feature branches. Doing so reduces the risk of merge conflicts.
 - Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into your feature branch. This ensures that your feature branch is current and minimizes unforeseen integration issues.
 
-## Chat Application
-##This application is used for chatting by scanning on the following QR code.
+# Chat Application
+## Scan the following QR code to try on our chat application.
 ![qrcodechatsecure](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996)
 
-##The frontend of the chat screen is as below.
+## The frontend of the chat screen is as below.
 ![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
 
 Steps to create
