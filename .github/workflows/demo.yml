@@ -12,5 +12,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Job Name
-      - run: echo "The current job - ${{ github.job }} is running on ${{ github.ref_name }} branch."
+        run: echo "The current job - ${{ github.job }} is running on ${{ github.ref_name }} branch."
       
