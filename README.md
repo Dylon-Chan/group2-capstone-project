@@ -24,10 +24,14 @@ Our developers are the architects behind Project Titanium. They leverage their e
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
 
 ## Customer Request
-Project Name: Titanium
-Repository: https://github.com/Dylon-Chan/group2-capstone-project
-
 **Write some story here**
+
+Project Name: Titanium
+
+Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
+
+## Architecture
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 ## Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
@@ -39,17 +43,19 @@ Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
 ## Application Design
 ### Software Architecture
+**--Add here--**
 
 ### Infrastructure Architecture
+**--Add here--**
 
 
-## CICD Pipeline <move below>
-**Add transition here**
+## CICD Pipeline
+**--Add transition here--**
 
 E.g.
 Our mission is to accelerate software deployment using CI/CD Pipeline so that each release cycle can be released quickly from the development environment, to staging environment and to production environment.
 
-## Workflow for Project Titanium <move below>
+## Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
 
 ## Branching Strategies
@@ -149,12 +155,18 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 # Chat Application
 ## Scan the following QR code to try on our chat application. **--Put at last**
-![qrcodechatsecure](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996)
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<br>
 
 ## The frontend of the chat screen is as below. **--Put at last**
-![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
 
-<move up to Design>
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
+
+<br>
+
+**move below section up to Design**
+
 ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
 
 ## Application Architecture <move up to Design>
@@ -389,7 +401,7 @@ Earlier we run unit test, vulnerability scan and deploy serverless application i
 
 The following outline the steps required to create a GitHub Actions workflow.
 ## Prerequisite
-...
+**--Add OIDC, Github Secrets here--**
 
 ## Step 1: Create dev.yml in .github/workflows folder
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
@@ -555,7 +567,7 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 <br>
 <br>
 
-### Snyk Comprehensive Security Scan Workflow **-- move up to Snyk portion**
+### Snyk Comprehensive Security Scan Workflow **--move up to Snyk portion--**
 Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
 
 This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in the codebase and infrastructure, ensuring the project's security.
@@ -657,7 +669,7 @@ jobs:
 
 <br>
 
-## Step 1: Create main.yml in .github/workflows folder
+## Step 1: Create main.yml in .github/workflows folder **--TO DELETE--**
 
 ## Step 2: Create OIDC Roles on AWS IAM **--move to Prerequisite**
 In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
@@ -770,34 +782,47 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 <br>
 <br>
 
-## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
+## Step 3: Create a pull request and commit a merge in GitHub to start the workflow 
+**--Add here on Pull Request to Staging--**
+
+**--Show Staging workflow--**
 * Create a `New pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
+![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
 * Choose the desired base and merge branch, and click `Create pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
+![choose-base-merge-branch-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/5bfaec86-1e95-4f8c-bedd-c56bad22ba32)
 
 * A new pull request is now open. Leave a comment and click `Create pull request`
+![leave-comment-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/884eaf5f-5a6a-4512-a41a-531c42a5f2db)
 
-* Review the pull request
+* Review the pull request, resolved conflicts if any.
+![review-the-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/33cb1d4c-4485-4136-bac4-88436afd70ac)
 
 * Approve and submit the pull request
+![approve-submit-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/84dad82e-a150-40b1-acdb-9b9cd8dd5075)
 
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/1bf935b7-ecbe-4944-b9ba-0e5f63f6132d)
 
-The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+The pull request is now merging a new 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+
+**--Add here on Pull Request to Production--**
+
+**--Show Production workflow--**
 
 
 ## Lesson Learnt
 1. Team collaboration is critical for the success of the project
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
 
+**--Add in if have--**
+
 ## Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-3. HTTPS connection
-4. WAF...
-5. Auto scaling..
+3. **--Add HTTPS connection?--**
+4. **--Add WAF--**
+5. **--Add auto scaling--**
 
 ## Conclusion
 
