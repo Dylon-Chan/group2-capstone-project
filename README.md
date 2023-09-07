@@ -1146,7 +1146,7 @@ With the deployment complete, the application is now associated with its domain 
 <br>
 
 ## Login Page
-![app-login-page](/documentation/images/app-login-page.jpeg)
+<img src="/documentation/images/app-login-page.jpeg" width="350">
 
 ## Chat Page
 
