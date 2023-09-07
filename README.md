@@ -626,7 +626,7 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 ### Snyk Comprehensive Security Scan Workflow
 Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
 
-This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in your codebase and infrastructure, ensuring the project's security.
+This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in the codebase and infrastructure, ensuring the project's security.
 
 ### Usage
 
@@ -720,6 +720,8 @@ jobs:
 4. Click on the workflow to monitor its progress, view the details of each step as it runs, and if configured correctly, observe a successful completion marked by a green checkmark.
 ![steps-of-snyk-security-scan](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/8348de10-4a45-48b3-a2d3-64be6f690ad9)
 
+5. To inspect scan results, click the specific SNYK step (e.g., IaC, Container test, etc.). Resolve vulnerabilities if identified; if none are found, proceed to the next task. Repeat this process for each feature update to ensure there are no weaknesses or vulnerabilities in the code.
+![open-step-to-check-scan-result](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fb53af9d-2c9d-4fd2-a0cf-87072e7e02a4)
 
 <br>
 
