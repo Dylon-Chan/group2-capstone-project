@@ -7,18 +7,17 @@
 # Company Profile
 ChatSecure is a dynamic and innovative tech startup specializing in DevSecOps services. Founded in 2023, our company brings together a team of five dedicated tech experts with a shared passion for enhancing software development and operational processes through security-first practices. We are committed to helping organizations achieve a secure and efficient software development lifecycle.
 <br>
-<br>
+
 # Company Mission Statement
 At ChatSecure, our mission is to empower businesses to seamlessly integrate security into their software development and operations. We strive to create a culture of security awareness while expediting the delivery of robust software solutions, thus reducing vulnerabilities and risks.
 <br>
-<br>
+
 # Core Services
 1. DevSecOps Consulting: Our team of DevSecOps specialists, including Chris, David, Poh Guan, Poh Leng, and Weng Siong, provides expert guidance and tailored strategies to facilitate the effective adoption of DevSecOps principles within your organization.
 2. Secure CI/CD Pipeline Setup: We design, develop, and implement secure Continuous Integration and Continuous Deployment (CI/CD) pipelines that include automated security testing and compliance checks, streamlining your development workflows while enhancing security measures.
 3. Vulnerability Management: ChatSecure offers comprehensive vulnerability assessment and management services, identifying and mitigating security weaknesses in your applications and infrastructure, ensuring early detection and remediation of potential threats.
 4. Security Automation: Leveraging cutting-edge automation tools and techniques, we seamlessly integrate security throughout your software development lifecycle. This includes automated code scanning, configuration management, and threat detection.
-<br>
-<br>
+
 # Our Team
 Our developers are the architects behind Project Titanium. They leverage their expertise in programming languages, such as Python, Java, and C++, to design, develop, and implement robust and scalable software solutions. Their skills range from front-end development for intuitive user interfaces to back-end systems that power our products' functionality:
 
@@ -27,57 +26,52 @@ Our developers are the architects behind Project Titanium. They leverage their e
 3. Poh Guan - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/Docker).
 4. David - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/IaC).
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
-<br>
-<br>
+
 # Showcase Project
 Project Name: Titanium
 
 Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
 <br>
-<br>
+
 # Architecture
 *** Diagram Chris
 <br>
-<br>
+
 # Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
 2. Implement dependency screening in CI Script
 3. Ensure proper authentication and authorization in each environment in CD Script. (e.g. credentials used for deploying development and production environments should not be the same)
 4. Proper handling of CICD Pipeline Secrets
-<br>
-<br>
+
 # Getting started
 ## To get the Node server running locally
 1.	Clone this repo
 2.	npm install to install all required dependencies
 3.	Use snyk to scan for vunlerabilities
 4.	Deploy to dev, stage or production environment respectively
-<br>
-<br>
+
 # Dependencies
 1.	Dockerfile - to create a Docker image, which is a lightweight, standalone, executable package that includes all the necessary components to run a piece of software
 2.  Node Express framework
 3.  Socket.io
-<br>
-<br>
+
 # Application Structure
 index.js - The entry point to our application. This file for unit testing. 
   It also requires the routes and models we'll be using in the application.
 <br>
-<br>
+
 # CICD Pipeline
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
 <br>
-<br>
+
 # Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
 <br>
-<br>
+
 # Branching Strategies
 ![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
-<br>
 <br>
 
 ## Development Branch (Dev)
@@ -100,7 +94,6 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 - It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
 - Only fully reviewed and approved code changes are merged into the main branch.
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
-
 <br>
 <br>
 
@@ -114,16 +107,6 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 <br>
 <br>
 
-# Chat Application
-## Scan the QR code below to use this application for chatting
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
-<br>
-<br>
-
-## The frontend of the chat screen is as below.
-
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
-=======
 ## Branch Creation
 There are two methods to create branch in GitHub: through the GitHub website and using a local environment followed by pushing to GitHub.
 
@@ -194,11 +177,16 @@ This branch solely requires a PR before merging, streamlining the process for te
 - Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into your feature branch. This ensures that your feature branch is current and minimizes unforeseen integration issues.
 
 # Chat Application
-## Scan the following QR code to try on our chat application.
-![qrcodechatsecure](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996)
+## Scan the QR code below to use this application for chatting
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+
+<br>
+<br>
 
 ## The frontend of the chat screen is as below.
-![Chatimage](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1)
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
 
 ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
 
@@ -898,18 +886,12 @@ The pull request is merging 'feature' branch into 'dev' branch which resulted in
 
 # Lesson Learnt
 1. Team collaboration is critical for the success of the project
-<br>
-<br>
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
-<br>
-<br>
+
 # Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
-<br>
-<br>
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-<br>
-<br>
+
 # Conclusion
 
 The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
