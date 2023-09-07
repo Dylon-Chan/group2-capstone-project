@@ -1,20 +1,22 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
 ## Case 3 - Securtiy Focused (DevSecOps)
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
+<br>
+<br>
 
-## Company Profile
+# Company Profile
 ChatSecure is a dynamic and innovative tech startup specializing in DevSecOps services. Founded in 2023, our company brings together a team of five dedicated tech experts with a shared passion for enhancing software development and operational processes through security-first practices. We are committed to helping organizations achieve a secure and efficient software development lifecycle.
 
-## Company Mission Statement
+# Company Mission Statement
 At ChatSecure, our mission is to empower businesses to seamlessly integrate security into their software development and operations. We strive to create a culture of security awareness while expediting the delivery of robust software solutions, thus reducing vulnerabilities and risks.
 
-## Core Services
+# Core Services
 1. DevSecOps Consulting: Our team of DevSecOps specialists, including Chris, David, Poh Guan, Poh Leng, and Weng Siong, provides expert guidance and tailored strategies to facilitate the effective adoption of DevSecOps principles within your organization.
 2. Secure CI/CD Pipeline Setup: We design, develop, and implement secure Continuous Integration and Continuous Deployment (CI/CD) pipelines that include automated security testing and compliance checks, streamlining your development workflows while enhancing security measures.
 3. Vulnerability Management: ChatSecure offers comprehensive vulnerability assessment and management services, identifying and mitigating security weaknesses in your applications and infrastructure, ensuring early detection and remediation of potential threats.
 4. Security Automation: Leveraging cutting-edge automation tools and techniques, we seamlessly integrate security throughout your software development lifecycle. This includes automated code scanning, configuration management, and threat detection.
 
-## Our Team
+# Our Team
 Our developers are the architects behind Project Titanium. They leverage their expertise in programming languages, such as Python, Java, and C++, to design, develop, and implement robust and scalable software solutions. Their skills range from front-end development for intuitive user interfaces to back-end systems that power our products' functionality:
 
 1. Weng Siong - Co-founder and CEO, a visionary leader with a cybersecurity and software development background (CI/CD/SCA).
@@ -23,17 +25,17 @@ Our developers are the architects behind Project Titanium. They leverage their e
 4. David - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/IaC).
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
 
-## Customer Request
+# Customer Request
 **--Write some story here--**
 
 Project Name: Titanium
 
 Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
 
-## Architecture
+# Architecture
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
-## Requirement / Criteria for Project Titanium
+# Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
 2. Implement dependency screening in CI Script
 3. Ensure proper authentication and authorization in each environment in CD Script. (e.g. credentials used for deploying development and production environments should not be the same)
@@ -55,27 +57,27 @@ Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capston
 E.g.
 Our mission is to accelerate software deployment using CI/CD Pipeline so that each release cycle can be released quickly from the development environment, to staging environment and to production environment.
 
-## Workflow for Project Titanium
+# Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
 
-## Branching Strategies
+# Branching Strategies
 ![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
 
-### Development Branch (Dev)
+## Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
 - The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
 -	It acts as a staging area for features and bug fixes before they are merged into the main branch.
 - Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
 - Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
 
-### Stage Branch (Stage)
+## Stage Branch (Stage)
 https://github.com/Dylon-Chan/group2-capstone-project/stage
 
 - The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
 - It acts as a staging area for testing before deploy Production environment
 
 
-### Production Branch (Prod)
+## Production Branch (Prod)
 https://github.com/Dylon-Chan/group2-capstone-project/prod
 
 - The main branch, also known as the master branch, represents the production-ready state of the application.
@@ -169,17 +171,17 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
 
-## Application Architecture <move up to Design>
-### Backend: <move up to Design>
+# Application Architecture <move up to Design>
+## Backend: <move up to Design>
 Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
 
-### Frontend: <move up to Design>
+## Frontend: <move up to Design>
 The user interface is designed using a blend of HTML, CSS, and JavaScript.
 
-### Source Code Organization: <KIV>
+## Source Code Organization: <KIV>
 Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
 
-## Package and Dependency Installation
+# Package and Dependency Installation
 Once the application source codes are available, we can install the required packages and dependencies. This can be done by running the following command in the terminal:
 ```bash
 npm init                        # Create the package.json file
@@ -210,7 +212,7 @@ npm start
 ```
 We can now access the ChatSecure magic by heading over to http://localhost:3000 in the browser.
 
-## Unit tests
+# Unit tests
 Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
 
 1. Install Jest with npm
@@ -257,12 +259,12 @@ The output from **npm test** command shows that the unit test has passed.
 The unit test has been successfully run locally. This unit test will be included in the CI/CD pipeline and will be automatically triggered through the [GitHub Actions](#github-actions) workflow.
 <br>
 
-## Containerization with Docker
+# Containerization with Docker
 Docker encapsulates applications within containers, providing an environment-agnostic platform to ensure uniform behavior across varying setups. Containerizing our ChatSecure application ensures consistent behavior across different environments, from local development to production deployment.
 
 To initiate this, a Dockerfile is essential for Docker image construction.
 
-### Dockerfile:
+## Dockerfile:
 ```bash
 #use nodejs with latest version
 FROM node:latest
@@ -284,7 +286,7 @@ EXPOSE 3000
 #start the app
 CMD ["npm", "start"]
 ```
-### Local Docker Image Development:
+## Local Docker Image Development:
 1. Navigate to the root directory which contain the Dockerfile and build the Docker image with the following.
     ```bash
     docker build -t chatsecure-app:latest .
@@ -301,22 +303,22 @@ CMD ["npm", "start"]
 
 Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
 
-## Infrastructure in Different Environment
+# Infrastructure in Different Environment
 **... to briefly describe what are the infra we have in dev, stage and prod differently. (different set of infra resources)**
 
 
 
-## Vulnerability Scan
+# Vulnerability Scan
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
 
 We will begin by locally validating each test to ensure the correct implementation of the Snyk security scan software. 
 
 Subsequently, we will automate the same test in our Continuous Integration (CI) process.  This process employs a server known as a GitHub-hosted runner to monitor the repository and conduct each security scan during continuous integration testing, which we will explain in more detail later.
 
-### Static Application Security Testing (SAST)
+## Static Application Security Testing (SAST)
 SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. 
 
-### Run SAST scan - `local testing`
+## Run SAST scan - `local testing`
 For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
 ```sh
 $ snyk code test 
@@ -324,10 +326,10 @@ $ snyk code test
 ✔ Test completed
 ```
 
-### Software Composition Analysis (SCA)
+## Software Composition Analysis (SCA)
 SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. 
 
-### Run SCA scan - `local testing`
+## Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
 ```sh
 $ snyk test --all-projects 
@@ -341,10 +343,10 @@ Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/17b1d8b9-d5b
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 
-### Infrastructure as Code (IaC) Scanning
+## Infrastructure as Code (IaC) Scanning
 IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. 
 
-### Run IaC scan - `local testing`
+## Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
 ```sh
 $ snyk iac test --report
@@ -364,10 +366,10 @@ Report Complete
   under the name: Dylon-Chan/group2-capstone-project
 
 ```
-### Container Scanning
+## Container Scanning
 Container scanning focuses on the security of our Docker images and containers. It checks for vulnerabilities within the containerized applications and their dependencies. By integrating container scanning, we ensure that our containerized applications are free from known vulnerabilities, minimizing the risk of security breaches through containerized environments.
 
-### Run Container scan - `local testing`
+## Run Container scan - `local testing`
 Initially, we initiate the Docker image building process using the following command:
 ```
 docker build -t group2-chat-app/latest .
@@ -389,7 +391,7 @@ Notifications about newly disclosed issues related to these dependencies will be
 
 ```
 
-## GitHub Actions
+# GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
 
 ## About GitHub Actions Workflows
@@ -593,91 +595,7 @@ As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-d
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c93fbf4d-d44e-43a2-8625-9cf86222d3ee)
 
 
-# <Move the Snyk workflows explanation here>
-
-Job name : `deploy`
-
-```yml
-deploy:
-    runs-on: ubuntu-latest
-    outputs:
-      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
-    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
-    name: Deploy to AWS
-    env:
-      environment: ${{ github.ref_name }} # Specify the environment to deploy
-    steps:
-      - name: Checkout repo code
-        uses: actions/checkout@v3
-      
-      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-        with:
-          mask-password: true
-      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
-        id: terraform-ecr
-        working-directory: ./modules/ecr
-        run: |
-          terraform init
-          terraform plan
-          terraform apply -auto-approve
-          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
-      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
-        id: push-image
-        env:
-          image_tag: latest
-        run: |
-          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
-          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
-      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
-        working-directory: ./environments/${{ env.environment }}        
-        run: |
-          terraform init
-          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
-      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
-        id: tf-outputs
-        working-directory: ./environments/${{ env.environment }}
-        run: |
-          terraform output
-          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
-      - name: Echo Access URL # Print the access url on Github Actions
-        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
-```
-
-In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
-
-The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
-<br>
-
-Job name : `zap-scan`
-
-```yml
-runs-on: ubuntu-latest
-    permissions: write-all
-    # This job depends on the successful completion of the 'deploy' job before it can run.
-    needs: deploy
-    # Name of the job, indicating it's an OWASP ZAP Full Scan.
-    name: OWASP ZAP Full Scan
-    steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.7.0
-        with:
-          # The 'target' parameter specifies the URL of the deployed application to be scanned.
-          target: ${{ needs.deploy.outputs.access_url_output }}
-```
-OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ff7a79a-a60f-4c8a-a93b-049c1aba6adc)
-<br>
-
-### Snyk Comprehensive Security Scan Workflow **--move up to Snyk portion--**
+### Snyk Comprehensive Security Scan Workflow
 Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
 
 This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in the codebase and infrastructure, ensuring the project's security.
@@ -779,6 +697,89 @@ jobs:
 
 <br>
 
+Job name : `deploy`
+
+```yml
+deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+    needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
+    name: Deploy to AWS
+    env:
+      environment: ${{ github.ref_name }} # Specify the environment to deploy
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
+        id: terraform-ecr
+        working-directory: ./modules/ecr
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
+        id: push-image
+        env:
+          image_tag: latest
+        run: |
+          docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
+          docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
+      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
+        working-directory: ./environments/${{ env.environment }}        
+        run: |
+          terraform init
+          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
+        id: tf-outputs
+        working-directory: ./environments/${{ env.environment }}
+        run: |
+          terraform output
+          echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
+      - name: Echo Access URL # Print the access url on Github Actions
+        run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
+```
+
+In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
+
+The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
+<br>
+
+Job name : `zap-scan`
+
+```yml
+runs-on: ubuntu-latest
+    permissions: write-all
+    # This job depends on the successful completion of the 'deploy' job before it can run.
+    needs: deploy
+    # Name of the job, indicating it's an OWASP ZAP Full Scan.
+    name: OWASP ZAP Full Scan
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.7.0
+        with:
+          # The 'target' parameter specifies the URL of the deployed application to be scanned.
+          target: ${{ needs.deploy.outputs.access_url_output }}
+```
+OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ff7a79a-a60f-4c8a-a93b-049c1aba6adc)
+
+<br>
 
 ## Step 2: Create a pull request and commit a merge in GitHub to start the workflow 
 **--Add here on Pull Request to Staging--**
@@ -809,20 +810,20 @@ The pull request is now merging a new 'feature' branch into 'dev' branch which r
 **--Show Production workflow--**
 
 
-## Lesson Learnt
+# Lesson Learnt
 1. Team collaboration is critical for the success of the project
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
 
 **--Add in if have--**
 
-## Future Enhancement
+# Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
 3. **--Add HTTPS connection?--**
 4. **--Add WAF--**
 5. **--Add auto scaling--**
 
-## Conclusion
+# Conclusion
 
 The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
 
