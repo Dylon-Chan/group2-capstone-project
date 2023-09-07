@@ -148,7 +148,7 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 ![DevBranchProtection](documentation/images/branch-protection-dev.png)
 
-# Best Practices on Branch Management
+## Best Practices on Branch Management
 
 - Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
 - Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
@@ -427,6 +427,9 @@ Audience : sts.amazonaws.com
 
 
 - Attached permission policies accordingly
+
+<img width="737" alt="image" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/debc8dd8-ef1d-403b-97d7-af8e8d9d04d1">
+
 
 In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
 - grp2-oidc
