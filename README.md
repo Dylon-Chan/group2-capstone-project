@@ -400,8 +400,121 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-## Prerequisite
-**--Add OIDC, Github Secrets here--**
+
+<br>
+
+## Pre-requisite
+
+### Create OIDC Roles on AWS IAM
+In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
+- Login to AWS Console
+- Add provider on IAM Identity providers
+
+<img width="481" alt="Add IAM Provider" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/aebf6e7b-07e9-4148-98bc-4fe6ee575576">
+
+- Select OpenID Connect and ensure below information are correct
+```
+Provider URL :  https://token.actions.githubusercontent.com
+
+Audience : sts.amazonaws.com
+
+```
+- Create new IAM Roles with `web identity`
+
+![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
+
+
+- Attached permission policies accordingly
+
+In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
+- grp2-oidc
+- grp2-oidc-stage
+- grp2-oidc-prods
+
+IAM permission policies required in deploying AWS Resources must be attached into these roles accordingly.
+
+**`grp2-oidc`** is used for *`dev`* environment.
+
+This role will only allow any actions executed from *`dev`* branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringLike": {
+                    "token.actions.githubusercontent.com:sub": [
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev",
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/feature/*"
+                    ]
+                },
+                "ForAllValues:StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+**`grp2-oidc-stage`** is used for *`stage`* environment.
+
+This role will only allow any actions executed from *`stage`* branch as indicated in trust relationship below:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/stage",
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+
+**`grp2-oidc-prod`** is used for *`prod`* environment.
+
+This role will only allow any actions executed from *`prod`* branch as indicated in trust relationship below:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/prod"
+                }
+            }
+        }
+    ]
+}
+```
+<br>
+<br>
 
 ## Step 1: Create dev.yml in .github/workflows folder
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
@@ -669,118 +782,6 @@ jobs:
 
 <br>
 
-## Step 1: Create main.yml in .github/workflows folder **--TO DELETE--**
-
-## Step 2: Create OIDC Roles on AWS IAM **--move to Prerequisite**
-In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
-- Login to AWS Console
-- Add provider on IAM Identity providers
-
-<img width="481" alt="Add IAM Provider" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/aebf6e7b-07e9-4148-98bc-4fe6ee575576">
-
-- Select OpenID Connect and ensure below information are correct
-```
-Provider URL :  https://token.actions.githubusercontent.com
-
-Audience : sts.amazonaws.com
-
-```
-- Create new IAM Roles with `web identity`
-
-![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
-
-
-- Attached permission policies accordingly
-
-In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
-- grp2-oidc
-- grp2-oidc-stage
-- grp2-oidc-prods
-
-IAM permission policies required in deploying AWS Resources must be attached into these roles accordingly.
-
-**`grp2-oidc`** is used for *`dev`* environment.
-
-This role will only allow any actions executed from *`dev`* branch as indicated in trust relationship below:
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
-            },
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Condition": {
-                "StringLike": {
-                    "token.actions.githubusercontent.com:sub": [
-                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev",
-                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/feature/*"
-                    ]
-                },
-                "ForAllValues:StringEquals": {
-                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-                    "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
-                }
-            }
-        }
-    ]
-}
-```
-<br>
-
-**`grp2-oidc-stage`** is used for *`stage`* environment.
-
-This role will only allow any actions executed from *`stage`* branch as indicated in trust relationship below:
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
-            },
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Condition": {
-                "StringEquals": {
-                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/stage",
-                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-                }
-            }
-        }
-    ]
-}
-```
-<br>
-
-**`grp2-oidc-prod`** is used for *`prod`* environment.
-
-This role will only allow any actions executed from *`prod`* branch as indicated in trust relationship below:
-
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
-            },
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Condition": {
-                "StringEquals": {
-                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-                    "token.actions.githubusercontent.com:sub": "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/prod"
-                }
-            }
-        }
-    ]
-}
-```
-<br>
-<br>
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow 
 **--Add here on Pull Request to Staging--**
