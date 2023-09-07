@@ -1012,7 +1012,7 @@ On completing a successful deployment, delve into the Github Action workflow log
 ![stage-access-url](/documentation/images/stage-access-url.png)
 
 ## Step 3: Setting up `prod.yml` in .github/workflows directory
-Upon obtaining satisfactory UAT results, you're set to deploy the application in the Production environment. Before initiating a Pull Request to merge the `stage` branch into the `prod` branch, ensure the `prod.yml` file is in place to enable automated deployment.
+Upon obtaining satisfactory UAT results, we are set to deploy the application in the Production environment. Before initiating a Pull Request to merge the `stage` branch into the `prod` branch, ensure the `prod.yml` file is in place to enable automated deployment.
 
 ```yml
 name: CICD for Group 2 Chat Application - Production
