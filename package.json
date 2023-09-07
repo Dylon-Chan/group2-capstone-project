@@ -1,11 +1,9 @@
 {
   "name": "group2-capstone-project-chat",
-  "version": "0.0.0",
-  "description": "A simple chat client using socket.io",
+  "version": "1.0.0",
+  "description": "ChatSecure App",
   "main": "index.js",
-  "author": "Grant Timmerman",
-  "private": true,
-  "license": "BSD",
+  "author": "SCTP Cohort 2 Group 2",
   "dependencies": {
     "express": "~4.17.1",
     "socket.io": "^4.0.0"
