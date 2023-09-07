@@ -43,15 +43,22 @@ Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capston
 
 # Getting started
 
-## Application Design
-### Software Architecture
+# Application Design
+
+## Software Architecture
+ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
+
+### Backend:
+Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
+
+### Frontend:
+The user interface is designed using a blend of HTML, CSS, and JavaScript.
+
+## Infrastructure Architecture
 **--Add here--**
 
-### Infrastructure Architecture
-**--Add here--**
 
-
-## CICD Pipeline
+# CICD Pipeline
 **--Add transition here--**
 
 E.g.
@@ -86,7 +93,7 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 
-## Branch Creation
+# Branch Creation
 There are two methods to create branch in GitHub: through the GitHub website and using a local environment followed by pushing to GitHub.
 
 1. Create environment branches in GitHub website - `dev`, `stage` and `prod`. 
@@ -119,7 +126,7 @@ There are two methods to create branch in GitHub: through the GitHub website and
 
 ![CreateBranch](documentation/images/create-branch-local.png)
 
-## Branch Protection
+# Branch Protection
 Branch protection is a critical aspect of maintaining code integrity in a collaborative environment. It enforces rules on the specific branches and prevents unauthorized changes to the codebase.
 
 **Steps to enable branch protection in GitHub:**
@@ -148,14 +155,14 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 ![DevBranchProtection](documentation/images/branch-protection-dev.png)
 
-## Best Practices on Branch Management
+# Best Practices on Branch Management
 
 - Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
 - Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
 - Stay Synced: Consistently pull the latest changes from the main (or base) branch into our feature branches. Doing so reduces the risk of merge conflicts.
 - Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into our feature branch. This ensures that our feature branch is current and minimizes unforeseen integration issues.
 
-# Chat Application
+# Chat Application **--Put at last--**
 ## Scan the following QR code to try on our chat application. **--Put at last--**
 
 <img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
@@ -166,17 +173,6 @@ This branch solely requires a PR before merging, streamlining the process for te
 <img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
 
 <br>
-
-**--move below section up to Design--**
-
-ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
-
-# Application Architecture <move up to Design>
-## Backend: <move up to Design>
-Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
-
-## Frontend: <move up to Design>
-The user interface is designed using a blend of HTML, CSS, and JavaScript.
 
 ## Source Code Organization: <KIV>
 Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
@@ -303,16 +299,28 @@ CMD ["npm", "start"]
 
 Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
 
-## Infrastructure in Different Environment
+# Infrastructure in Different Environment
 Our infrastructure setup varies across the three main environments: Development (Dev), Staging, and Production. Our workflow employs a centralized AWS ECR Private Repository, where Docker images are built and pushed. For deployments across all environments, the Docker image with the latest tag is utilized.
 
-### Dev Environment:
+## Dev Environment:
 In the Dev environment:
-- ECS: We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
+- Amazon Elastic Container Service (ECS) : We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
 - Security Group: A dedicated security group is configured for the ECS service. This group facilitates incoming traffic on port 3000.
 - Network Configuration: The ECS is also equipped with a specified network configuration to ensure smooth communication and resource accessibility.
 
+## Staging Environment:
+For the Staging environment:
+- ECS: Just like in Dev, an ECS cluster, ECS task definition, and ECS service are established using Fargate.
+- Application Load Balancer (ALB): An ALB has been introduced. It listens to an ALB target group, which in turn is associated with the Fargate task.
+- Security Group: Two security groups are established: One for the ALB, allowing incoming traffic on port 8000. The second for the ECS, permitting incoming traffic exclusively from the ALB's security group.
 
+## Production Environment:
+The Production environment infrastructure mirrors Staging but introduces an additional component:
+- Route 53: Integrated with the ALB, Route 53 facilitates DNS management, ensuring reliable routing and enhanced availability.
+
+<br>
+
+> We utilize a centralized AWS ECR repository to ensure consistent, secure, and efficient Docker image management across all environments. Differentiated infrastructures for Dev, Staging, and Production allow for tailored resource allocation, enhanced security, and environment-specific scalability. Having individual Terraform state files for each environment offers granular control, mitigates risks by containing potential errors, and provides more organized and efficient state management.
 
 # Vulnerability Scan
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
@@ -525,11 +533,10 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 <br>
 <br>
 
-## Step 1: Create dev.yml in .github/workflows folder
+## Step 1: Create `dev.yml` in .github/workflows directory
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
 ```yml
-dev.yml
 name: CICD for Group 2 Chat Application - Development
 run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
 ```
@@ -560,6 +567,7 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/6dea8858-fa05-4ccf-ad93-64196cf7d658)
 
 <br>
