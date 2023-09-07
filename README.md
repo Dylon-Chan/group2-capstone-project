@@ -33,7 +33,7 @@ Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capston
 <br>
 
 ## Architecture
-*** Diagram Chris
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 ## Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
