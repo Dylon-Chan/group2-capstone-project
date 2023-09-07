@@ -390,6 +390,7 @@ Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/02779ff9-426
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 <br>
+<br>
 
 # GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
@@ -426,9 +427,7 @@ Audience : sts.amazonaws.com
 
 
 - Attached permission policies accordingly
-
 <img width="737" alt="image" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/debc8dd8-ef1d-403b-97d7-af8e8d9d04d1">
-
 
 In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
 - grp2-oidc
