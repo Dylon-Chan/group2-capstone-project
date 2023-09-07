@@ -123,7 +123,7 @@ There are two methods to create branch in GitHub: through the GitHub website and
     git branch <branch name>
     ```
 
-![create-branch-local](documentation/images/create-branch-local.png)
+![create-branch-local](documentation/images/create-branch-local.png)![Alt text](image.png)
 
 # Branch Protection
 Branch protection is a critical aspect of maintaining code integrity in a collaborative environment. It enforces rules on the specific branches and prevents unauthorized changes to the codebase.
