@@ -561,6 +561,7 @@ permissions:
 Job name : `pre-deploy`
 
 ```yml
+jobs:
   pre-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -575,7 +576,7 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 Job name : `unit-testing`
 
 ```yml
-unit-testing:
+  unit-testing:
     runs-on: ubuntu-latest
     needs: pre-deploy
     name: Unit Testing
@@ -894,10 +895,140 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 
 <br>
 
-## Step 2: Create a pull request and commit a merge in GitHub to start the workflow 
-**--Add here on Pull Request to Staging--**
+## Step 2: Setting up `stage.yml` in .github/workflows directory
+After successful OWASP scans and once the `dev` deployment is validated, proceed with creating a Pull Request to merge changes from the `dev` branch into the `stage` branch. However, before this merge, a `stage.yml` must be set up to automatically run the Staging workflow post-merge.
+```yml
+name: CICD for Group 2 Chat Application - Staging
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Staging
+```
 
-**--Show Staging workflow--**
+### The workflow will be triggered on push events to the "stage" branch, which will be done when a pull request is merged into the "stage" branch.
+```yml
+on:
+  push:
+    branches: [ stage ]
+```
+
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+``` 
+
+### Below are the jobs defined in [stage.yml](./.github/workflows/stage.yml):
+
+Job name : `pre-deploy`
+```yml
+jobs:
+  # The pre-deploy job just prints the type of event and branch that triggered the workflow
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+
+### Deploy to Staging Environment
+
+Job name : `deploy-to-stage`
+```yml
+deploy-to-stage:
+    runs-on: ubuntu-latest
+    needs: [ pre-deploy ]   # This job depends on the completion of the 'pre-deploy' job.
+    name: Deploy to Staging Environment
+    env:
+      environment: ${{ github.ref_name }}  # Specify the environment to deploy
+      port: 8000  # Specify the port to access the Staging environment application
+    steps:
+
+      # Checkout the latest code from the repository
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.STAGE_ROLE_TO_ASSUME }}
+          aws-region: ap-southeast-1
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' output from Terraform.
+        # Store the resulting ECR URL as the output variable for later use or reference.
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve -refresh-only
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
+        working-directory: ./environments/${{ env.environment }}
+        id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # 'image_name' is provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform taint aws_ecs_service.service
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)"
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)" >> $GITHUB_OUTPUT
+          echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
+      
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
+      - name: Check ALB Target Group Health Status
+        run: |
+          target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
+          while true; do
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            if [[ "$health_status" == "healthy" ]]; then
+                    echo "Targets are healthy!"
+                    break
+                else
+                    echo "Current status of target: $health_status. Waiting..."
+                    sleep 10  # Check every 30 seconds
+                fi
+          done
+      
+      # Display the access URL where the app can be accessed
+      - name: Echo Access URL
+        run: echo "The Access URL is http://${{ steps.terraform-ecs.outputs.access_url }}:${{ env.port }}"
+```
+Note: A Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
+
+The entire staging delpoyment workflow is shown below:
+![Alt text](image-4.png)
+
+On completing a successful deployment, delve into the Github Action workflow logs to obtain the application's access URL. This URL facilitates User Acceptance Testing (UAT) by either the in-house team or the customers.
+![Alt text](image-3.png)
+
+## Step 3: Create `prod.yml` in .github/workflows directory
+
+
+
+
+
+
+
 * Create a `New pull request`
 ![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
