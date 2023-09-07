@@ -561,6 +561,7 @@ permissions:
 Job name : `pre-deploy`
 
 ```yml
+jobs:
   pre-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -575,7 +576,7 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 Job name : `unit-testing`
 
 ```yml
-unit-testing:
+  unit-testing:
     runs-on: ubuntu-latest
     needs: pre-deploy
     name: Unit Testing
@@ -712,18 +713,22 @@ jobs:
 
 <br>
 
-Job name : `deploy`
+### Deploy to Development Environment
 
+Job name : `deploy`
 ```yml
 deploy:
     runs-on: ubuntu-latest
     outputs:
-      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }} # Define outputs for this job which can be used in subsequent jobs.
     needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
     name: Deploy to AWS
+    # Set environment variables for this job. Here, the deployment environment is set based on the branch name 'dev'.
     env:
       environment: ${{ github.ref_name }} # Specify the environment to deploy
     steps:
+      
+      # Checkout the latest code from the repository
       - name: Checkout repo code
         uses: actions/checkout@v3
       
@@ -732,46 +737,139 @@ deploy:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
-        id: login-ecr
+          aws-region: ap-southeast-1
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR 
+        id: login-ecr # Define an id which allows other steps to reference outputs from this step.
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: true
-      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
-        id: terraform-ecr
+
+      # Create an ECR repository using Terraform and output the repository url for the input to the subsequent steps.
+      - name: Create ECR repository using Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
         working-directory: ./modules/ecr
         run: |
           terraform init
           terraform plan
           terraform apply -auto-approve
           echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
-      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
-        id: push-image
+      
+      # Build and push the Docker image to the Amazon ECR Repository using the repository url from the previous step.
+      - name: Push image to Amazon ECR
+        id: push-image  # Define an id which allows other steps to reference outputs from this step.
         env:
-          image_tag: latest
+          image_tag: latest # Define the image tag
         run: |
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
-      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
-        working-directory: ./environments/${{ env.environment }}        
+
+      # Use Terraform to create AWS ECS resources like cluster, task definition, and service
+      - name: Create AWS ECS cluster, task definition and service using Terraform
+        id: terraform-ecs # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # 'terraform apply -auto-approve' command is used to create or update the resources with auto-approval.
+        # Variables are passed using the '-var' option to customize the Terraform configuration.
+        # The '-target' option is used to restrict the scope of resource application.
+        # Mark the ECS service resource for recreation in the next Terraform apply.
         run: |
           terraform init
-          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
-      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
-        id: tf-outputs
-        working-directory: ./environments/${{ env.environment }}
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" \
+          -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+          terraform taint aws_ecs_service.service
+
+          # Output the ECS cluster name for use in subsequent steps.
+          echo "ecs_name=$(terraform output -json | jq -r .ecs_name.value)" >> $GITHUB_OUTPUT
+      
+      # Ensure that ECS task is running before proceeding to next step.
+      - name: Check if ECS task is running
         run: |
-          terraform output
+          # Define ECS cluster and service names based on previous Terraform outputs.
+          cluster_name=${{ steps.terraform-ecs.outputs.ecs_name}}
+          service_name="${{ steps.terraform-ecs.outputs.ecs_name}}-service"
+        
+          # Set a timeout and interval for checking task status
+          timeout=600 # Wait for 10 minutes max
+          interval=30 # Check every 30 seconds
+        
+          # Capture the start time for timeout tracking
+          start_time=$(date +%s)
+        
+          # Begin loop to check task status
+          while true; do
+              # Calculate elapsed time
+              current_time=$(date +%s)
+              elapsed_time=$((current_time - start_time))
+                       
+              # Fetch the task ARNs associated with the service
+              task_arns=$(aws ecs list-tasks --cluster $cluster_name --service-name $service_name --query "taskArns" --output text)
+                       # If no tasks are found, wait for the interval duration and then check again
+              if [ -z "$task_arns" ]; then
+                  echo "No tasks found. Waiting..."
+                  sleep $interval
+                  continue
+              fi
+        
+              # Fetch the last status of the tasks
+              statuses=$(aws ecs describe-tasks --cluster $cluster_name --tasks $task_arns --query "tasks[*].lastStatus" --output text)
+        
+              # Start by assuming all tasks are in the "RUNNING" state.
+              all_running=true
+        
+              # Loop through each status and check if it's "RUNNING"
+              for status in $statuses; do
+                  if [ "$status" != "RUNNING" ]; then
+                      all_running=false
+                      break
+                  fi
+              done
+        
+              # If all tasks are running, exit the loop
+              if $all_running; then
+                  echo "All tasks are running."
+                  break
+              fi
+        
+              # If timeout is reached before all tasks are running, exit with an error
+              if [[ $elapsed_time -ge $timeout ]]; then
+                  echo "Timeout reached before all tasks reached RUNNING state."
+                  exit 1
+              fi
+        
+              # Wait for the specified interval before checking again
+              echo "Waiting for tasks to reach RUNNING state..."
+              sleep $interval
+          done
+
+      # Retrieve the access URL from Terraform outputs
+      - name: Set up Terraform outputs
+        id: tf-outputs  # Define an id for this step to be used in the subsequent steps.
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to only refresh the state without creating/updating any resources.
+        # Iinput variables are passed using the '-var' option. These are used to customize the Terraform configuration.
+        # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
+        run: |
+          terraform apply -refresh-only -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
-      - name: Echo Access URL # Print the access url on Github Actions
+
+      # Display the access URL in the GitHub Actions log
+      - name: Echo Access URL 
         run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
 ```
 
-In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
+For the `deploy` job to initiate, the `pre-deploy`, `unit-testing`, and `SNYK-Comprehensive-Security-scan` jobs must first complete successfully, as indicated by `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`.
 
-The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+The targeted deployment environment (whether it is dev, stage, or prod) is identified by the value of `environment: ${{ github.ref_name }}`, which references the branch name.
+
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
+
+Upon successful deployment, we can explore the Github Action workflow logs to retrieve the application's access URL.
+
+![image](image-1.png)
+
 
 <br>
 
@@ -797,10 +895,140 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 
 <br>
 
-## Step 2: Create a pull request and commit a merge in GitHub to start the workflow 
-**--Add here on Pull Request to Staging--**
+## Step 2: Setting up `stage.yml` in .github/workflows directory
+After successful OWASP scans and once the `dev` deployment is validated, proceed with creating a Pull Request to merge changes from the `dev` branch into the `stage` branch. However, before this merge, a `stage.yml` must be set up to automatically run the Staging workflow post-merge.
+```yml
+name: CICD for Group 2 Chat Application - Staging
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Staging
+```
 
-**--Show Staging workflow--**
+### The workflow will be triggered on push events to the "stage" branch, which will be done when a pull request is merged into the "stage" branch.
+```yml
+on:
+  push:
+    branches: [ stage ]
+```
+
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+``` 
+
+### Below are the jobs defined in [stage.yml](./.github/workflows/stage.yml):
+
+Job name : `pre-deploy`
+```yml
+jobs:
+  # The pre-deploy job just prints the type of event and branch that triggered the workflow
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+
+### Deploy to Staging Environment
+
+Job name : `deploy-to-stage`
+```yml
+deploy-to-stage:
+    runs-on: ubuntu-latest
+    needs: [ pre-deploy ]   # This job depends on the completion of the 'pre-deploy' job.
+    name: Deploy to Staging Environment
+    env:
+      environment: ${{ github.ref_name }}  # Specify the environment to deploy
+      port: 8000  # Specify the port to access the Staging environment application
+    steps:
+
+      # Checkout the latest code from the repository
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.STAGE_ROLE_TO_ASSUME }}
+          aws-region: ap-southeast-1
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' output from Terraform.
+        # Store the resulting ECR URL as the output variable for later use or reference.
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve -refresh-only
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
+        working-directory: ./environments/${{ env.environment }}
+        id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # 'image_name' is provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform taint aws_ecs_service.service
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)"
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)" >> $GITHUB_OUTPUT
+          echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
+      
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
+      - name: Check ALB Target Group Health Status
+        run: |
+          target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
+          while true; do
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            if [[ "$health_status" == "healthy" ]]; then
+                    echo "Targets are healthy!"
+                    break
+                else
+                    echo "Current status of target: $health_status. Waiting..."
+                    sleep 10  # Check every 30 seconds
+                fi
+          done
+      
+      # Display the access URL where the app can be accessed
+      - name: Echo Access URL
+        run: echo "The Access URL is http://${{ steps.terraform-ecs.outputs.access_url }}:${{ env.port }}"
+```
+Note: A Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
+
+The entire staging delpoyment workflow is shown below:
+![Alt text](image-4.png)
+
+On completing a successful deployment, delve into the Github Action workflow logs to obtain the application's access URL. This URL facilitates User Acceptance Testing (UAT) by either the in-house team or the customers.
+![Alt text](image-3.png)
+
+## Step 3: Create `prod.yml` in .github/workflows directory
+
+
+
+
+
+
+
 * Create a `New pull request`
 ![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
