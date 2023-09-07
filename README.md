@@ -554,6 +554,7 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/6dea8858-fa05-4ccf-ad93-64196cf7d658)
 
 <br>
@@ -821,9 +822,9 @@ The pull request is now merging a new 'feature' branch into 'dev' branch which r
 # Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-3. **--Add HTTPS connection?--**
-4. **--Add WAF--**
-5. **--Add auto scaling--**
+3. Providing a higher level of security with HTTPS and SSL certificates
+4. Adding an additional layer of security by implementing WAF (Web Application Firewall)
+5. As part of our continuous effort to improve the availability and resiliency of our application, we are planning to leverage auto scaling group
 
 # Conclusion
 
