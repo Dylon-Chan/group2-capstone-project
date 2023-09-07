@@ -148,7 +148,7 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 ![DevBranchProtection](documentation/images/branch-protection-dev.png)
 
-# Best Practices on Branch Management
+## Best Practices on Branch Management
 
 - Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
 - Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
@@ -388,8 +388,9 @@ Monitoring group2-chat-app/latest (docker-image|group2-chat-app/latest)...
 Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/02779ff9-426c-455d-93d5-7ff1f1f5ad95/history/b4d1839d-faba-4bf5-ba27-9f209b57a31b
 
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
-
 ```
+<br>
+<br>
 
 # GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
@@ -402,7 +403,6 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-
 <br>
 
 ## Pre-requisite
@@ -427,6 +427,7 @@ Audience : sts.amazonaws.com
 
 
 - Attached permission policies accordingly
+<img width="737" alt="image" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/debc8dd8-ef1d-403b-97d7-af8e8d9d04d1">
 
 In order to protect each individual deployment environment, three different IAM OIDC roles were utilized namely, 
 - grp2-oidc
