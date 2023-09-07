@@ -388,8 +388,8 @@ Monitoring group2-chat-app/latest (docker-image|group2-chat-app/latest)...
 Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/02779ff9-426c-455d-93d5-7ff1f1f5ad95/history/b4d1839d-faba-4bf5-ba27-9f209b57a31b
 
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
-
 ```
+<br>
 
 # GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
@@ -402,7 +402,6 @@ We use event to trigger the workflow in our CI/CD Pipeline.
 Earlier we run unit test, vulnerability scan and deploy serverless application in local environment. It is now time to set up a CI/CP Pipeline that run all these jobs automatically whenever a code change is push to the GitHub respository.
 
 The following outline the steps required to create a GitHub Actions workflow.
-
 <br>
 
 ## Pre-requisite
