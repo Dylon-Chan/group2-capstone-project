@@ -551,7 +551,8 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/4b9fa16c-6855-4f43-9047-2d26ca6cba90)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/6dea8858-fa05-4ccf-ad93-64196cf7d658)
+
 <br>
 <br>
 Job name : `unit-testing`
@@ -571,7 +572,8 @@ unit-testing:
 ```
 In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ce14b7c-d389-4d81-bf87-94bc6b3ea6e7)
+
 <br>
 <br>
 Job name : `SNYK-Comprehensive-Security-scan`
@@ -588,9 +590,10 @@ In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/work
 As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
 
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c93fbf4d-d44e-43a2-8625-9cf86222d3ee)
 
-<Move the Snyk workflows explanation here>
+
+# <Move the Snyk workflows explanation here>
 
 Job name : `deploy`
 
@@ -651,10 +654,7 @@ deploy:
 In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
 
 The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
-
-
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
-<br>
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
 <br>
 
 Job name : `zap-scan`
@@ -674,10 +674,7 @@ runs-on: ubuntu-latest
           target: ${{ needs.deploy.outputs.access_url_output }}
 ```
 OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
-
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
-<br>
-<br>
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ff7a79a-a60f-4c8a-a93b-049c1aba6adc)
 <br>
 
 ### Snyk Comprehensive Security Scan Workflow **--move up to Snyk portion--**
