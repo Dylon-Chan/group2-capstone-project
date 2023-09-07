@@ -887,20 +887,24 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 
 ## Step 3: Create a pull request and commit a merge in GitHub to start the workflow
 * Create a `New pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/fa98d258-62c2-4f5c-8645-691102b22bfd)
+![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
 * Choose the desired base and merge branch, and click `Create pull request`
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/862a8f33-1db6-4172-abe1-fd6df138520b)
+![choose-base-merge-branch-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/5bfaec86-1e95-4f8c-bedd-c56bad22ba32)
 
 * A new pull request is now open. Leave a comment and click `Create pull request`
+![leave-comment-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/884eaf5f-5a6a-4512-a41a-531c42a5f2db)
 
-* Review the pull request
+* Review the pull request, resolved conflicts if any.
+![review-the-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/33cb1d4c-4485-4136-bac4-88436afd70ac)
 
 * Approve and submit the pull request
+![approve-submit-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/84dad82e-a150-40b1-acdb-9b9cd8dd5075)
 
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
+![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/1bf935b7-ecbe-4944-b9ba-0e5f63f6132d)
 
-The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+The pull request is now merging a new 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
 
 
 ## Lesson Learnt
