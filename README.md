@@ -554,6 +554,7 @@ Job name : `pre-deploy`
       - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
 ```
 In `pre-deploy` job, useful information such as the triggered event name, output can be seen in the job details when it complete.
+
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/6dea8858-fa05-4ccf-ad93-64196cf7d658)
 
 <br>
