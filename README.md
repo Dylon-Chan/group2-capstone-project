@@ -1,20 +1,25 @@
 # (SCTP) Cloud Infrastructure Engineering Capstone Project Documentation
 ## Case 3 - Securtiy Focused (DevSecOps)
 ### by Group 2: Chan Weng Siong, Chris Pang, David Suntama, Lim Poh Guan and Ng Poh Leng
+<br>
+<br>
 
-## Company Profile
+# Company Profile
 ChatSecure is a dynamic and innovative tech startup specializing in DevSecOps services. Founded in 2023, our company brings together a team of five dedicated tech experts with a shared passion for enhancing software development and operational processes through security-first practices. We are committed to helping organizations achieve a secure and efficient software development lifecycle.
-
-## Company Mission Statement
+<br>
+<br>
+# Company Mission Statement
 At ChatSecure, our mission is to empower businesses to seamlessly integrate security into their software development and operations. We strive to create a culture of security awareness while expediting the delivery of robust software solutions, thus reducing vulnerabilities and risks.
-
-## Core Services
+<br>
+<br>
+# Core Services
 1. DevSecOps Consulting: Our team of DevSecOps specialists, including Chris, David, Poh Guan, Poh Leng, and Weng Siong, provides expert guidance and tailored strategies to facilitate the effective adoption of DevSecOps principles within your organization.
 2. Secure CI/CD Pipeline Setup: We design, develop, and implement secure Continuous Integration and Continuous Deployment (CI/CD) pipelines that include automated security testing and compliance checks, streamlining your development workflows while enhancing security measures.
 3. Vulnerability Management: ChatSecure offers comprehensive vulnerability assessment and management services, identifying and mitigating security weaknesses in your applications and infrastructure, ensuring early detection and remediation of potential threats.
 4. Security Automation: Leveraging cutting-edge automation tools and techniques, we seamlessly integrate security throughout your software development lifecycle. This includes automated code scanning, configuration management, and threat detection.
-
-## Our Team
+<br>
+<br>
+# Our Team
 Our developers are the architects behind Project Titanium. They leverage their expertise in programming languages, such as Python, Java, and C++, to design, develop, and implement robust and scalable software solutions. Their skills range from front-end development for intuitive user interfaces to back-end systems that power our products' functionality:
 
 1. Weng Siong - Co-founder and CEO, a visionary leader with a cybersecurity and software development background (CI/CD/SCA).
@@ -22,59 +27,73 @@ Our developers are the architects behind Project Titanium. They leverage their e
 3. Poh Guan - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/Docker).
 4. David - Security Analyst, proficient in vulnerability assessment and management (CI/CD/OIDC/IaC).
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
-
-## Showcase Project
+<br>
+<br>
+# Showcase Project
 Project Name: Titanium
-Repository: https://github.com/Dylon-Chan/group2-capstone-project
 
-## Architecture
+Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
+<br>
+<br>
+# Architecture
 *** Diagram Chris
-
-## Requirement / Criteria for Project Titanium
+<br>
+<br>
+# Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
 2. Implement dependency screening in CI Script
 3. Ensure proper authentication and authorization in each environment in CD Script. (e.g. credentials used for deploying development and production environments should not be the same)
 4. Proper handling of CICD Pipeline Secrets
-
-## Getting started
-### To get the Node server running locally:
+<br>
+<br>
+# Getting started
+## To get the Node server running locally
 1.	Clone this repo
 2.	npm install to install all required dependencies
 3.	Use snyk to scan for vunlerabilities
 4.	Deploy to dev, stage or production environment respectively
-
-## Dependencies
-1.	dockerfile - definition for docker file
-
-## Application Structure
-###	index.js - The entry point to our application. This file for unit testing. It also requires the routes and models we'll be using in the application.
-
-## CICD Pipeline
+<br>
+<br>
+# Dependencies
+1.	Dockerfile - to create a Docker image, which is a lightweight, standalone, executable package that includes all the necessary components to run a piece of software
+2.  Node Express framework
+3.  Socket.io
+<br>
+<br>
+# Application Structure
+index.js - The entry point to our application. This file for unit testing. 
+  It also requires the routes and models we'll be using in the application.
+<br>
+<br>
+# CICD Pipeline
 pre-deploy to check the application
 npm install to install all required dependencies
 deploy to deploy chat application to development, stage or production respectively
-
-## Workflow for Project Titanium
+<br>
+<br>
+# Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
-
-## Branching Strategies
+<br>
+<br>
+# Branching Strategies
 ![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
+<br>
+<br>
 
-### Development Branch (Dev)
+## Development Branch (Dev)
 https://github.com/Dylon-Chan/group2-capstone-project/dev
 - The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
 -	It acts as a staging area for features and bug fixes before they are merged into the main branch.
 - Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
 - Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
 
-### Stage Branch (Stage)
+## Stage Branch (Stage)
 https://github.com/Dylon-Chan/group2-capstone-project/stage
 
 - The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
 - It acts as a staging area for testing before deploy Production environment
 
-
-### Production Branch (Prod)
+## Production Branch (Prod)
 https://github.com/Dylon-Chan/group2-capstone-project/prod
 
 - The main branch, also known as the master branch, represents the production-ready state of the application.
@@ -82,7 +101,29 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 - Only fully reviewed and approved code changes are merged into the main branch.
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
+<br>
+<br>
 
+# Branch Creation
+*** Program Weng Siong
+<br>
+<br>
+
+# Branch Protection
+*** Diagram Weng Siong
+<br>
+<br>
+
+# Chat Application
+## Scan the QR code below to use this application for chatting
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<br>
+<br>
+
+## The frontend of the chat screen is as below.
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
+=======
 ## Branch Creation
 There are two methods to create branch in GitHub: through the GitHub website and using a local environment followed by pushing to GitHub.
 
@@ -201,8 +242,11 @@ npm start
 ```
 You can now access the ChatSecure magic by heading over to http://localhost:3000 in your browser.
 
-## Unit tests
-Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
+<br>
+<br>
+
+# Unit tests
+Testing is a crucial part of the development process because it allows us to ensure that our code is functional and maintainable. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
 
 1. Install Jest with npm
    ```
@@ -211,7 +255,7 @@ Testing is intended to maintainability and functionality of our code. Since even
    ```
    The *--save-dev* flag updates the `devDepenendices` in package.json. They are only used for testing and development on a local basis.
 
-   package.json
+`package.json`
 
   ```json
   "devDependencies": {
@@ -221,7 +265,8 @@ Testing is intended to maintainability and functionality of our code. Since even
    ```
 
 2. Test folder and test script
-As soon as Jest is executed, it searches our repository for tests. The practice of keeping our test scripts in a folder is recommended.
+
+Jest searches for the tests in our repository as soon as it is executed. The practice of keeping our test scripts in a folder is recommended.
    
 ![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
   
@@ -249,17 +294,17 @@ The unit test has been successfully run locally. This unit test will be included
 <br>
 <br>
 
-## Vulnerability Scan  
+# Vulnerability Scan  
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
 
 We will begin by locally validating each test to ensure the correct implementation of the Snyk security scan software. 
 
 Subsequently, we will automate the same test in our Continuous Integration (CI) process.  This process employs a server known as a GitHub-hosted runner to monitor the repository and conduct each security scan during continuous integration testing, which we will explain in more detail later.
 
-### Static Application Security Testing (SAST)
+## Static Application Security Testing (SAST)
 SAST focuses on analyzing the source code of our applications for security vulnerabilities. It examines the codebase for potential issues, such as insecure coding practices, known vulnerabilities, and code logic flaws. 
 
-### Run SAST scan - `local testing`
+## Run SAST scan - `local testing`
 For the SAST scan, we will employ Snyk Code analysis and generate results locally. 
 ```sh
 $ snyk code test 
@@ -267,10 +312,10 @@ $ snyk code test
 ✔ Test completed
 ```
 
-### Software Composition Analysis (SCA)
+## Software Composition Analysis (SCA)
 SCA plays a vital role in identifying vulnerabilities in our project's dependencies and third-party packages. It scans the components and libraries used in our software, checking for known vulnerabilities and outdated dependencies. 
 
-### Run SCA scan - `local testing`
+## Run SCA scan - `local testing`
 For SCA scan, we will use Snyk Open Source analysis and uploads result to Snyk.
 ```sh
 $ snyk test --all-projects 
@@ -284,10 +329,10 @@ Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/17b1d8b9-d5b
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 
-### Infrastructure as Code (IaC) Scanning
+## Infrastructure as Code (IaC) Scanning
 IaC scanning is crucial for evaluating the security of our infrastructure scripts and configurations. It examines our infrastructure code to identify misconfigurations, insecure settings, and potential risks. 
 
-### Run IaC scan - `local testing`
+## Run IaC scan - `local testing`
 For IaC scan, we will use Snyk Infrastructure as Code analysis and uploads result to Snyk.
 ```sh
 $ snyk iac test --report
@@ -307,10 +352,10 @@ Report Complete
   under the name: Dylon-Chan/group2-capstone-project
 
 ```
-### Container Scanning
+## Container Scanning
 Container scanning focuses on the security of our Docker images and containers. It checks for vulnerabilities within the containerized applications and their dependencies. By integrating container scanning, we ensure that our containerized applications are free from known vulnerabilities, minimizing the risk of security breaches through containerized environments.
 
-### Run Container scan - `local testing`
+## Run Container scan - `local testing`
 Initially, we initiate the Docker image building process using the following command:
 ```
 docker build -t group2-chat-app/latest .
@@ -333,7 +378,7 @@ Notifications about newly disclosed issues related to these dependencies will be
 ```
 
 
-## GitHub Actions
+# GitHub Actions
 We use GitHub Actions to automate our CI/CD Pipeline. Our CI/CD Pipeline build, test, and deploy code right from GitHub. We make code reviews and branch management fron within GitHub.
 
 ## About GitHub Actions Workflows
@@ -347,20 +392,20 @@ The following outline the steps required to create a GitHub Actions workflow.
 ## Step 1: Create dev.yml in .github/workflows folder
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
+`dev.yml`
 ```yml
-dev.yml
 name: CICD for Group 2 Chat Application - Development
 run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
 ```
 
-# The workflow is triggered on push event to the 'dev' branch
+### The workflow is triggered on push event to the **`dev`** branch
 ```yml
 on:
   push:
     branches: [ dev ]
 ```
 
-# Define permissions for this workflow, which can be added at either the job or workflow level.    
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
 ```yml  
 permissions:
   id-token: write # This is required for requesting the JWT.
@@ -487,7 +532,9 @@ These are the jobs defined in dev.yml, stage.yml, prod.yml and snykscan.yml whic
 *** Program Weng Siong - deploy, David - the rest, Poh Leng - Snyk
 
 ### These are the jobs defined in [dev.yml](./github/workflows/dev.yml) which will be run in Github Actions workflow :
-Job name : `pre-deploy`
+<br>
+
+- Job name : `pre-deploy`
 
 ```yml
   pre-deploy:
@@ -499,7 +546,8 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/4b9fa16c-6855-4f43-9047-2d26ca6cba90)
 <br>
 <br>
-Job name : `unit-testing`
+
+- Job name : `unit-testing`
 
 ```yml
 unit-testing:
@@ -514,12 +562,13 @@ unit-testing:
       - name: Run unit tests
         run: npm test
 ```
-In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+In `unit-testing` job, **npm test** command is used to run unit test. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c6fb40f0-c0ed-4ce0-89d4-547c18af2720">
 <br>
 <br>
-Job name : `SNYK-Comprehensive-Security-scan`
+
+- Job name : `SNYK-Comprehensive-Security-scan`
 
 ```yml
   SNYK-Comprehensive-Security-scan:
@@ -533,10 +582,11 @@ In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/work
 As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
 
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/c523376b-ce37-4a9c-831d-581924fb9b37">
 <br>
 <br>
-Job name : `deploy`
+
+- Job name : `deploy`
 
 ```yml
 deploy:
@@ -593,14 +643,14 @@ deploy:
 ```
 In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
 
-The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+The deployment environment (dev,stage, or prod) is determined from *```environment: ${{ github.ref_name }}```*
 
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2)
+<img width="450" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/17a8f44b-9180-4b99-8e15-b325c41217c2">
 <br>
 <br>
 
-Job name : `zap-scan`
+- Job name : `zap-scan`
 
 ```yml
 runs-on: ubuntu-latest
@@ -618,12 +668,12 @@ runs-on: ubuntu-latest
 ```
 OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
 
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839)
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/749f37da-7e64-4167-b6e0-735dbc91f839">
 <br>
 <br>
 <br>
 
-### Snyk Comprehensive Security Scan Workflow
+## Snyk Comprehensive Security Scan Workflow
 Below is the job defined in the Snyk Comprehensive Security Scan Workflow.
 
 This GitHub Actions workflow sets up Snyk to analyze the full Snyk platform, including Snyk Open Source, Snyk Code, Snyk Container, and Snyk Infrastructure as Code (IaC). It checks for security vulnerabilities in your codebase and infrastructure, ensuring the project's security.
@@ -715,17 +765,16 @@ jobs:
 ```
 <br>
 
-## Step 1: Create main.yml in .github/workflows folder
 
 ## Step 2: Create OIDC Roles on AWS IAM
-In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
+This project is focusing on leveraging the use of the **`OpenID Connect (OIDC)`** authentication protocol instead of the *`AWS_SECRET_KEY`* and *`AWS_SECRET_ACCESS_KEY`* for authentication purposes.
 - Login to AWS Console
 - Add provider on IAM Identity providers
 
 <img width="481" alt="Add IAM Provider" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/aebf6e7b-07e9-4148-98bc-4fe6ee575576">
 
 - Select OpenID Connect and ensure below information are correct
-```
+```yml
 Provider URL :  https://token.actions.githubusercontent.com
 
 Audience : sts.amazonaws.com
@@ -733,7 +782,7 @@ Audience : sts.amazonaws.com
 ```
 - Create new IAM Roles with `web identity`
 
-![IAM web Identity](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b)
+<img width="600" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/3a0d5055-5697-430e-8c2c-74f2e8426e1b">
 
 
 - Attached permission policies accordingly
@@ -844,19 +893,24 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 * Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
 
 The pull request is merging 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
+<br>
+<br>
 
-
-## Lesson Learnt
+# Lesson Learnt
 1. Team collaboration is critical for the success of the project
-
+<br>
+<br>
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
-
-## Future Enhancement
+<br>
+<br>
+# Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
-
+<br>
+<br>
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-
-## Conclusion
+<br>
+<br>
+# Conclusion
 
 The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
 
