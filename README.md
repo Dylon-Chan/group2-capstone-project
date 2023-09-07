@@ -179,14 +179,14 @@ This branch solely requires a PR before merging, streamlining the process for te
 # Chat Application
 ## Scan the QR code below to use this application for chatting
 
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
 
 <br>
 <br>
 
 ## The frontend of the chat screen is as below.
 
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
 
 ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
 
