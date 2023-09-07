@@ -557,7 +557,7 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/6dea8858-fa05-4ccf-ad93-64196cf7d658)
 
 <br>
-<br>
+
 Job name : `unit-testing`
 
 ```yml
@@ -578,7 +578,7 @@ In `unit-tests` job, **npm test** command is used to run unit test. `pre-deploy`
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ce14b7c-d389-4d81-bf87-94bc6b3ea6e7)
 
 <br>
-<br>
+
 Job name : `SNYK-Comprehensive-Security-scan`
 
 ```yml
@@ -758,6 +758,7 @@ In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-sca
 
 The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
+
 <br>
 
 Job name : `zap-scan`
