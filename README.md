@@ -764,7 +764,7 @@ jobs:
 
 ## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Create OIDC Roles on AWS IAM
+## Step 2: Create OIDC Roles on AWS IAM <shall we put at start of CICD?>
 In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
 - Login to AWS Console
 - Add provider on IAM Identity providers
