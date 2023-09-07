@@ -780,7 +780,7 @@ jobs:
 <br>
 
 
-## Step 3: Create a pull request and commit a merge in GitHub to start the workflow 
+## Step 2: Create a pull request and commit a merge in GitHub to start the workflow 
 **--Add here on Pull Request to Staging--**
 
 **--Show Staging workflow--**
