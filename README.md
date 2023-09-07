@@ -29,17 +29,16 @@ Our developers are the architects behind Project Titanium. They leverage their e
 **--Write some story here--**
 
 Project Name: Titanium
-
 Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
 
-# Architecture
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 # Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
 2. Implement dependency screening in CI Script
 3. Ensure proper authentication and authorization in each environment in CD Script. (e.g. credentials used for deploying development and production environments should not be the same)
 4. Proper handling of CICD Pipeline Secrets
+
+<br>
 
 # Getting started
 
@@ -55,7 +54,7 @@ Crafted with NodeJS, the backend harnesses the power of the Express framework fo
 The user interface is designed using a blend of HTML, CSS, and JavaScript.
 
 ## Infrastructure Architecture
-**--Add here--**
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 
 # CICD Pipeline
@@ -124,7 +123,7 @@ There are two methods to create branch in GitHub: through the GitHub website and
     git branch <branch name>
     ```
 
-![CreateBranch](documentation/images/create-branch-local.png)
+![create-branch-local](documentation/images/create-branch-local.png)
 
 # Branch Protection
 Branch protection is a critical aspect of maintaining code integrity in a collaborative environment. It enforces rules on the specific branches and prevents unauthorized changes to the codebase.
@@ -137,7 +136,7 @@ Branch protection is a critical aspect of maintaining code integrity in a collab
 5. Enter the branch name to be protected.
 6. Set up the branch protection rules as per team's requirement.
 
-![SetupBranchProtection](documentation/images/setup-branch-protection.png)
+![setup-branch-protection](documentation/images/setup-branch-protection.png)
 
 In this project, branch protection has been implemented for the `dev`, `stage` and `prod` branches. The following rules are enforced on these branches:
 
@@ -148,7 +147,7 @@ Both require a pull request (PR) prior to merging:
 - Both branches require status checks to pass and must be up-to-date before merging.
 - Administrators cannot override these branch protection rules.
 
-![Prod&StageBranchProtection](documentation/images/branch-protection-prod-stage.png)
+![branch-protection-prod-stage](documentation/images/branch-protection-prod-stage.png)
 
 ## `Dev` branch
 This branch solely requires a PR before merging, streamlining the process for team members to merge feature branches into dev for testing and collaboration.
@@ -162,19 +161,7 @@ This branch solely requires a PR before merging, streamlining the process for te
 - Stay Synced: Consistently pull the latest changes from the main (or base) branch into our feature branches. Doing so reduces the risk of merge conflicts.
 - Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into our feature branch. This ensures that our feature branch is current and minimizes unforeseen integration issues.
 
-# Chat Application **--Put at last--**
-## Scan the following QR code to try on our chat application. **--Put at last--**
-
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
-<br>
-
-## The frontend of the chat screen is as below. **--Put at last--**
-
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
-
-<br>
-
-## Source Code Organization: <KIV>
+## Source Code Organization: **--KIV--**
 Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
 
 # Package and Dependency Installation
@@ -531,7 +518,10 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 }
 ```
 <br>
-<br>
+
+### Github Secrets
+Prior to initiating the CI/CD pipeline, ensure that the necessary repository secrets are securely stored in GitHub Secrets. This not only safeguards sensitive data from potential leaks but also ensures they're readily available for reference within the workflows.
+![Alt text](/documentation/images/github-secrets.png)
 
 ## Step 1: Create `dev.yml` in .github/workflows directory
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
@@ -868,7 +858,7 @@ The targeted deployment environment (whether it is dev, stage, or prod) is ident
 
 Upon successful deployment, we can explore the Github Action workflow logs to retrieve the application's access URL.
 
-![image](image-1.png)
+![dev-access-url](/documentation/images/dev-access-url.png)
 
 
 <br>
@@ -931,7 +921,6 @@ jobs:
 
 ### Deploy to Staging Environment
 
-Job name : `deploy-to-stage`
 ```yml
 deploy-to-stage:
     runs-on: ubuntu-latest
@@ -1013,22 +1002,160 @@ deploy-to-stage:
       - name: Echo Access URL
         run: echo "The Access URL is http://${{ steps.terraform-ecs.outputs.access_url }}:${{ env.port }}"
 ```
-Note: A Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
+Note: This Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
+![pullrequest-stage](/documentation/images/pullrequest-stage.png)
 
 The entire staging delpoyment workflow is shown below:
-![Alt text](image-4.png)
+![stage-workflow](/documentation/images/stage-workflow.png)
 
 On completing a successful deployment, delve into the Github Action workflow logs to obtain the application's access URL. This URL facilitates User Acceptance Testing (UAT) by either the in-house team or the customers.
-![Alt text](image-3.png)
+![stage-access-url](/documentation/images/stage-access-url.png)
 
-## Step 3: Create `prod.yml` in .github/workflows directory
+## Step 3: Setting up `prod.yml` in .github/workflows directory
+Upon obtaining satisfactory UAT results, you're set to deploy the application in the Production environment. Before initiating a Pull Request to merge the `stage` branch into the `prod` branch, ensure the `prod.yml` file is in place to enable automated deployment.
+
+```yml
+name: CICD for Group 2 Chat Application - Production
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Production
+```
+
+### The workflow will be triggered on push events to the "prod" branch, which will be done when a pull request is merged into the "prod" branch.
+```yml
+on:
+  push:
+    branches: [ prod ]
+```
+
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT.
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+``` 
+
+### These are the jobs defined in [prod.yml](./.github/workflows/prod.yml):
+
+Job name : `pre-deploy`
+
+```yml
+jobs:
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+
+### Production Environment Deployment
+
+```yml
+deploy-to-prod:
+    runs-on: ubuntu-latest
+    needs: [ pre-deploy ]   # This job depends on the completion of the 'pre-deploy' job.
+    name: Deploy to Production
+    env:
+      environment: ${{ github.ref_name }}  # Specify the environment to deploy
+    steps:
+
+      # Checkout the latest code from the repository
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.PROD_ROLE_TO_ASSUME }}
+          aws-region: ap-southeast-1
+
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' output from Terraform.
+        # Store the resulting ECR URL as the output variable for later use or reference.
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve -refresh-only
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
+        working-directory: ./environments/${{ env.environment }}
+        id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # 'image_name' is provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform taint aws_ecs_service.service
+          echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
+          echo "route53_record_name=$(terraform output -json | jq -r .route53_record_name.value)" >> $GITHUB_OUTPUT
+
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
+      - name: Check ALB Target Group Health Status
+        run: |
+          target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
+          while true; do
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            if [[ "$health_status" == "healthy" ]]; then
+                    echo "Targets are healthy!"
+                    break
+                else
+                    echo "Current status of target: $health_status. Waiting..."
+                    sleep 10  # Check every 30 seconds
+                fi
+          done
+      
+      # Display the Application URL
+      - name: Echo Application URL
+        run: echo "The Application URL is http://${{ steps.terraform-ecs.outputs.route53_record_name }}"
+```
+Please note: A Pull Request to prod requires approvals from at least 4 reviewers, with all status checks in the green pass.
+
+![pullrequest-prod](/documentation/images/pullrequest-prod.png)
+
+A visual representation of the entire Production deployment workflow can be seen below:
+
+![prod-workflow](/documentation/images/prod-workflow.png)
+
+With the deployment complete, the application is now associated with its domain name and can be accessed via http://securechat.club.
+
+![app-url](/documentation/images/app-url.png)
+
+# ChatSecure Application 
+## Scan the following QR code to try on our chat application.
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<br>
+
+## Login Page
+![app-login-page](/documentation/images/app-login-page.jpeg)
+
+## Chat Page
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
+
+<br>
 
 
-
-
-
-
-
+**--KIV--**
 * Create a `New pull request`
 ![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
@@ -1048,11 +1175,6 @@ On completing a successful deployment, delve into the Github Action workflow log
 ![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/1bf935b7-ecbe-4944-b9ba-0e5f63f6132d)
 
 The pull request is now merging a new 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
-
-**--Add here on Pull Request to Production--**
-
-**--Show Production workflow--**
-
 
 # Lesson Learned
 1. Team collaboration is critical for the success of the project
