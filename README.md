@@ -302,7 +302,13 @@ CMD ["npm", "start"]
 Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
 
 ## Infrastructure in Different Environment
-**... to briefly describe what are the infra we have in dev, stage and prod differently. (different set of infra resources)**
+Our infrastructure setup varies across the three main environments: Development (Dev), Staging, and Production. Our workflow employs a centralized AWS ECR Private Repository, where Docker images are built and pushed. For deployments across all environments, the Docker image with the latest tag is utilized.
+
+### Dev Environment:
+In the Dev environment:
+- ECS: We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
+- Security Group: A dedicated security group is configured for the ECS service. This group facilitates incoming traffic on port 3000.
+- Network Configuration: The ECS is also equipped with a specified network configuration to ensure smooth communication and resource accessibility.
 
 
 
