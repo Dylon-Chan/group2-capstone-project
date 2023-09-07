@@ -247,9 +247,56 @@ The output from **npm test** command shows that the unit test has passed.
 
 The unit test has been successfully run locally. This unit test will be included in the CI/CD pipeline and will be automatically triggered through the [GitHub Actions](#github-actions) workflow.
 <br>
+
+## Containerization with Docker
+Docker encapsulates applications within containers, providing an environment-agnostic platform to ensure uniform behavior across varying setups. Containerizing our ChatSecure application ensures consistent behavior across different environments, from local development to production deployment.
+
+To initiate this, a Dockerfile is essential for Docker image construction.
+
+### Dockerfile:
+```bash
+#use nodejs with latest version
+FROM node:latest
+
+#set working directory
+WORKDIR /app
+
+#install the app dependencies
+#use wildcare to copy both package.json and package-lock.json
+COPY package*.json ./
+RUN npm install
+
+#bundle app source
+COPY . .
+
+#expose port
+EXPOSE 3000
+
+#start the app
+CMD ["npm", "start"]
+```
+### Local Docker Image Build and Run:
+1. Navigate to the root directory which contain the Dockerfile and build the Docker image with the following.
+```bash
+docker build -t chatsecure-app:latest .
+```
+This constructs a Docker image tagged `latest` under the name `chatsecure-app`
+2. Launch the application inside a Docker container using:
+```bash
+docker run -d -p 3000:3000 chatsecure-app:latest
+```
+3. Open your browser and navigate to `http://localhost:3000` to access the application.
+
 <br>
 
-## Vulnerability Scan  
+Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
+
+## Infrastructure in Different Environment
+**... to briefly describe what are the infra we have in dev, stage and prod differently. (different set of infra resources)**
+
+
+
+## Vulnerability Scan  <Shall we put under Github Actions section?>
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
 
 We will begin by locally validating each test to ensure the correct implementation of the Snyk security scan software. 
@@ -727,7 +774,7 @@ jobs:
 
 ## Step 1: Create main.yml in .github/workflows folder
 
-## Step 2: Create OIDC Roles on AWS IAM
+## Step 2: Create OIDC Roles on AWS IAM <shall we put at start of CICD?>
 In this project, `OpenID Connect` authentication protocol is being used instead of hard coding `AWS_SECRET_KEY` and `AWS_SECRET_ACCESS_KEY` inside Github Secrets and Variables.
 - Login to AWS Console
 - Add provider on IAM Identity providers
