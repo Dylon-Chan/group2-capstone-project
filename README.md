@@ -557,7 +557,7 @@ permissions:
   security-events: write # Grants permission to write security event data for the repository.
 ``` 
 
-### These are the jobs defined in [dev.yml](./github/workflows/dev.yml) which will be run in Github Actions workflow :
+### These are the jobs defined in [dev.yml](./.github/workflows/dev.yml) which will be run in Github Actions workflow :
 Job name : `pre-deploy`
 
 ```yml
@@ -826,7 +826,7 @@ The pull request is now merging a new 'feature' branch into 'dev' branch which r
 **--Show Production workflow--**
 
 
-# Lesson Learnt
+# Lesson Learned
 1. Team collaboration is critical for the success of the project
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
 
@@ -835,12 +835,12 @@ The pull request is now merging a new 'feature' branch into 'dev' branch which r
 # Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
 2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-3. **--Add HTTPS connection?--**
-4. **--Add WAF--**
-5. **--Add auto scaling--**
+3. Providing a higher level of security with HTTPS and SSL certificates
+4. Adding an additional layer of security by implementing WAF (Web Application Firewall)
+5. As part of our continuous effort to improve the availability and resiliency of our application, we are planning to leverage auto scaling group
 
 # Conclusion
 
-The project was successfully implemented as we have completed the CI/CD Pipeline and secured the application by scanning of vulnerabilities using the tools such as Branching strategy, GitHub branch creation & protection, Docker container application deployment, Unit test, GitHub Actions Workflow and Agile methology using Jira software.
+The project was successfully implemented as we have completed the CI/CD Pipeline and **secured** the application by scanning of vulnerabilities using a variety of tools, including Branching Strategy, GitHub branches creation and protections, deploying Docker container applications, performing unit tests, utilizing GitHub Action Workflows, and applying Agile methodologies to Jira software.
 
 
