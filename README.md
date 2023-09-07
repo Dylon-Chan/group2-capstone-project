@@ -713,6 +713,14 @@ jobs:
         with:
           sarif_file: snyk-code.sarif
 ```
+
+3. Save and commit the workflow YAML file to the repository, then push the changes to GitHub. Visit the "Actions" tab in the GitHub repository where the workflow is listed, and GitHub will start running it based on defined triggers.
+![workflow-with-snyk](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/628f3e53-c9a5-49bd-8a2b-842e36dcff20)
+
+4. Click on the workflow to monitor its progress, view the details of each step as it runs, and if configured correctly, observe a successful completion marked by a green checkmark.
+![steps-of-snyk-security-scan](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/8348de10-4a45-48b3-a2d3-64be6f690ad9)
+
+
 <br>
 
 ## Step 1: Create main.yml in .github/workflows folder
