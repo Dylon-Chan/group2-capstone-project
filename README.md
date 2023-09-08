@@ -293,28 +293,7 @@ CMD ["npm", "start"]
 
 Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
 
-# Infrastructure in Different Environment
-Our infrastructure setup varies across the three main environments: Development (Dev), Staging, and Production. Our workflow employs a centralized AWS ECR Private Repository, where Docker images are built and pushed. For deployments across all environments, the Docker image with the latest tag is utilized.
-
-## Dev Environment:
-In the Dev environment:
-- Amazon Elastic Container Service (ECS) : We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
-- Security Group: A dedicated security group is configured for the ECS service. This group facilitates incoming traffic on port 3000.
-- Network Configuration: The ECS is also equipped with a specified network configuration to ensure smooth communication and resource accessibility.
-
-## Staging Environment:
-For the Staging environment:
-- ECS: Just like in Dev, an ECS cluster, ECS task definition, and ECS service are established using Fargate.
-- Application Load Balancer (ALB): An ALB has been introduced. It listens to an ALB target group, which in turn is associated with the Fargate task.
-- Security Group: Two security groups are established: One for the ALB, allowing incoming traffic on port 8000. The second for the ECS, permitting incoming traffic exclusively from the ALB's security group.
-
-## Production Environment:
-The Production environment infrastructure mirrors Staging but introduces an additional component:
-- Route 53: Integrated with the ALB, Route 53 facilitates DNS management, ensuring reliable routing and enhanced availability.
-
 <br>
-
-> We utilize a centralized AWS ECR repository to ensure consistent, secure, and efficient Docker image management across all environments. Differentiated infrastructures for Dev, Staging, and Production allow for tailored resource allocation, enhanced security, and environment-specific scalability. Having individual Terraform state files for each environment offers granular control, mitigates risks by containing potential errors, and provides more organized and efficient state management.
 
 # Vulnerability Scan
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
@@ -398,6 +377,30 @@ Explore this snapshot at https://app.snyk.io/org/dylon-chan/project/02779ff9-426
 Notifications about newly disclosed issues related to these dependencies will be emailed to you.
 ```
 <br>
+
+# Infrastructure in Different Environment
+Our infrastructure setup varies across the three main environments: Development (Dev), Staging, and Production. Our workflow employs a centralized AWS ECR Private Repository, where Docker images are built and pushed. For deployments across all environments, the Docker image with the latest tag is utilized.
+
+## Dev Environment:
+In the Dev environment:
+- Amazon Elastic Container Service (ECS) : We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
+- Security Group: A dedicated security group is configured for the ECS service. This group facilitates incoming traffic on port 3000.
+- Network Configuration: The ECS is also equipped with a specified network configuration to ensure smooth communication and resource accessibility.
+
+## Staging Environment:
+For the Staging environment:
+- ECS: Just like in Dev, an ECS cluster, ECS task definition, and ECS service are established using Fargate.
+- Application Load Balancer (ALB): An ALB has been introduced. It listens to an ALB target group, which in turn is associated with the Fargate task.
+- Security Group: Two security groups are established: One for the ALB, allowing incoming traffic on port 8000. The second for the ECS, permitting incoming traffic exclusively from the ALB's security group.
+
+## Production Environment:
+The Production environment infrastructure mirrors Staging but introduces an additional component:
+- Route 53: Integrated with the ALB, Route 53 facilitates DNS management, ensuring reliable routing and enhanced availability.
+
+<br>
+
+> We utilize a centralized AWS ECR repository to ensure consistent, secure, and efficient Docker image management across all environments. Differentiated infrastructures for Dev, Staging, and Production allow for tailored resource allocation, enhanced security, and environment-specific scalability. Having individual Terraform state files for each environment offers granular control, mitigates risks by containing potential errors, and provides more organized and efficient state management.
+
 <br>
 
 # GitHub Actions
