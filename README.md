@@ -77,25 +77,25 @@ In the world of modern software development, security cannot be an afterthought.
 ![BranchingStrategy](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/4b6df491-f6a5-4317-8e57-3389e75f8a65)
 
 ## Development Branch (Dev)
-https://github.com/Dylon-Chan/group2-capstone-project/dev
+https://github.com/Dylon-Chan/group2-capstone-project/blob/dev
+- The main branch, also known as the master branch
 - The dev branch, short for development branch, serves as the primary integration branch for ongoing development work.
--	It acts as a staging area for features and bug fixes before they are merged into the main branch.
 - Developers regularly merge their completed feature branches into the dev branch for integration testing and collaboration.
 - Continuous integration practices are often implemented on the dev branch, allowing automated testing and verification of code changes.
 
 ## Stage Branch (Stage)
-https://github.com/Dylon-Chan/group2-capstone-project/stage
+https://github.com/Dylon-Chan/group2-capstone-project/blob/stage
 
 - The stage branch, short for Stage branch, serves as the User Acceptance Test (UAT) for ongoing testing.
 - It acts as a staging area for testing before deploy Production environment
 
 
 ## Production Branch (Prod)
-https://github.com/Dylon-Chan/group2-capstone-project/prod
+https://github.com/Dylon-Chan/group2-capstone-project/blob/prod
 
-- The main branch, also known as the master branch, represents the production-ready state of the application.
+- Represents the production-ready state of the application.
 - It contains stable and thoroughly tested code that is ready to be deployed to the live environment.
-- Only fully reviewed and approved code changes are merged into the main branch.
+- Only fully reviewed and approved code changes are merged from stage into the production branch.
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 
@@ -163,15 +163,13 @@ This branch solely requires a PR before merging, streamlining the process for te
 
 # Best Practices on Branch Management
 
-- Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
-- Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
-- Stay Synced: Consistently pull the latest changes from the main (or base) branch into our feature branches. Doing so reduces the risk of merge conflicts.
-- Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into our feature branch. This ensures that our feature branch is current and minimizes unforeseen integration issues.
-
-## Source Code Organization: **--KIV--**
-Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
+- **Descriptive Naming:** Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
+- **Clean House Regularly:** Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
+- **Stay Synced:** Consistently pull the latest changes from the main (or base) branch into our feature branches. Doing so reduces the risk of merge conflicts.
+- **Pre-merge Checks:** Before merging a feature branch into the base branch, merge the latest changes from the base branch into our feature branch. This ensures that our feature branch is current and minimizes unforeseen integration issues.
 
 # Package and Dependency Installation
+
 Once the application source codes are available, we can install the required packages and dependencies. This can be done by running the following command in the terminal:
 ```bash
 npm init                        # Create the package.json file
@@ -200,7 +198,7 @@ For local exploration, update the scripts as above and launch the application:
 ```bash
 npm start
 ```
-We can now access the ChatSecure magic by heading over to http://localhost:3000 in the browser.
+We can now access the **ChatSecure** magic by heading over to http://localhost:3000 in the browser.
 
 # Unit tests
 Testing is intended to maintainability and functionality of our code. Since even small changes can have a significant impact, we ensure that our tests are updated with our code in order to reduce the likelihood of encountering a bug in the future.
@@ -222,6 +220,7 @@ Testing is intended to maintainability and functionality of our code. Since even
    ```
 
 2. Test folder and test script
+
 As soon as Jest is executed, it searches our repository for tests. The practice of keeping our test scripts in a folder is recommended.
    
 ![test-folder](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/a9fbd015-9d9d-4d82-9a17-5cb0037273b0)
@@ -229,7 +228,7 @@ As soon as Jest is executed, it searches our repository for tests. The practice 
 
 4. Run the unit test - **`local testing`**
 
-```sh
+```bash
 $ npm test
 > group2-capstone-project-chat@0.0.0 test
 > jest
@@ -460,10 +459,9 @@ This role will only allow any actions executed from *`dev`* branch as indicated 
             "Condition": {
                 "StringLike": {
                     "token.actions.githubusercontent.com:sub": [
-                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev",
-                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/feature/*"
+                        "repo:Dylon-Chan/group2-capstone-project:ref:refs/heads/dev"
                     ]
-                },
+                }
                 "ForAllValues:StringEquals": {
                     "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
                     "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
@@ -600,7 +598,7 @@ Job name : `SNYK-Comprehensive-Security-scan`
     secrets: inherit
 ```
 
-In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./github/workflows/snyk-security.yml) workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
+In `SNYK-Comprehensive-Security-scan` job, [**snyk-security.yml**](./.github/workflows/snyk-security.yml) workflow is called to run security scanning. `pre-deploy` job must complete successfully before this job will run because of `needs: pre-deploy`.
 
 As both `unit-testing` and `SNYK-Comprehensive-Security-scan` jobs needs: `pre-deploy`, these 2 jobs will run in parallel after `pre-deploy` job is completed.
 
@@ -867,7 +865,6 @@ Upon successful deployment, we can explore the Github Action workflow logs to re
 
 ![dev-access-url](/documentation/images/dev-access-url.png)
 
-
 <br>
 
 Job name : `zap-scan`
@@ -886,6 +883,12 @@ runs-on: ubuntu-latest
           # The 'target' parameter specifies the URL of the deployed application to be scanned.
           target: ${{ needs.deploy.outputs.access_url_output }}
 ```
+DAST tools simulate real-world attacks on the application, uncovering vulnerabilities that may not be apparent in static analysis alone.
+By incorporating DAST scans into the pipeline, you can continuously assess the security posture of the browser-based chat application in a production-like environment. 
+This ongoing assessment helps to identify and remediate vulnerabilities before they are exploited by attackers.
+
+We used OWASP ZAP which is a penetration testing tool that helps developers and security professionals detect and find vulnerabilities in web applications
+
 OWASP scanning will only be performed by `zap-scan` after the resources have been successfully deployed by the `deploy` job.
 
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/8ff7a79a-a60f-4c8a-a93b-049c1aba6adc)
