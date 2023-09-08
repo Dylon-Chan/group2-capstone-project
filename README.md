@@ -1173,20 +1173,18 @@ With the deployment complete, the application is now associated with its domain 
 <br>
 
 # Lesson Learned
-1. Team collaboration is critical for the success of the project
-2. Repository name is case sensitive and Yaml’s syntax and spacing are important
-3. It is important to setup automated testing and try to automate as much as possible
-4. Security is critical to incorporate earlier in the development lifecycle
+1. Team collaboration is critical for the success of the project.
+2. Repository name is case sensitive and Yaml’s syntax and spacing are important to get right.
+3. Setting up automated testing is essential, and efforts should be made to automate processes wherever feasible.
+4. Prioritizing security from the early stages of the development lifecycle is paramount.
 
 # Future Enhancement
-1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
-2. Explore using Jira Service Management as a ticketing system to integrate with GitHub to report issues and follow up
-3. Providing a higher level of security with HTTPS and SSL certificates
+1. Exploring other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and evaluate the strengths of each tool.
+2. Integrating Jira Service Management as a ticketing system with GitHub to report issues and follow up
+3. Providing a higher level of security with HTTPS protocol and SSL certificates
 4. Adding an additional layer of security by implementing WAF (Web Application Firewall)
 5. As part of our continuous effort to improve the availability and resiliency of our application, we are planning to leverage auto scaling group
 
 # Conclusion
 
-The project was successfully implemented as we have completed the CI/CD Pipeline and **secured** the application by scanning of vulnerabilities using a variety of tools, including Branching Strategy, GitHub branches creation and protections, deploying Docker container applications, performing unit tests, utilizing GitHub Action Workflows, and applying Agile methodologies to Jira software.
-
-
+Throughout this project, our team has successfully implemented a DevSecOps-centric CI/CD pipeline, ensuring a secure and efficient software development lifecycle. By leveraging cutting-edge tools such as Github Actions, Snyk and OWASP, combined with best-practice methodologies, we have created a robust system that integrates security at every stage of the development process. This ensures that vulnerabilities are identified and addressed early, reducing risks and streamlining deployment. We are proud of the strides we have made in promoting a security-first approach and are confident that our methods set a benchmark for DevSecOps excellence.
