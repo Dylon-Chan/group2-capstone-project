@@ -26,14 +26,17 @@ Our developers are the architects behind Project Titanium. They leverage their e
 5. Chris - DevOps Engineer, experienced in building secure CI/CD pipelines and automation (CI/CD/DAST).
 
 # Customer Request
-**--Write some story here--**
+In a high-security workplace with strict app restrictions, Sarah, the IT head, faced a communication problem. She couldn't install chat apps on company devices, yet the slow email system hindered real-time communication.
+
+Our Solution: Our company proposed creating an in-house browser-based chat app, custom-built for security. It had basic text chat functions, with no multimedia features, and operated within the company's secure network.
+
+Development and Testing: Our team developed a secure, isolated network and a minimalistic chat interface. After thorough testing, it was rolled out gradually.
+
+Desired Results: The new chat app improved real-time communication without compromising security. It boosted productivity and collaboration, and other high-security workplaces sought their advice. This solution had not only solved Sarah company's problem but also helped others facing similar challenges.
 
 Project Name: Titanium
-
 Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capstone-project)
 
-# Architecture
-![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 # Requirement / Criteria for Project Titanium
 1. A typical CICD Pipeline
@@ -41,21 +44,31 @@ Repository: [Titanium Project Repo](https://github.com/Dylon-Chan/group2-capston
 3. Ensure proper authentication and authorization in each environment in CD Script. (e.g. credentials used for deploying development and production environments should not be the same)
 4. Proper handling of CICD Pipeline Secrets
 
+<br>
+
 # Getting started
+https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cb6253f4-50fb-4e00-82cb-1ec8d9f5a535
 
-## Application Design
-### Software Architecture
-**--Add here--**
+# Application Design
 
-### Infrastructure Architecture
-**--Add here--**
+## Software Architecture
+ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
+
+### Backend:
+Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
+
+### Frontend:
+The user interface is designed using a blend of HTML, CSS, and JavaScript.
+
+## Infrastructure Architecture
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/20112494/cbd2e0f7-9dd6-46d8-b8a2-b506f36261ec)
 
 
-## CICD Pipeline
-**--Add transition here--**
+# CICD Pipeline
 
-E.g.
-Our mission is to accelerate software deployment using CI/CD Pipeline so that each release cycle can be released quickly from the development environment, to staging environment and to production environment.
+In the ever-evolving landscape of software development, Continuous Integration and Continuous Deployment (CI/CD) pipelines have become indispensable tools for ensuring the efficiency, reliability, and agility of applications. Here, we'll explore how a chat application, designed to operate exclusively within web browsers, underwent a transformative transition to embrace CI/CD pipelines.
+In the world of modern software development, security cannot be an afterthought. It must be an integral part of the development process from the very beginning. Enter DevSecOps, a paradigm shift that incorporates security seamlessly into the DevOps pipeline utilising tools integrating various security functions
+
 
 # Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
@@ -86,7 +99,7 @@ https://github.com/Dylon-Chan/group2-capstone-project/prod
 - It is typically protected, meaning that direct commits or modifications are restricted, and changes can only be introduced through pull requests after thorough code review and testing.
 
 
-## Branch Creation
+# Branch Creation
 There are two methods to create branch in GitHub: through the GitHub website and using a local environment followed by pushing to GitHub.
 
 1. Create environment branches in GitHub website - `dev`, `stage` and `prod`. 
@@ -117,9 +130,9 @@ There are two methods to create branch in GitHub: through the GitHub website and
     git branch <branch name>
     ```
 
-![CreateBranch](documentation/images/create-branch-local.png)
+![create-branch-local](documentation/images/create-branch-local.png)
 
-## Branch Protection
+# Branch Protection
 Branch protection is a critical aspect of maintaining code integrity in a collaborative environment. It enforces rules on the specific branches and prevents unauthorized changes to the codebase.
 
 **Steps to enable branch protection in GitHub:**
@@ -130,7 +143,7 @@ Branch protection is a critical aspect of maintaining code integrity in a collab
 5. Enter the branch name to be protected.
 6. Set up the branch protection rules as per team's requirement.
 
-![SetupBranchProtection](documentation/images/setup-branch-protection.png)
+![setup-branch-protection](documentation/images/setup-branch-protection.png)
 
 In this project, branch protection has been implemented for the `dev`, `stage` and `prod` branches. The following rules are enforced on these branches:
 
@@ -141,44 +154,21 @@ Both require a pull request (PR) prior to merging:
 - Both branches require status checks to pass and must be up-to-date before merging.
 - Administrators cannot override these branch protection rules.
 
-![Prod&StageBranchProtection](documentation/images/branch-protection-prod-stage.png)
+![branch-protection-prod-stage](documentation/images/branch-protection-prod-stage.png)
 
 ## `Dev` branch
 This branch solely requires a PR before merging, streamlining the process for team members to merge feature branches into dev for testing and collaboration.
 
 ![DevBranchProtection](documentation/images/branch-protection-dev.png)
 
-## Best Practices on Branch Management
+# Best Practices on Branch Management
 
 - Descriptive Naming: Choose clear and meaningful names for feature branches. This aids in collaboration and simplifies code review processes.
 - Clean House Regularly: Remove outdated branches both locally and on GitHub periodically. A streamlined repository is easier to navigate and manage.
 - Stay Synced: Consistently pull the latest changes from the main (or base) branch into our feature branches. Doing so reduces the risk of merge conflicts.
 - Pre-merge Checks: Before merging a feature branch into the base branch, merge the latest changes from the base branch into our feature branch. This ensures that our feature branch is current and minimizes unforeseen integration issues.
 
-# Chat Application
-## Scan the following QR code to try on our chat application. **--Put at last--**
-
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
-<br>
-
-## The frontend of the chat screen is as below. **--Put at last--**
-
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
-
-<br>
-
-**--move below section up to Design--**
-
-ChatSecure offers a dynamic platform for instant messaging. Upon accessing, users are prompted to set a unique username. To make each participant distinct, the system automatically assigns a unique color to every username. Moreover, users can see the new joiners and the current number of participants in the chat room, adding a layer of interactivity.
-
-# Application Architecture <move up to Design>
-## Backend: <move up to Design>
-Crafted with NodeJS, the backend harnesses the power of the Express framework for the web functionalities. Real-time communication is achieved through the socket.io library.
-
-## Frontend: <move up to Design>
-The user interface is designed using a blend of HTML, CSS, and JavaScript.
-
-## Source Code Organization: <KIV>
+## Source Code Organization: **--KIV--**
 Client-side code resides in the public folder. For server-side functionalities, refer to the index.js file.
 
 # Package and Dependency Installation
@@ -304,9 +294,27 @@ CMD ["npm", "start"]
 Subsequently, this `Dockerfile` will play a pivotal role in our CI/CD pipeline, facilitating the automated build and push of the Docker image to AWS ECR.
 
 # Infrastructure in Different Environment
-**... to briefly describe what are the infra we have in dev, stage and prod differently. (different set of infra resources)**
+Our infrastructure setup varies across the three main environments: Development (Dev), Staging, and Production. Our workflow employs a centralized AWS ECR Private Repository, where Docker images are built and pushed. For deployments across all environments, the Docker image with the latest tag is utilized.
 
+## Dev Environment:
+In the Dev environment:
+- Amazon Elastic Container Service (ECS) : We have established an ECS cluster, an ECS task definition, and an ECS service using Fargate.
+- Security Group: A dedicated security group is configured for the ECS service. This group facilitates incoming traffic on port 3000.
+- Network Configuration: The ECS is also equipped with a specified network configuration to ensure smooth communication and resource accessibility.
 
+## Staging Environment:
+For the Staging environment:
+- ECS: Just like in Dev, an ECS cluster, ECS task definition, and ECS service are established using Fargate.
+- Application Load Balancer (ALB): An ALB has been introduced. It listens to an ALB target group, which in turn is associated with the Fargate task.
+- Security Group: Two security groups are established: One for the ALB, allowing incoming traffic on port 8000. The second for the ECS, permitting incoming traffic exclusively from the ALB's security group.
+
+## Production Environment:
+The Production environment infrastructure mirrors Staging but introduces an additional component:
+- Route 53: Integrated with the ALB, Route 53 facilitates DNS management, ensuring reliable routing and enhanced availability.
+
+<br>
+
+> We utilize a centralized AWS ECR repository to ensure consistent, secure, and efficient Docker image management across all environments. Differentiated infrastructures for Dev, Staging, and Production allow for tailored resource allocation, enhanced security, and environment-specific scalability. Having individual Terraform state files for each environment offers granular control, mitigates risks by containing potential errors, and provides more organized and efficient state management.
 
 # Vulnerability Scan
 In our CI/CD pipeline, comprehensive package vulnerability scanning is absolutely essential. This practice involves multiple layers of security checks, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), Infrastructure as Code (IaC) scanning, and Container scanning.
@@ -517,13 +525,15 @@ This role will only allow any actions executed from *`prod`* branch as indicated
 }
 ```
 <br>
-<br>
 
-## Step 1: Create dev.yml in .github/workflows folder
+### Github Secrets
+Prior to initiating the CI/CD pipeline, ensure that the necessary repository secrets are securely stored in GitHub Secrets. This not only safeguards sensitive data from potential leaks but also ensures they're readily available for reference within the workflows.
+![Alt text](/documentation/images/github-secrets.png)
+
+## Step 1: Create `dev.yml` in .github/workflows directory
 ![gitaction](https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/46dc8874-876e-4831-aa0a-49a324892851)
 
 ```yml
-dev.yml
 name: CICD for Group 2 Chat Application - Development
 run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Development
 ```
@@ -548,6 +558,7 @@ permissions:
 Job name : `pre-deploy`
 
 ```yml
+jobs:
   pre-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -562,7 +573,7 @@ In `pre-deploy` job, useful information such as the triggered event name, output
 Job name : `unit-testing`
 
 ```yml
-unit-testing:
+  unit-testing:
     runs-on: ubuntu-latest
     needs: pre-deploy
     name: Unit Testing
@@ -699,18 +710,22 @@ jobs:
 
 <br>
 
-Job name : `deploy`
+### Deploy to Development Environment
 
+Job name : `deploy`
 ```yml
 deploy:
     runs-on: ubuntu-latest
     outputs:
-      access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
+      access_url_output: ${{ steps.tf-outputs.outputs.access_url }} # Define outputs for this job which can be used in subsequent jobs.
     needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ] # This job depends on the completion of 'pre-deploy', 'unit-testing' and "SNYK-Comprehensive-Security-scan" jobs
     name: Deploy to AWS
+    # Set environment variables for this job. Here, the deployment environment is set based on the branch name 'dev'.
     env:
       environment: ${{ github.ref_name }} # Specify the environment to deploy
     steps:
+      
+      # Checkout the latest code from the repository
       - name: Checkout repo code
         uses: actions/checkout@v3
       
@@ -719,46 +734,139 @@ deploy:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEV_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Login to Amazon ECR # Log in to Amazon ECR (Elastic Container Registry)
-        id: login-ecr
+          aws-region: ap-southeast-1
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR 
+        id: login-ecr # Define an id which allows other steps to reference outputs from this step.
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: true
-      - name: Create ECR repository using Terraform # Create an ECR repository using Terraform
-        id: terraform-ecr
+
+      # Create an ECR repository using Terraform and output the repository url for the input to the subsequent steps.
+      - name: Create ECR repository using Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
         working-directory: ./modules/ecr
         run: |
           terraform init
           terraform plan
           terraform apply -auto-approve
           echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
-      - name: Push image to Amazon ECR # Build and push the Docker image to the Amazon ECR
-        id: push-image
+      
+      # Build and push the Docker image to the Amazon ECR Repository using the repository url from the previous step.
+      - name: Push image to Amazon ECR
+        id: push-image  # Define an id which allows other steps to reference outputs from this step.
         env:
-          image_tag: latest
+          image_tag: latest # Define the image tag
         run: |
           docker build -t ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag .
           docker push ${{ steps.terraform-ecr.outputs.ecr_url }}:$image_tag
-      - name: Create AWS ECS cluster, task definition and service using Terraform # Create an AWS ECS cluster, task definition and service using Terraform
-        working-directory: ./environments/${{ env.environment }}        
+
+      # Use Terraform to create AWS ECS resources like cluster, task definition, and service
+      - name: Create AWS ECS cluster, task definition and service using Terraform
+        id: terraform-ecs # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # 'terraform apply -auto-approve' command is used to create or update the resources with auto-approval.
+        # Variables are passed using the '-var' option to customize the Terraform configuration.
+        # The '-target' option is used to restrict the scope of resource application.
+        # Mark the ECS service resource for recreation in the next Terraform apply.
         run: |
           terraform init
-          terraform apply -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
-      - name: Set up Terraform outputs # Set up Terraform outputs to get the access url
-        id: tf-outputs
-        working-directory: ./environments/${{ env.environment }}
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}" \
+          -target="aws_ecs_cluster.cluster" -target="aws_ecs_task_definition.task" \
+          -target="aws_security_group.ecs_sg" -target="aws_ecs_service.service"
+          terraform taint aws_ecs_service.service
+
+          # Output the ECS cluster name for use in subsequent steps.
+          echo "ecs_name=$(terraform output -json | jq -r .ecs_name.value)" >> $GITHUB_OUTPUT
+      
+      # Ensure that ECS task is running before proceeding to next step.
+      - name: Check if ECS task is running
         run: |
-          terraform output
+          # Define ECS cluster and service names based on previous Terraform outputs.
+          cluster_name=${{ steps.terraform-ecs.outputs.ecs_name}}
+          service_name="${{ steps.terraform-ecs.outputs.ecs_name}}-service"
+        
+          # Set a timeout and interval for checking task status
+          timeout=600 # Wait for 10 minutes max
+          interval=30 # Check every 30 seconds
+        
+          # Capture the start time for timeout tracking
+          start_time=$(date +%s)
+        
+          # Begin loop to check task status
+          while true; do
+              # Calculate elapsed time
+              current_time=$(date +%s)
+              elapsed_time=$((current_time - start_time))
+                       
+              # Fetch the task ARNs associated with the service
+              task_arns=$(aws ecs list-tasks --cluster $cluster_name --service-name $service_name --query "taskArns" --output text)
+                       # If no tasks are found, wait for the interval duration and then check again
+              if [ -z "$task_arns" ]; then
+                  echo "No tasks found. Waiting..."
+                  sleep $interval
+                  continue
+              fi
+        
+              # Fetch the last status of the tasks
+              statuses=$(aws ecs describe-tasks --cluster $cluster_name --tasks $task_arns --query "tasks[*].lastStatus" --output text)
+        
+              # Start by assuming all tasks are in the "RUNNING" state.
+              all_running=true
+        
+              # Loop through each status and check if it's "RUNNING"
+              for status in $statuses; do
+                  if [ "$status" != "RUNNING" ]; then
+                      all_running=false
+                      break
+                  fi
+              done
+        
+              # If all tasks are running, exit the loop
+              if $all_running; then
+                  echo "All tasks are running."
+                  break
+              fi
+        
+              # If timeout is reached before all tasks are running, exit with an error
+              if [[ $elapsed_time -ge $timeout ]]; then
+                  echo "Timeout reached before all tasks reached RUNNING state."
+                  exit 1
+              fi
+        
+              # Wait for the specified interval before checking again
+              echo "Waiting for tasks to reach RUNNING state..."
+              sleep $interval
+          done
+
+      # Retrieve the access URL from Terraform outputs
+      - name: Set up Terraform outputs
+        id: tf-outputs  # Define an id for this step to be used in the subsequent steps.
+        working-directory: ./environments/${{ env.environment }}  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to only refresh the state without creating/updating any resources.
+        # Iinput variables are passed using the '-var' option. These are used to customize the Terraform configuration.
+        # Fetch the 'all_access_urls' output from Terraform and process it with 'jq' to retrieve the access URL.
+        run: |
+          terraform apply -refresh-only -auto-approve -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
           echo "access_url=$(terraform output -json all_access_urls | jq -r 'to_entries[0].value')" >> $GITHUB_OUTPUT
-      - name: Echo Access URL # Print the access url on Github Actions
+
+      # Display the access URL in the GitHub Actions log
+      - name: Echo Access URL 
         run: echo "The Access URL is ${{ steps.tf-outputs.outputs.access_url }}"
 ```
 
-In this `deploy` job, `pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan` must first successfuly completed because of the `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`
+For the `deploy` job to initiate, the `pre-deploy`, `unit-testing`, and `SNYK-Comprehensive-Security-scan` jobs must first complete successfully, as indicated by `needs: [ pre-deploy, unit-testing, SNYK-Comprehensive-Security-scan ]`.
 
-The deployment environment (dev,stage, or prod) is determined from ```environment: ${{ github.ref_name }}```
+The targeted deployment environment (whether it is dev, stage, or prod) is identified by the value of `environment: ${{ github.ref_name }}`, which references the branch name.
+
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/554957ab-b13a-41c1-baf6-4e50d0df00b5)
+
+Upon successful deployment, we can explore the Github Action workflow logs to retrieve the application's access URL.
+
+![dev-access-url](/documentation/images/dev-access-url.png)
+
 
 <br>
 
@@ -784,10 +892,277 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 
 <br>
 
-## Step 2: Create a pull request and commit a merge in GitHub to start the workflow 
-**--Add here on Pull Request to Staging--**
+## Step 2: Setting up `stage.yml` in .github/workflows directory
+After successful OWASP scans and once the `dev` deployment is validated, proceed with creating a Pull Request to merge changes from the `dev` branch into the `stage` branch. However, before this merge, a `stage.yml` must be set up to automatically run the Staging workflow post-merge.
+```yml
+name: CICD for Group 2 Chat Application - Staging
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Staging
+```
 
-**--Show Staging workflow--**
+### The workflow will be triggered on push events to the "stage" branch, which will be done when a pull request is merged into the "stage" branch.
+```yml
+on:
+  push:
+    branches: [ stage ]
+```
+
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+``` 
+
+### Below are the jobs defined in [stage.yml](./.github/workflows/stage.yml):
+
+Job name : `pre-deploy`
+```yml
+jobs:
+  # The pre-deploy job just prints the type of event and branch that triggered the workflow
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+
+### Deploy to Staging Environment
+
+```yml
+deploy-to-stage:
+    runs-on: ubuntu-latest
+    needs: [ pre-deploy ]   # This job depends on the completion of the 'pre-deploy' job.
+    name: Deploy to Staging Environment
+    env:
+      environment: ${{ github.ref_name }}  # Specify the environment to deploy
+      port: 8000  # Specify the port to access the Staging environment application
+    steps:
+
+      # Checkout the latest code from the repository
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.STAGE_ROLE_TO_ASSUME }}
+          aws-region: ap-southeast-1
+      
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' output from Terraform.
+        # Store the resulting ECR URL as the output variable for later use or reference.
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve -refresh-only
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
+        working-directory: ./environments/${{ env.environment }}
+        id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # 'image_name' is provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform taint aws_ecs_service.service
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)"
+          echo "access_url=$(terraform output -json | jq -r .alb_hostname.value)" >> $GITHUB_OUTPUT
+          echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
+      
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
+      - name: Check ALB Target Group Health Status
+        run: |
+          target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
+          while true; do
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            if [[ "$health_status" == "healthy" ]]; then
+                    echo "Targets are healthy!"
+                    break
+                else
+                    echo "Current status of target: $health_status. Waiting..."
+                    sleep 10  # Check every 30 seconds
+                fi
+          done
+      
+      # Display the access URL where the app can be accessed
+      - name: Echo Access URL
+        run: echo "The Access URL is http://${{ steps.terraform-ecs.outputs.access_url }}:${{ env.port }}"
+```
+Note: This Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
+![pullrequest-stage](/documentation/images/pullrequest-stage.png)
+
+The entire staging delpoyment workflow is shown below:
+![stage-workflow](/documentation/images/stage-workflow.png)
+
+On completing a successful deployment, delve into the Github Action workflow logs to obtain the application's access URL. This URL facilitates User Acceptance Testing (UAT) by either the in-house team or the customers.
+![stage-access-url](/documentation/images/stage-access-url.png)
+
+## Step 3: Setting up `prod.yml` in .github/workflows directory
+Upon obtaining satisfactory UAT results, we are set to deploy the application in the Production environment. Before initiating a Pull Request to merge the `stage` branch into the `prod` branch, ensure the `prod.yml` file is in place to enable automated deployment.
+
+```yml
+name: CICD for Group 2 Chat Application - Production
+run-name: ${{ github.actor }} is running CICD for Group 2 Chat Application - Production
+```
+
+### The workflow will be triggered on push events to the "prod" branch, which will be done when a pull request is merged into the "prod" branch.
+```yml
+on:
+  push:
+    branches: [ prod ]
+```
+
+### Define permissions for this workflow, which can be added at either the job or workflow level.    
+```yml  
+permissions:
+  id-token: write # This is required for requesting the JWT.
+  actions: read # Permission to read actions.
+  contents: read # Permission to read contents.
+``` 
+
+### These are the jobs defined in [prod.yml](./.github/workflows/prod.yml):
+
+Job name : `pre-deploy`
+
+```yml
+jobs:
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event on ${{ github.ref_name }} branch."
+```
+
+### Production Environment Deployment
+
+```yml
+deploy-to-prod:
+    runs-on: ubuntu-latest
+    needs: [ pre-deploy ]   # This job depends on the completion of the 'pre-deploy' job.
+    name: Deploy to Production
+    env:
+      environment: ${{ github.ref_name }}  # Specify the environment to deploy
+    steps:
+
+      # Checkout the latest code from the repository
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+
+      # Set up AWS credentials by using OIDC authentication which are stored in the Github Actions Secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.PROD_ROLE_TO_ASSUME }}
+          aws-region: ap-southeast-1
+
+      # Log in to Amazon ECR (Elastic Container Registry)
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+      
+      # Retrieve the ECR URL from Terraform output
+      - name: Get ECR URL from Terraform
+        id: terraform-ecr # Define an id which allows other steps to reference outputs from this step.
+        working-directory: ./modules/ecr  # Set the working directory for this step
+        # Apply the Terraform configuration with the '-refresh-only' option to update the state file without making changes.
+        # Fetch the 'repository_url' output from Terraform.
+        # Store the resulting ECR URL as the output variable for later use or reference.
+        run: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve -refresh-only
+          echo "ecr_url=$(terraform output -json | jq -r .repository_url.value)" >> $GITHUB_OUTPUT
+
+      # Use Terraform to set up AWS ECS with Fargate
+      - name: Create AWS ECS Fargate
+        working-directory: ./environments/${{ env.environment }}
+        id: terraform-ecs
+        # Apply the Terraform configuration to provision or update the AWS ECS with Fargate resources.
+        # 'image_name' is provided to customize the Terraform configuration.
+        # Fetch the 'alb_hostname' and 'target_group_arn' outputs from Terraform.
+        # Store the resulting access URL and target group ARN in output variables for later use or reference.
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+          -var "image_name=${{ steps.terraform-ecr.outputs.ecr_url }}"
+          terraform taint aws_ecs_service.service
+          echo "target_group_arn=$(terraform output -json | jq -r .target_group_arn.value)" >> $GITHUB_OUTPUT
+          echo "route53_record_name=$(terraform output -json | jq -r .route53_record_name.value)" >> $GITHUB_OUTPUT
+
+      # This step continuously checks the health status of the ALB Target Group.
+      # It ensures that the target group is in a 'healthy' state before proceeding.
+      # This is crucial to ensure that the service is running and reachable before publishing the access URL.
+      - name: Check ALB Target Group Health Status
+        run: |
+          target_group_arn=${{ steps.terraform-ecs.outputs.target_group_arn }}
+          while true; do
+            health_status=$(aws elbv2 describe-target-health \
+            --target-group-arn $target_group_arn \
+            --query "TargetHealthDescriptions[0].TargetHealth.State" --output text)
+            if [[ "$health_status" == "healthy" ]]; then
+                    echo "Targets are healthy!"
+                    break
+                else
+                    echo "Current status of target: $health_status. Waiting..."
+                    sleep 10  # Check every 30 seconds
+                fi
+          done
+      
+      # Display the Application URL
+      - name: Echo Application URL
+        run: echo "The Application URL is http://${{ steps.terraform-ecs.outputs.route53_record_name }}"
+```
+Please note: A Pull Request to prod requires approvals from at least 4 reviewers, with all status checks in the green pass.
+
+![pullrequest-prod](/documentation/images/pullrequest-prod.png)
+
+A visual representation of the entire Production deployment workflow can be seen below:
+
+![prod-workflow](/documentation/images/prod-workflow.png)
+
+With the deployment complete, the application is now associated with its domain name and can be accessed via http://securechat.club.
+
+![app-url](/documentation/images/app-url.png)
+
+# ChatSecure Application 
+## Scan the following QR code to try on our chat application.
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<br>
+
+## Login Page
+<img src="/documentation/images/app-login-page.jpeg" width="350">
+
+## Chat Page
+
+<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/09e66dea-2dec-45a5-805a-a68344226bf1">
+
+<br>
+
+
+**--KIV--**
 * Create a `New pull request`
 ![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
 
@@ -807,11 +1182,6 @@ OWASP scanning will only be performed by `zap-scan` after the resources have bee
 ![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/1bf935b7-ecbe-4944-b9ba-0e5f63f6132d)
 
 The pull request is now merging a new 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
-
-**--Add here on Pull Request to Production--**
-
-**--Show Production workflow--**
-
 
 # Lesson Learned
 1. Team collaboration is critical for the success of the project
