@@ -67,7 +67,8 @@ The user interface is designed using a blend of HTML, CSS, and JavaScript.
 # CICD Pipeline
 
 In the ever-evolving landscape of software development, Continuous Integration and Continuous Deployment (CI/CD) pipelines have become indispensable tools for ensuring the efficiency, reliability, and agility of applications. Here, we'll explore how a chat application, designed to operate exclusively within web browsers, underwent a transformative transition to embrace CI/CD pipelines.
-In the world of modern software development, security cannot be an afterthought. It must be an integral part of the development process from the very beginning. Enter DevSecOps, a paradigm shift that incorporates security seamlessly into the DevOps pipeline utilising tools integrating various security functions
+
+However, in today's software development landscape, security can't be an afterthought; it must be integral from the start. This is where DevSecOps enters the stage—a paradigm shift seamlessly weaving security into the DevOps pipeline through tools that integrate diverse security functions.
 
 
 # Workflow for Project Titanium
@@ -1013,7 +1014,11 @@ deploy-to-stage:
         run: echo "The Access URL is http://${{ steps.terraform-ecs.outputs.access_url }}:${{ env.port }}"
 ```
 Note: This Pull Request mandates approvals from a minimum of 2 reviewers, and all status checks must pass.
-![pullrequest-stage](/documentation/images/pullrequest-stage.png)
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/60492027-097f-4681-a084-dcd1e0c01209)
+
+![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/127754707/e5855fe4-651e-4766-adf2-5e8c4b87209d)
+
+<br>
 
 The entire staging delpoyment workflow is shown below:
 ![stage-workflow](/documentation/images/stage-workflow.png)
@@ -1145,14 +1150,14 @@ A visual representation of the entire Production deployment workflow can be seen
 
 ![prod-workflow](/documentation/images/prod-workflow.png)
 
-With the deployment complete, the application is now associated with its domain name and can be accessed via http://securechat.club.
+With the deployment complete, the application is now associated with its domain name and can be accessed via http://securechat.club
 
 ![app-url](/documentation/images/app-url.png)
 
 # ChatSecure Application 
 ## Scan the following QR code to try on our chat application.
 
-<img width="350" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
+<img width="400" alt="QR" src="https://github.com/Dylon-Chan/group2-capstone-project/assets/10412954/c2ed63a0-4482-4b74-9d0d-385f9eda7996">
 <br>
 
 ## Login Page
@@ -1164,33 +1169,11 @@ With the deployment complete, the application is now associated with its domain 
 
 <br>
 
-
-**--KIV--**
-* Create a `New pull request`
-![create pull request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/4349df04-4a58-4435-8e97-fd33711ec1cc)
-
-* Choose the desired base and merge branch, and click `Create pull request`
-![choose-base-merge-branch-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/5bfaec86-1e95-4f8c-bedd-c56bad22ba32)
-
-* A new pull request is now open. Leave a comment and click `Create pull request`
-![leave-comment-create-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/884eaf5f-5a6a-4512-a41a-531c42a5f2db)
-
-* Review the pull request, resolved conflicts if any.
-![review-the-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/33cb1d4c-4485-4136-bac4-88436afd70ac)
-
-* Approve and submit the pull request
-![approve-submit-pull-request](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/84dad82e-a150-40b1-acdb-9b9cd8dd5075)
-
-* Navigate the repo on GitHub, click on the `Action` tab to see the workflows.
-![github-action](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/1bf935b7-ecbe-4944-b9ba-0e5f63f6132d)
-
-The pull request is now merging a new 'feature' branch into 'dev' branch which resulted in GitHub action workflow was running or skipped.
-
 # Lesson Learned
 1. Team collaboration is critical for the success of the project
 2. Repository name is case sensitive and Yaml’s syntax and spacing are important
-
-**--Add in if have--**
+3. It is important to setup automated testing and try to automate as much as possible
+4. Security is critical to incorporate earlier in the development lifecycle
 
 # Future Enhancement
 1. Explore other security scanning systems such as SonarQube, JFrog, Synopsys, Checkmarx, etc. and explore which is better for which type of scanning.
