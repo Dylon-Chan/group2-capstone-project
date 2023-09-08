@@ -1023,7 +1023,7 @@ Note: This Pull Request mandates approvals from a minimum of 2 reviewers, and al
 
 <br>
 
-The entire staging delpoyment workflow is shown below:
+The entire staging deployment workflow is shown below:
 ![stage-workflow](/documentation/images/stage-workflow.png)
 
 On completing a successful deployment, delve into the Github Action workflow logs to obtain the application's access URL. This URL facilitates User Acceptance Testing (UAT) by either the in-house team or the customers.
