@@ -66,90 +66,9 @@ The user interface is designed using a blend of HTML, CSS, and JavaScript.
 
 # CICD Pipeline
 
-Introduction
-
 In the ever-evolving landscape of software development, Continuous Integration and Continuous Deployment (CI/CD) pipelines have become indispensable tools for ensuring the efficiency, reliability, and agility of applications. Here, we'll explore how a chat application, designed to operate exclusively within web browsers, underwent a transformative transition to embrace CI/CD pipelines.
+In the world of modern software development, security cannot be an afterthought. It must be an integral part of the development process from the very beginning. Enter DevSecOps, a paradigm shift that incorporates security seamlessly into the DevOps pipeline utilising tools integrating various security functions
 
-The Challenge
-
-Our story begins with Sarah's company that operates in a highly secure environment, where stringent policies restrict the installation of third-party applications, including popular chat communication tools, on company-issued mobile devices. To address the need for real-time communication while adhering to strict security protocols, the company opted to create an in-house browser-based chat application.
-
-The Initial Setback
-
-Initially, the development of this chat application faced several challenges. Without a streamlined CI/CD pipeline, updates and improvements to the application were slow and cumbersome. Developers often struggled to deliver new features and security enhancements promptly.
-
-The Solution: Implementing a CI/CD Pipeline
-
-Recognizing the need for a more efficient development process, our team decided to implement a CI/CD pipeline:
-
-Automated Testing: The first step was to establish automated testing procedures. A comprehensive suite of tests, including unit tests, integration tests, and security scans, was created to ensure the application's stability and security.
-
-Version Control: The development team adopted a version control system (such as Git) to manage code changes and collaborate seamlessly. This allowed them to track and merge code changes efficiently.
-
-Continuous Integration: Developers were encouraged to push code changes frequently. These changes were automatically integrated into a shared code repository, where automated tests were run to identify and address issues early in the development cycle.
-
-Continuous Deployment: Once code changes passed all automated tests, the CI/CD pipeline automatically triggered deployment to a staging environment for final testing. This allowed for thorough testing of new features and security enhancements before reaching production.
-
-Monitoring and Feedback Loop: Real-time monitoring tools were integrated to keep an eye on application performance and user experience. Any anomalies or performance issues were addressed promptly.
-
-Benefits of the CI/CD Pipeline Transition
-
-The implementation of the CI/CD pipeline brought several significant advantages to the development process of the browser-based chat application:
-
-Faster Development: With automated testing and continuous integration, developers could iterate faster, delivering new features and security updates promptly.
-
-Reduced Human Error: Automation reduced the risk of human error during deployments, leading to a more stable application.
-
-Enhanced Security: Automated security scans were integrated into the pipeline, ensuring that security vulnerabilities were detected and addressed before reaching production.
-
-Improved Collaboration: Version control and continuous integration fostered better collaboration among team members, making it easier to track changes and work together on complex features.
-
-Scalability: The CI/CD pipeline allowed for easy scalability as the application grew. New development and deployment processes could be added without disrupting existing workflows.
-
-Integration of Security into CI/CD Pipeline
-
-In the world of modern software development, security cannot be an afterthought. It must be an integral part of the development process from the very beginning. Enter DevSecOps, a paradigm shift that incorporates security seamlessly into the DevOps pipeline utilising tools integrating various security functions such as SAST, SCA, DAST, IaC, and Docker scanning that can elevate the application development process:
-
-1. Static Application Security Testing (SAST)
-
-SAST is a crucial component of DevSecOps, providing automated code analysis to identify vulnerabilities and security weaknesses early in the development cycle. By integrating SAST tools into your CI/CD pipeline, developers can receive instant feedback on potential security issues as they write code. This proactive approach ensures that security concerns are addressed before they escalate into critical problems.
-
-2. Software Composition Analysis (SCA)
-
-SCA tools scan the application's dependencies to identify known vulnerabilities in third-party libraries and components. Integrating SCA into pipeline helps prevent security issues stemming from outdated or vulnerable dependencies. It ensures that the chat application remains secure even as it leverages external code to expedite development.
-
-3. Dynamic Application Security Testing (DAST)
-
-DAST tools simulate real-world attacks on the application, uncovering vulnerabilities that may not be apparent in static analysis alone. By incorporating DAST scans into the pipeline, you can continuously assess the security posture of the browser-based chat application in a production-like environment. This ongoing assessment helps to identify and remediate vulnerabilities before they are exploited by attackers.
-
-4. Infrastructure as Code (IaC) Security
-
-Modern applications often rely on infrastructure as code (IaC) to define and provision cloud resources. Ensuring the security of the IaC templates is essential. DevSecOps involves incorporating security checks into your IaC pipeline, validating configurations and permissions to prevent misconfigurations that could expose your application to security risks.
-
-5. Docker Scanning
-
-Docker containers have revolutionized application deployment, but they also introduce unique security challenges. Docker scanning tools assess container images for vulnerabilities and misconfigurations. By integrating Docker scanning into the CI/CD process, which can ensure that the containers running the chat application are secure, reducing the risk of container-specific vulnerabilities.
-
-The DevSecOps Workflow
-
-In a DevSecOps workflow, security is not a separate phase but an ongoing, integrated process. Here's how it typically works:
-
-Commit Stage: Developers commit code to the repository. SAST tools analyze the code for vulnerabilities, and SCA scans dependencies to identify potential issues.
-
-Build and Test Stage: The CI/CD pipeline builds the application, runs automated tests, and deploys it to a staging environment. DAST scans are performed here, simulating attacks on the application.
-
-IaC Validation: If the application relies on IaC, security checks are performed on infrastructure templates during this stage to ensure configurations adhere to security best practices.
-
-Container Scanning: For containerization, Docker images are scanned for vulnerabilities and compliance issues.
-
-Deployment: Once all security checks pass, the application is deployed to the production environment.
-
-Conclusion
-
-Incorporating security functions and tools like SAST, SCA, DAST, IaC security, and Docker scanning into the DevOps pipeline transforms it into a robust DevSecOps framework. This integration ensures that the browser-based chat application remains secure throughout its development lifecycle, protecting sensitive information and meeting the stringent security requirements of high-risk environments. DevSecOps is not just a practice; it's a mindset that fosters a culture of continuous security improvement.
-
-E.g.
-Our mission is to accelerate software deployment using CI/CD Pipeline so that each release cycle can be released quickly from the development environment, to staging environment and to production environment.
 
 # Workflow for Project Titanium
 ![image](https://github.com/Dylon-Chan/group2-capstone-project/assets/92975797/f668febf-d88e-46c9-afe8-55c85d70f186)
