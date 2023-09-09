@@ -1188,3 +1188,6 @@ With the deployment complete, the application is now associated with its domain 
 # Conclusion
 
 Throughout this project, our team has successfully implemented a DevSecOps-centric CI/CD pipeline, ensuring a secure and efficient software development lifecycle. By leveraging cutting-edge tools such as Github Actions, Snyk and OWASP, combined with best-practice methodologies, we have created a robust system that integrates security at every stage of the development process. This ensures that vulnerabilities are identified and addressed early, reducing risks and streamlining deployment. We are proud of the strides we have made in promoting a security-first approach and are confident that our methods set a benchmark for DevSecOps excellence.
+
+# Reference
+- https://github.com/socketio/socket.io/tree/main/examples/chat
