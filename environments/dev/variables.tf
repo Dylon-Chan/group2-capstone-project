@@ -29,13 +29,13 @@ variable "image_port" {
 #Set the default VPC ID
 variable "vpc_id" {
   type = string
-  default = "vpc-01eb8331fac862b2e"
+  default = "vpc-09269adb2ae16ec0a"
 }
 
 #Defines a list of subnet IDs within the VPC
 variable "subnets" {
   type = list(string)
-  default = ["subnet-0623d78431b777e3e" ]  
+  default = ["subnet-024976170a0e938db" ]  
 }
 
 #Specifies the name of ECR(Elastic Container Registry) repo where container images are stored
