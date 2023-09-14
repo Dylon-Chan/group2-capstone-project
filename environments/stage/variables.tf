@@ -36,13 +36,13 @@ variable "alb_port" {
 #Set the default VPC ID
 variable "vpc_id" {
   type = string
-  default = "vpc-038783054495c1d2f"
+  default = "vpc-09269adb2ae16ec0a"
 }
 
 #Defines a list of subnet IDs within the VPC
 variable "subnets" {
   type = list(string)
-  default = ["subnet-0a66f860edb68d17a", "subnet-0cb72c22794da5e18"]  
+  default = ["subnet-024976170a0e938db", "subnet-0d7974134dab46ffd"]  
 }
 
 #Specifies the name of ECR(Elastic Container Registry) repo where container images are stored
